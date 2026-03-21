@@ -175,7 +175,7 @@ footer{border-top:1px solid var(--border);text-align:center;padding:26px 24px;fo
         </div>
         <div class="socials">
           <a class="social-btn" href="https://linkedin.com/in/prasannamalode" target="_blank">🔗 LinkedIn</a>
-          <a class="social-btn" href="mailto:prasanna.malode@outlook.com">✉️ prasanna.malode@outlook.com</a>
+          <a class="social-btn" href="/cdn-cgi/l/email-protection#5d2d2f3c2e3c33333c73303c313239381d32282931323236733e3230">✉️ <span class="__cf_email__" data-cfemail="4b3b392a382a25252a65262a27242f2e0b243e3f2724242065282426">[email&#160;protected]</span></a>
           <a class="social-btn" href="tel:+918884161655">📞 +91-888-416-1655</a>
         </div>
       </div>
@@ -183,9 +183,9 @@ footer{border-top:1px solid var(--border);text-align:center;padding:26px 24px;fo
   </div>
 </section>
 
-<footer>Built with HTML · Hosted free on GitHub Pages · © 2026 Prasanna Malode · Bengaluru, India</footer>
+<footer>© 2026 Prasanna Malode · Bengaluru, India · <a href="mailto:prasanna.malode@outlook.com" style="color:var(--accent);text-decoration:none">prasanna.malode@outlook.com</a></footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── Load articles from articles.json ──
 let allArticles = [];
 
@@ -239,14 +239,4 @@ function renderArticlesList() {
 function showSection(id) {
   document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-  const sec = document.getElementById(id);
-  if (sec) sec.classList.add('active');
-  const nav = document.getElementById('nav-' + id);
-  if (nav) nav.classList.add('active');
-  window.scrollTo({top:0, behavior:'smooth'});
-}
-
-loadArticles();
-</script>
-</body>
-</html>
+  const
