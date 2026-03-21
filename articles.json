@@ -1,0 +1,67 @@
+[
+  {
+    "id": "cicd-80-percent",
+    "title": "How I increased release frequency by 80% \u2014 without sacrificing security",
+    "tag": "DevSecOps",
+    "date": "Mar 2026",
+    "read": "6 min read",
+    "summary": "The CI/CD transformation framework, quality gates, and governance model that delivered measurable results at IP Infusion.",
+    "file": "articles/cicd-80-percent.html"
+  },
+  {
+    "id": "iso-27001-from-scratch",
+    "title": "Building a cybersecurity function from scratch: lessons from zero to ISO 27001",
+    "tag": "Cybersecurity",
+    "date": "Feb 2026",
+    "read": "5 min read",
+    "summary": "From no InfoSec function to zero major audit findings \u2014 the people, process, and tools decisions that got us there.",
+    "file": "articles/iso-27001-from-scratch.html"
+  },
+  {
+    "id": "follow-the-sun-ops",
+    "title": "What managing a 16-person global team taught me about follow-the-sun ops",
+    "tag": "Leadership",
+    "date": "Jan 2026",
+    "read": "7 min read",
+    "summary": "Handovers, shift scheduling, and the one ritual that keeps 24x7 teams sane and aligned.",
+    "file": "articles/follow-the-sun-ops.html"
+  },
+  {
+    "id": "itil-incident-management",
+    "title": "How ITIL-aligned incident management cut our recurring incidents by 50%",
+    "tag": "ITIL / Ops",
+    "date": "Dec 2025",
+    "read": "5 min read",
+    "summary": "The exact process changes, tooling decisions, and cultural shifts that drove the improvement.",
+    "file": "articles/itil-incident-management.html"
+  },
+  {
+    "id": "genai-cicd-pipelines",
+    "title": "How we integrated Gen AI into CI/CD pipelines \u2014 and what surprised us",
+    "tag": "Gen AI",
+    "date": "Nov 2025",
+    "read": "6 min read",
+    "summary": "Real-world implementation of AI-assisted code reviews, decision gates, and memory leak detection in production CI/CD.",
+    "file": "articles/genai-cicd-pipelines.html"
+  },
+  {
+    "id": "git-hands-on-guide",
+    "title": "Git Fundamentals for DevOps Engineers \u2014 Hands-On Training Guide",
+    "tag": "DevOps",
+    "date": "2010",
+    "read": "Training Guide",
+    "summary": "A comprehensive hands-on guide to Git for DevOps engineers: version control, architecture, branching strategies, SSH setup, and real-world workflows.",
+    "file": "Git_HandsOn_Guide.html",
+    "external": true
+  },
+  {
+    "id": "git-cheatsheet",
+    "title": "Git Command Cheat Sheet \u2014 DevOps Quick Reference",
+    "tag": "DevOps",
+    "date": "2010",
+    "read": "Cheat Sheet",
+    "summary": "A searchable quick-reference card covering every Git command: setup, branching, remotes, undo, tags, workflows, and troubleshooting.",
+    "file": "Git_CheatSheet.html",
+    "external": true
+  }
+]
