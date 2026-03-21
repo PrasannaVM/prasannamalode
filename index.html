@@ -351,6 +351,22 @@
       </div>
     </div>
 
+    <p class="section-label">Recent Guides &amp; Resources</p>
+    <div class="home-grid" style="margin-bottom:48px">
+      <div class="card fade-up" onclick="window.open('Git_HandsOn_Guide.html','_blank')">
+        <span class="card-tag">DevOps</span>
+        <h3>Git Fundamentals for DevOps Engineers — Hands-On Training Guide</h3>
+        <p>Hands-on Git training: version control, architecture, branching strategies, SSH setup, and real-world DevOps workflows.</p>
+        <div class="card-meta"><span>2010</span><span>Training Guide</span></div>
+      </div>
+      <div class="card fade-up" onclick="window.open('Git_CheatSheet.html','_blank')">
+        <span class="card-tag">DevOps</span>
+        <h3>Git Command Cheat Sheet — DevOps Quick Reference</h3>
+        <p>Searchable quick-reference covering every Git command: setup, branching, remotes, undo, tags, workflows, and troubleshooting.</p>
+        <div class="card-meta"><span>2010</span><span>Cheat Sheet</span></div>
+      </div>
+    </div>
+
     <p class="section-label">Tools I've Built</p>
     <div class="home-grid">
       <div class="tool-card fade-up">
@@ -420,6 +436,22 @@
           <p>Real-world implementation of AI-assisted code reviews, decision gates, and memory leak detection in production CI/CD.</p>
         </div>
         <div class="article-date">Nov 2025<br>6 min</div>
+      </div>
+      <div class="article-item fade-up" onclick="window.open('Git_HandsOn_Guide.html','_blank')">
+        <div>
+          <span class="card-tag">DevOps</span>
+          <h3>Git Fundamentals for DevOps Engineers — Hands-On Training Guide</h3>
+          <p>A comprehensive hands-on guide to Git for DevOps engineers: version control, architecture, branching strategies, SSH setup, and real-world workflows.</p>
+        </div>
+        <div class="article-date">2010<br>Training Guide</div>
+      </div>
+      <div class="article-item fade-up" onclick="window.open('Git_CheatSheet.html','_blank')">
+        <div>
+          <span class="card-tag">DevOps</span>
+          <h3>Git Command Cheat Sheet — DevOps Quick Reference</h3>
+          <p>A searchable quick-reference card covering every Git command you need: setup, branching, remotes, undo, tags, workflows, and troubleshooting.</p>
+        </div>
+        <div class="article-date">2010<br>Cheat Sheet</div>
       </div>
     </div>
   </div>
@@ -526,7 +558,7 @@
         </div>
         <div class="socials">
           <a class="social-btn" href="https://linkedin.com/in/prasannamalode" target="_blank">🔗 LinkedIn</a>
-          <a class="social-btn" href="mailto:prasanna.malode@outlook.com">✉️ prasanna.malode@outlook.com</a>
+          <a class="social-btn" href="/cdn-cgi/l/email-protection#2454564557454a4a450a4945484b4041644b5150484b4b4f0a474b49">✉️ <span class="__cf_email__" data-cfemail="4a3a382b392b24242b64272b26252e2f0a253f3e2625252164292527">[email&#160;protected]</span></a>
           <a class="social-btn" href="tel:+918884161655">📞 +91-888-416-1655</a>
         </div>
       </div>
@@ -538,7 +570,7 @@
   Built with HTML · Hosted free on GitHub Pages · © 2026 Prasanna Malode · Bengaluru, India
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const articles = [
   {
     title: "How I increased release frequency by 80% — without sacrificing security",
@@ -654,14 +686,4 @@ function openArticle(idx) {
   document.getElementById('av-read').textContent = a.read;
   document.getElementById('av-tag').textContent = a.tag;
   document.getElementById('av-body').innerHTML = a.body;
-  document.getElementById('article-view').classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function closeArticle() {
-  document.getElementById('article-view').classList.remove('active');
-  showSection('articles');
-}
-</script>
-</body>
-</html>
+  document.g
