@@ -60,7 +60,7 @@
     "date": "2010",
     "read": "Training Guide",
     "summary": "A comprehensive hands-on guide to Git for DevOps engineers: version control, architecture, branching strategies, SSH setup, and real-world workflows.",
-    "file": "Git_HandsOn_Guide.html",
+    "file": "articles/Git_HandsOn_Guide.html",
     "external": true
   },
   {
@@ -70,7 +70,7 @@
     "date": "2010",
     "read": "Cheat Sheet",
     "summary": "A searchable quick-reference card covering every Git command: setup, branching, remotes, undo, tags, workflows, and troubleshooting.",
-    "file": "Git_CheatSheet.html",
+    "file": "articles/Git_CheatSheet.html",
     "external": true
   }
 ]
