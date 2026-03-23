@@ -45,6 +45,15 @@
     "file": "articles/genai-cicd-pipelines.html"
   },
   {
+    "id": "cicd-jenkins-azure-docker",
+    "title": "CI/CD Pipeline: Complete Training Guide — Jenkins, Azure & Docker",
+    "tag": "DevOps",
+    "date": "2021",
+    "read": "Training Guide",
+    "summary": "Step-by-step guide covering CI/CD foundations, Jenkins setup in Docker, Azure Container Registry, AKS deployment, Jenkinsfile writing, and troubleshooting. Zero prior CI/CD experience assumed.",
+    "file": "articles/cicd-jenkins-azure-docker.html"
+  },
+  {
     "id": "git-hands-on-guide",
     "title": "Git Fundamentals for DevOps Engineers \u2014 Hands-On Training Guide",
     "tag": "DevOps",
