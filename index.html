@@ -239,18 +239,20 @@ var allArticles = [
 ];
 document.getElementById('hero-photo').src = 'data:image/jpeg;base64,' + PHOTO;
 document.getElementById('about-photo').src = 'data:image/jpeg;base64,' + PHOTO;
-function openArticle(a){ window.location.href = a.file; }
 function renderHomeArticles(){
   document.getElementById('home-articles-grid').innerHTML = allArticles.slice(0,2).map(a =>
-    '<div class="card fade-up" onclick='openArticle('+JSON.stringify(JSON.stringify(a))+')"><span class="card-tag">'+a.tag+'</span><h3>'+a.title+'</h3><p>'+a.summary+'</p><div class="card-meta"><span>'+a.date+'</span><span>· '+a.read+'</span></div></div>'
+    `<div class="card fade-up" onclick="openArticle('${a.id}')"><span class="card-tag">${a.tag}</span><h3>${a.title}</h3><p>${a.summary}</p><div class="card-meta"><span>${a.date}</span><span>· ${a.read}</span></div></div>`
   ).join('');
 }
 function renderArticlesList(){
   document.getElementById('articles-list').innerHTML = allArticles.map(a =>
-    '<div class="article-item fade-up" onclick='openArticle('+JSON.stringify(JSON.stringify(a))+')"><div><span class="card-tag">'+a.tag+'</span><h3>'+a.title+'</h3><p>'+a.summary+'</p></div><div class="article-date">'+a.date+'<br>'+a.read+'</div></div>'
+    `<div class="article-item fade-up" onclick="openArticle('${a.id}')"><div><span class="card-tag">${a.tag}</span><h3>${a.title}</h3><p>${a.summary}</p></div><div class="article-date">${a.date}<br>${a.read}</div></div>`
   ).join('');
 }
-function openArticle(a){ if(typeof a==='string') a=JSON.parse(a); window.location.href=a.file; }
+function openArticle(id){
+  const a = allArticles.find(art => art.id === id);
+  if(a) window.location.href = a.file;
+}
 function showSection(id){
   document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
