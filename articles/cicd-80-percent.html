@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>How I increased release frequency by 80% — without sacrificing security — Prasanna Malode</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#faf8f4;--surface:#fff;--ink:#1a1814;--muted:#7a7468;--accent:#1a5276;--accent-light:#d6eaf8;--border:#e8e2d9;--radius:12px;--max:720px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.7;min-height:100vh}
+nav{position:sticky;top:0;z-index:100;background:rgba(250,248,244,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px}
+.nav-inner{max-width:var(--max);margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}
+.logo{font-family:'Lora',serif;font-size:1rem;font-weight:600;color:var(--ink);text-decoration:none}
+.back-btn{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:.85rem;text-decoration:none;transition:color .2s}
+.back-btn:hover{color:var(--accent)}
+.container{max-width:var(--max);margin:0 auto;padding:56px 24px 80px}
+.tag{display:inline-block;background:var(--accent-light);color:var(--accent);font-size:.72rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:3px 12px;border-radius:20px;margin-bottom:16px}
+h1{font-family:'Lora',serif;font-size:clamp(1.6rem,4vw,2.3rem);line-height:1.2;margin-bottom:16px}
+.meta{display:flex;gap:16px;font-size:.85rem;color:var(--muted);margin-bottom:48px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.body p{margin-bottom:20px;color:#2a2620}
+.body h2{font-family:'Lora',serif;font-size:1.4rem;margin:40px 0 16px;color:var(--ink)}
+.body h3{font-size:1.1rem;font-weight:500;margin:28px 0 12px;color:var(--ink)}
+.body blockquote{border-left:3px solid var(--accent);padding:14px 24px;margin:32px 0;background:var(--accent-light);border-radius:0 8px 8px 0;font-style:italic;color:var(--muted)}
+.body ul,.body ol{margin:0 0 20px 24px}
+.body li{margin-bottom:8px;color:#2a2620}
+.body strong{font-weight:500;color:var(--ink)}
+.divider{height:1px;background:var(--border);margin:48px 0}
+.author{display:flex;gap:16px;align-items:center}
+.author-name{font-weight:500;font-size:.95rem}
+.author-role{font-size:.83rem;color:var(--muted)}
+footer{border-top:1px solid var(--border);text-align:center;padding:24px;font-size:.8rem;color:var(--muted)}
+@media(max-width:600px){.container{padding:40px 18px 60px}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="../index.html">Prasanna Malode</a>
+    <a class="back-btn" href="../index.html#articles">← All Articles</a>
+  </div>
+</nav>
+<div class="container">
+  <span class="tag">DevSecOps</span>
+  <h1>How I increased release frequency by 80% — without sacrificing security</h1>
+  <div class="meta">
+    <span>March 2026</span>
+    <span>· 6 min read</span>
+    <span>· Prasanna Malode</span>
+  </div>
+  <div class="body">
+    <p>When I joined IP Infusion, releases were slow, unpredictable, and stressful. Engineers dreaded deployment days. Six years later we'd increased release frequency by 80% and cut deployment failures by 60%. Here's the honest story of how we got there.</p>
+
+    <h2>The Starting Point</h2>
+    <p>The first thing I did was measure. Not guess — measure. We tracked lead time for change, deployment frequency, failure rate, and time to restore. The numbers were uncomfortable. That was the point.</p>
+    <blockquote>You can't improve what you don't measure. But more importantly — you can't get buy-in without showing the business what slow really costs.</blockquote>
+
+    <h2>Pre-QAT Quality Gates</h2>
+    <p>The biggest unlock was introducing Pre-QAT quality gates — automated checks before code even reached the test environment. This shifted quality left and eliminated entire categories of late-stage failures.</p>
+    <ul>
+      <li>Static code analysis via Coverity at commit time</li>
+      <li>FOSS compliance scanning on every build</li>
+      <li>Automated security checks (NMAP, OpenVAS) in staging</li>
+      <li>Memory leak detection integrated into CI pipeline</li>
+    </ul>
+
+    <h2>The Release Governance Layer</h2>
+    <p>Speed without control creates chaos. We built a release governance framework that gave every stakeholder visibility without creating bottlenecks. Executive dashboards showing MTTR, SLA compliance, and incident trends meant I never had to prep a slide deck for a C-suite review — the data spoke for itself.</p>
+
+    <h2>Tools That Drove the Change</h2>
+    <p>The stack that made it possible: Jenkins, Python, Shell scripting, Coverity for static analysis, Artifactory and Nexus for artifact management, Docker and Kubernetes for containerised deployments, all running on Linux. None of these tools were exotic — the discipline around how we used them was what mattered.</p>
+
+    <h2>What Actually Moved the Needle</h2>
+    <p>Honestly? Culture. The tools were 30% of the improvement. The other 70% was getting the team to own quality rather than throw it over the wall to QA. That took time, consistent reinforcement, and being willing to slow down briefly to accelerate long-term.</p>
+    <p>The principle I kept coming back to: make the right thing the easy thing. When quality gates caught issues automatically, engineers stopped seeing them as obstacles and started seeing them as safety nets.</p>
+  </div>
+  <div class="divider"></div>
+  <div class="author">
+    <div>
+      <div class="author-name">Prasanna Malode</div>
+      <div class="author-role">Global Head — DevSecOps · Cybersecurity · IT Operations · Bengaluru, India</div>
+    </div>
+  </div>
+</div>
+<footer>© 2026 Prasanna Malode · <a href="../index.html" style="color:var(--accent)">prasannamalode.in</a></footer>
+</body>
+</html>

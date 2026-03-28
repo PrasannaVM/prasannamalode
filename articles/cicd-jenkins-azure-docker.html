@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>CI/CD Pipeline: Complete Training Guide — Jenkins, Azure & Docker | Prasanna Malode</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#faf8f4;--surface:#fff;--ink:#1a1814;--muted:#7a7468;--accent:#1a5276;--accent-light:#d6eaf8;--border:#e8e2d9;--code-bg:#1e2433;--code-text:#e2e8f0;--radius:10px;--max:760px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.7;min-height:100vh}
+nav{position:sticky;top:0;z-index:100;background:rgba(250,248,244,0.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px}
+.nav-inner{max-width:var(--max);margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}
+.logo{font-family:'Lora',serif;font-size:1rem;font-weight:600;color:var(--ink);text-decoration:none}
+.back-btn{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:.85rem;text-decoration:none;transition:color .2s}
+.back-btn:hover{color:var(--accent)}
+.container{max-width:var(--max);margin:0 auto;padding:56px 24px 80px}
+.tag{display:inline-block;background:var(--accent-light);color:var(--accent);font-size:.72rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:3px 12px;border-radius:20px;margin-bottom:16px}
+h1{font-family:'Lora',serif;font-size:clamp(1.6rem,4vw,2.3rem);line-height:1.2;margin-bottom:16px}
+.meta{display:flex;gap:16px;flex-wrap:wrap;font-size:.85rem;color:var(--muted);margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+/* TOC */
+.toc{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:40px}
+.toc-title{font-size:.75rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.toc ol{padding-left:18px}
+.toc li{margin-bottom:5px}
+.toc a{color:var(--accent);font-size:.9rem;text-decoration:none}
+.toc a:hover{text-decoration:underline}
+/* Body */
+.body p{margin-bottom:18px;color:#2a2620}
+.body h2{font-family:'Lora',serif;font-size:1.45rem;margin:44px 0 16px;color:var(--ink);padding-top:8px;border-top:1px solid var(--border)}
+.body h3{font-size:1.1rem;font-weight:500;margin:28px 0 10px;color:var(--ink)}
+.body h4{font-size:.95rem;font-weight:500;margin:20px 0 8px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.body ul,.body ol{margin:0 0 18px 22px}
+.body li{margin-bottom:6px;color:#2a2620}
+.body strong{font-weight:500;color:var(--ink)}
+.body blockquote{border-left:3px solid var(--accent);padding:12px 20px;margin:24px 0;background:var(--accent-light);border-radius:0 8px 8px 0;font-style:italic;color:var(--muted)}
+/* Code blocks */
+pre{background:var(--code-bg);border-radius:var(--radius);padding:16px 20px;margin:16px 0 20px;overflow-x:auto}
+pre code{font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--code-text);line-height:1.7}
+code{font-family:'JetBrains Mono',monospace;font-size:.83rem;background:#eef2f7;color:#1a3a5c;padding:2px 6px;border-radius:4px}
+pre code{background:none;color:var(--code-text);padding:0}
+/* Tables */
+table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:.88rem}
+th{background:var(--accent-light);color:var(--accent);font-weight:500;text-align:left;padding:10px 14px;border:1px solid var(--border)}
+td{padding:9px 14px;border:1px solid var(--border);color:#2a2620;vertical-align:top}
+tr:nth-child(even) td{background:var(--bg)}
+/* Note boxes */
+.note{background:#fffbeb;border:1px solid #fde68a;border-radius:var(--radius);padding:14px 18px;margin:20px 0;font-size:.9rem;color:#78350f}
+.note strong{color:#92400e}
+/* Part header */
+.part-header{background:var(--accent);color:#fff;border-radius:var(--radius);padding:14px 20px;margin:40px 0 24px;font-family:'Lora',serif;font-size:1.1rem}
+/* Flow diagram */
+.flow{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin:20px 0;text-align:center;font-size:.9rem;color:var(--muted)}
+.flow-step{display:inline-block;background:var(--accent-light);color:var(--accent);padding:6px 14px;border-radius:6px;margin:4px;font-weight:500;font-size:.85rem}
+.flow-arrow{color:var(--muted);margin:0 4px;font-size:1rem}
+/* Divider & author */
+.divider{height:1px;background:var(--border);margin:48px 0}
+.author-name{font-weight:500;font-size:.95rem}
+.author-role{font-size:.83rem;color:var(--muted)}
+footer{border-top:1px solid var(--border);text-align:center;padding:24px;font-size:.8rem;color:var(--muted)}
+@media(max-width:600px){.container{padding:36px 16px 60px}pre{padding:12px 14px}th,td{padding:7px 10px}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="../index.html">Prasanna Malode</a>
+    <a class="back-btn" href="../index.html">← All Articles</a>
+  </div>
+</nav>
+
+<div class="container">
+  <span class="tag">DevOps · CI/CD</span>
+  <h1>CI/CD Pipeline: Complete Training Guide<br><span style="font-size:.7em;font-family:'DM Sans',sans-serif;font-weight:300;color:var(--muted)">Jenkins · Azure · Docker</span></h1>
+  <div class="meta">
+    <span>2021</span>
+    <span>· Training Guide</span>
+    <span>· Prasanna Malode</span>
+    <span>· 8 Parts · Step-by-step</span>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">Table of Contents</div>
+    <ol>
+      <li><a href="#part1">Foundations &amp; Concepts</a></li>
+      <li><a href="#part2">Environment Setup</a></li>
+      <li><a href="#part3">Jenkins Installation &amp; Configuration</a></li>
+      <li><a href="#part4">Docker Integration</a></li>
+      <li><a href="#part5">Azure Integration</a></li>
+      <li><a href="#part6">Writing Your First Jenkinsfile</a></li>
+      <li><a href="#part7">Full CI/CD Pipeline Walkthrough</a></li>
+      <li><a href="#part8">Best Practices &amp; Troubleshooting</a></li>
+    </ol>
+  </div>
+
+  <div class="body">
+
+    <!-- PART 1 -->
+    <div class="part-header" id="part1">Part 1 — Foundations &amp; Concepts</div>
+
+    <h2>1. What is CI/CD?</h2>
+    <p>CI/CD stands for Continuous Integration and Continuous Delivery (or Deployment). It is a set of practices and tools that automate the process of building, testing, and deploying software — reducing human error and speeding up releases.</p>
+
+    <table>
+      <tr><th>Term</th><th>What it Means</th></tr>
+      <tr><td><strong>Continuous Integration (CI)</strong></td><td>Automatically build and test code every time a developer pushes a change</td></tr>
+      <tr><td><strong>Continuous Delivery (CD)</strong></td><td>Automatically prepare tested code for release to any environment</td></tr>
+      <tr><td><strong>Continuous Deployment</strong></td><td>Automatically deploy every passing build straight to production</td></tr>
+      <tr><td><strong>Pipeline</strong></td><td>A series of automated steps: build → test → package → deploy</td></tr>
+      <tr><td><strong>Artifact</strong></td><td>The output of a build (e.g., a Docker image, JAR file, or ZIP)</td></tr>
+      <tr><td><strong>Stage</strong></td><td>A logical group of pipeline steps (e.g., 'Build' or 'Test')</td></tr>
+      <tr><td><strong>Agent/Node</strong></td><td>The machine that actually runs the pipeline stages</td></tr>
+    </table>
+
+    <h3>1.1 Why CI/CD?</h3>
+    <ul>
+      <li>Catch bugs early — tests run on every commit, not just at release time</li>
+      <li>Faster feedback loop — developers know within minutes if their code broke something</li>
+      <li>Consistent deployments — the same pipeline runs every time, eliminating 'works on my machine'</li>
+      <li>Audit trail — every deployment is logged with who changed what and when</li>
+      <li>Reduced risk — small, frequent releases are easier to debug than big quarterly drops</li>
+    </ul>
+
+    <h3>1.2 Key Players in This Guide</h3>
+    <table>
+      <tr><th>Tool</th><th>Role</th></tr>
+      <tr><td><strong>Jenkins</strong></td><td>Open-source automation server — the orchestrator of your pipeline</td></tr>
+      <tr><td><strong>Docker</strong></td><td>Containers — packages your app + its dependencies into a portable image</td></tr>
+      <tr><td><strong>Azure</strong></td><td>Cloud platform — hosts your container registry (ACR) and Kubernetes (AKS) or App Service</td></tr>
+      <tr><td><strong>Git / GitHub</strong></td><td>Source code management — every push can trigger a pipeline run</td></tr>
+      <tr><td><strong>Jenkinsfile</strong></td><td>A text file (Groovy DSL) checked into Git that defines your pipeline</td></tr>
+    </table>
+
+    <h3>1.3 The Big Picture Flow</h3>
+    <div class="flow">
+      <span class="flow-step">Developer pushes code</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Jenkins webhook fires</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Stage 1: Build</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Stage 2: Test</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Stage 3: Docker Build → ACR</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Stage 4: Deploy to AKS</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Slack/Email Notification</span>
+    </div>
+
+    <!-- PART 2 -->
+    <div class="part-header" id="part2">Part 2 — Environment Setup</div>
+
+    <h2>2. Prerequisites Checklist</h2>
+    <div class="note"><strong>Teacher Note:</strong> Walk through this checklist live in class. Let students verify each item on their own machine before moving on. Estimated setup time: 45–60 minutes for a fresh laptop.</div>
+
+    <h3>2.1 Local Machine Requirements</h3>
+    <table>
+      <tr><th>Requirement</th><th>Details</th></tr>
+      <tr><td>OS</td><td>Windows 10/11, macOS 12+, or Ubuntu 20.04+</td></tr>
+      <tr><td>RAM</td><td>Minimum 8 GB (16 GB recommended when running Jenkins + Docker locally)</td></tr>
+      <tr><td>Disk</td><td>At least 20 GB free</td></tr>
+      <tr><td>Internet</td><td>Required for downloading images and Azure CLI</td></tr>
+    </table>
+
+    <h3>2.2 Software to Install</h3>
+
+    <h4>Step A — Install Docker Desktop</h4>
+    <ol>
+      <li>Download Docker Desktop from <code>https://www.docker.com/products/docker-desktop</code></li>
+      <li>Run the installer and follow the wizard</li>
+      <li>After install, open a terminal and verify:</li>
+    </ol>
+    <pre><code>docker --version
+# Expected output: Docker version 24.x.x</code></pre>
+    <p>Enable WSL 2 integration on Windows: Settings → Resources → WSL Integration</p>
+
+    <h4>Step B — Install Java (required by Jenkins)</h4>
+    <pre><code># Ubuntu/Debian
+sudo apt update && sudo apt install -y openjdk-17-jdk
+
+# macOS (Homebrew)
+brew install openjdk@17
+
+# Verify
+java -version
+# Expected: openjdk version "17.x.x"</code></pre>
+
+    <h4>Step C — Install Git</h4>
+    <pre><code># Ubuntu
+sudo apt install -y git
+
+# macOS
+brew install git
+
+# Windows — Download from https://git-scm.com
+
+# Verify
+git --version</code></pre>
+
+    <h4>Step D — Install Azure CLI</h4>
+    <pre><code># Ubuntu
+curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+# macOS
+brew install azure-cli
+
+# Windows — Download MSI from https://aka.ms/installazurecliwindows
+
+# Verify
+az --version</code></pre>
+
+    <h4>Step E — Install kubectl</h4>
+    <pre><code># Ubuntu
+sudo apt-get install -y kubectl
+
+# macOS
+brew install kubectl
+
+# Verify
+kubectl version --client</code></pre>
+
+    <h3>2.3 Azure Account Setup</h3>
+    <pre><code># Login
+az login
+
+# List subscriptions
+az account list --output table
+az account set --subscription "<YOUR_SUBSCRIPTION_NAME>"
+
+# Create a Resource Group
+az group create --name cicd-demo-rg --location eastus</code></pre>
+
+    <h3>2.4 Create Azure Container Registry (ACR)</h3>
+    <p>ACR is Azure's private Docker registry — like Docker Hub, but inside Azure.</p>
+    <pre><code># Create the registry
+az acr create \
+  --resource-group cicd-demo-rg \
+  --name mycicdregistry \
+  --sku Basic
+
+# Enable admin access (so Jenkins can push images)
+az acr update --name mycicdregistry --admin-enabled true
+
+# Get credentials (save these — you'll need them in Jenkins)
+az acr credential show --name mycicdregistry</code></pre>
+
+    <!-- PART 3 -->
+    <div class="part-header" id="part3">Part 3 — Jenkins Installation &amp; Configuration</div>
+
+    <h2>3. Running Jenkins in Docker</h2>
+    <p>The easiest way to start Jenkins in any environment is via Docker. This avoids polluting your host OS and makes Jenkins completely portable.</p>
+
+    <h3>3.1 Run Jenkins Container</h3>
+    <pre><code># Create a network and volume
+docker network create jenkins
+docker volume create jenkins-data
+
+# Run Jenkins (official LTS image with Docker-in-Docker support)
+docker run -d \
+  --name jenkins \
+  --network jenkins \
+  -p 8080:8080 \
+  -p 50000:50000 \
+  -v jenkins-data:/var/jenkins_home \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  jenkins/jenkins:lts-jdk17
+
+# Wait ~30 seconds, then get the initial admin password
+docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword</code></pre>
+
+    <div class="note"><strong>What is <code>-v /var/run/docker.sock</code>?</strong> This mounts the host Docker socket into Jenkins, allowing Jenkins to run Docker commands (docker build, docker push) inside pipeline stages. Without this, Docker commands inside Jenkinsfile would fail.</div>
+
+    <h3>3.2 Initial Jenkins Setup</h3>
+    <ol>
+      <li>Open <code>http://localhost:8080</code> in your browser</li>
+      <li>Paste the initial admin password retrieved above</li>
+      <li>Click 'Install suggested plugins' and wait ~5 minutes</li>
+      <li>Create your first admin user</li>
+      <li>Accept the default Jenkins URL</li>
+    </ol>
+
+    <h3>3.3 Essential Plugins to Install</h3>
+    <p>Go to: Manage Jenkins → Plugins → Available plugins</p>
+    <table>
+      <tr><th>Plugin</th><th>Purpose</th></tr>
+      <tr><td>Docker Pipeline</td><td>Enables <code>docker.build()</code>, <code>docker.withRegistry()</code> in Jenkinsfile</td></tr>
+      <tr><td>Azure Credentials</td><td>Stores Azure SP credentials securely</td></tr>
+      <tr><td>Kubernetes CLI</td><td>Runs kubectl commands inside pipeline stages</td></tr>
+      <tr><td>Pipeline: Stage View</td><td>Visualises pipeline stages in the Jenkins UI</td></tr>
+      <tr><td>GitHub Integration</td><td>Enables webhooks from GitHub to trigger builds</td></tr>
+      <tr><td>Blue Ocean</td><td>Modern UI for visualising pipelines (optional)</td></tr>
+      <tr><td>Credentials Binding</td><td>Injects secrets as environment variables into pipeline steps</td></tr>
+    </table>
+
+    <h3>3.4 Configuring Jenkins Credentials</h3>
+    <p>Credentials are stored securely in Jenkins and referenced by ID in the Jenkinsfile — never hardcode passwords!</p>
+    <ol>
+      <li>Go to: Manage Jenkins → Credentials → System → Global Credentials → Add Credentials</li>
+      <li>Kind: <strong>Username with password</strong></li>
+      <li>Username: (ACR admin username)</li>
+      <li>Password: (ACR password)</li>
+      <li>ID: <code>acr-credentials</code> ← this exact ID is used in the Jenkinsfile</li>
+    </ol>
+    <pre><code># Create a service principal for Azure deployment
+az ad sp create-for-rbac \
+  --name jenkins-cicd-sp \
+  --role Contributor \
+  --scopes /subscriptions/<YOUR_SUBSCRIPTION_ID>
+
+# This outputs: appId, password, tenant — save all three!</code></pre>
+
+    <!-- PART 4 -->
+    <div class="part-header" id="part4">Part 4 — Docker Integration</div>
+
+    <h2>4. Docker Fundamentals for CI/CD</h2>
+    <p>Docker packages your application into a self-contained unit called a container. In a CI/CD pipeline, Docker solves the classic 'it works on my machine' problem — if it runs in a container on your laptop, it runs exactly the same in Azure.</p>
+
+    <h3>4.1 Writing a Dockerfile</h3>
+    <pre><code># Stage 1: Build
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+
+# Stage 2: Production image (smaller — only what's needed)
+FROM node:20-alpine AS production
+WORKDIR /app
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/dist ./dist
+EXPOSE 3000
+CMD ["node", "dist/index.js"]</code></pre>
+
+    <table>
+      <tr><th>Instruction</th><th>Meaning</th></tr>
+      <tr><td><code>FROM</code></td><td>Base image to start from</td></tr>
+      <tr><td><code>WORKDIR</code></td><td>Set the working directory inside the container</td></tr>
+      <tr><td><code>COPY</code></td><td>Copy files from your local machine into the image</td></tr>
+      <tr><td><code>RUN</code></td><td>Execute a command during image build</td></tr>
+      <tr><td><code>EXPOSE</code></td><td>Documents which port the app listens on</td></tr>
+      <tr><td><code>CMD</code></td><td>The command that runs when a container starts</td></tr>
+    </table>
+
+    <h3>4.2 Essential Docker Commands</h3>
+    <pre><code># Build an image
+docker build -t myapp:1.0 .
+
+# Run a container
+docker run -d -p 3000:3000 --name myapp-container myapp:1.0
+
+# View running containers
+docker ps
+
+# View logs
+docker logs myapp-container
+
+# Tag for ACR
+docker tag myapp:1.0 mycicdregistry.azurecr.io/myapp:1.0
+
+# Push to ACR
+az acr login --name mycicdregistry
+docker push mycicdregistry.azurecr.io/myapp:1.0</code></pre>
+
+    <!-- PART 5 -->
+    <div class="part-header" id="part5">Part 5 — Azure Integration</div>
+
+    <h2>5. Azure Services Used in This Pipeline</h2>
+    <table>
+      <tr><th>Azure Service</th><th>Role in Pipeline</th></tr>
+      <tr><td>Azure Container Registry (ACR)</td><td>Private registry for Docker images built by Jenkins</td></tr>
+      <tr><td>Azure Kubernetes Service (AKS)</td><td>Managed Kubernetes cluster to run your containers (Option A)</td></tr>
+      <tr><td>Azure App Service</td><td>Simpler PaaS option — deploy containers without Kubernetes (Option B)</td></tr>
+    </table>
+
+    <h3>5.1 Option A — Deploy to Azure Kubernetes Service (AKS)</h3>
+    <pre><code># Create cluster (takes 5–10 minutes)
+az aks create \
+  --resource-group cicd-demo-rg \
+  --name cicd-demo-aks \
+  --node-count 2 \
+  --node-vm-size Standard_B2s \
+  --generate-ssh-keys \
+  --attach-acr mycicdregistry
+
+# Get credentials so kubectl can talk to your cluster
+az aks get-credentials \
+  --resource-group cicd-demo-rg \
+  --name cicd-demo-aks
+
+# Verify cluster is running
+kubectl get nodes</code></pre>
+
+    <!-- PART 6 -->
+    <div class="part-header" id="part6">Part 6 — Writing Your First Jenkinsfile</div>
+
+    <h2>6. The Jenkinsfile</h2>
+    <p>A Jenkinsfile is a text file written in Groovy DSL, checked into your Git repo. It defines every stage of your pipeline — Jenkins reads it automatically when a build triggers.</p>
+
+    <pre><code>pipeline {
+  agent any
+
+  environment {
+    ACR_NAME        = 'mycicdregistry'
+    ACR_LOGIN_SERVER = "${ACR_NAME}.azurecr.io"
+    IMAGE_NAME      = 'myapp'
+    IMAGE_TAG       = "${BUILD_NUMBER}"
+    AKS_RG          = 'cicd-demo-rg'
+    AKS_CLUSTER     = 'cicd-demo-aks'
+  }
+
+  stages {
+
+    stage('Checkout') {
+      steps {
+        checkout scm
+        echo "Building commit: ${env.GIT_COMMIT}"
+      }
+    }
+
+    stage('Build') {
+      steps {
+        sh 'npm ci'
+        sh 'npm run build'
+      }
+    }
+
+    stage('Test') {
+      steps {
+        sh 'npm run test -- --coverage'
+      }
+      post {
+        always {
+          junit 'test-results/**/*.xml'
+        }
+      }
+    }
+
+    stage('Docker Build & Push') {
+      steps {
+        withCredentials([usernamePassword(
+          credentialsId: 'acr-credentials',
+          usernameVariable: 'ACR_USER',
+          passwordVariable: 'ACR_PASS'
+        )]) {
+          sh """
+            docker login ${ACR_LOGIN_SERVER} -u ${ACR_USER} -p ${ACR_PASS}
+            docker build -t ${ACR_LOGIN_SERVER}/${IMAGE_NAME}:${IMAGE_TAG} .
+            docker push  ${ACR_LOGIN_SERVER}/${IMAGE_NAME}:${IMAGE_TAG}
+          """
+        }
+      }
+    }
+
+    stage('Deploy to AKS') {
+      steps {
+        withCredentials([azureServicePrincipal('azure-service-principal')]) {
+          sh """
+            az login --service-principal \
+              -u ${AZURE_CLIENT_ID} \
+              -p ${AZURE_CLIENT_SECRET} \
+              --tenant ${AZURE_TENANT_ID}
+
+            az aks get-credentials \
+              --resource-group ${AKS_RG} \
+              --name ${AKS_CLUSTER} \
+              --overwrite-existing
+
+            kubectl set image deployment/myapp \
+              myapp=${ACR_LOGIN_SERVER}/${IMAGE_NAME}:${IMAGE_TAG} \
+              --record
+
+            kubectl rollout status deployment/myapp
+          """
+        }
+      }
+    }
+  }
+
+  post {
+    success {
+      echo "Pipeline succeeded — Build ${BUILD_NUMBER} deployed to AKS"
+    }
+    failure {
+      echo "Pipeline FAILED — check Stage View for details"
+    }
+  }
+}</code></pre>
+
+    <!-- PART 7 -->
+    <div class="part-header" id="part7">Part 7 — Full CI/CD Pipeline Walkthrough</div>
+
+    <h2>7. End-to-End Walkthrough</h2>
+
+    <h3>7.1 Set Up the Sample Application</h3>
+    <pre><code># Create project structure
+mkdir cicd-demo && cd cicd-demo
+git init
+
+# Minimal Node.js app (index.js)
+# const http = require('http');
+# const server = http.createServer((req, res) => {
+#   res.end(`Hello from CI/CD Pipeline! Build: ${process.env.BUILD_NUMBER || 'local'}\n`);
+# });
+# server.listen(3000);
+
+git add .
+git commit -m "Initial commit with Jenkinsfile and Dockerfile"
+git push origin main</code></pre>
+
+    <h3>7.2 Create a Jenkins Pipeline Job</h3>
+    <ol>
+      <li>Open Jenkins at <code>http://localhost:8080</code></li>
+      <li>Click 'New Item' → enter name: <code>cicd-demo-pipeline</code> → select 'Pipeline'</li>
+      <li>Under 'Pipeline Definition' → select 'Pipeline script from SCM'</li>
+      <li>SCM: Git → Repository URL: your GitHub repo URL</li>
+      <li>Branch: <code>*/main</code> → Script Path: <code>Jenkinsfile</code></li>
+      <li>Click Save</li>
+    </ol>
+
+    <h3>7.3 Set Up GitHub Webhook</h3>
+    <p>A webhook tells GitHub to notify Jenkins whenever code is pushed — no manual clicking needed.</p>
+    <ol>
+      <li>In GitHub: repo → Settings → Webhooks → Add webhook</li>
+      <li>Payload URL: <code>http://&lt;JENKINS_PUBLIC_IP&gt;:8080/github-webhook/</code></li>
+      <li>Content type: <code>application/json</code></li>
+      <li>Events: Just the push event → Add webhook</li>
+    </ol>
+    <div class="note"><strong>Local Dev Tip:</strong> If Jenkins is on localhost, GitHub can't reach it. Use <code>ngrok http 8080</code> to create a public tunnel and use the <code>https://xxx.ngrok.io</code> URL as your webhook payload URL.</div>
+
+    <h3>7.4 Verify the Deployment</h3>
+    <pre><code># Check pods are running
+kubectl get pods -n default
+
+# Get the external IP of your service
+kubectl get service myapp-service -n default
+
+# Test the app
+curl http://<EXTERNAL-IP>
+# Expected: Hello from CI/CD Pipeline! Build: 1</code></pre>
+
+    <!-- PART 8 -->
+    <div class="part-header" id="part8">Part 8 — Best Practices &amp; Troubleshooting</div>
+
+    <h2>8. Best Practices</h2>
+
+    <h3>8.1 Security</h3>
+    <ul>
+      <li>Never hardcode passwords, tokens, or keys in the Jenkinsfile or Dockerfile</li>
+      <li>Always use Jenkins Credentials Store for secrets — reference by ID in the pipeline</li>
+      <li>Rotate ACR credentials regularly: <code>az acr credential renew</code></li>
+      <li>Use a dedicated Service Principal for Jenkins — grant only minimum permissions needed</li>
+      <li>Add <code>.dockerignore</code> to prevent secrets and node_modules from leaking into images</li>
+      <li>Scan images for vulnerabilities before pushing: <code>docker scout quickview</code></li>
+    </ul>
+
+    <h3>8.2 Performance</h3>
+    <ul>
+      <li>Use multi-stage Dockerfiles to keep production images small</li>
+      <li>Order COPY instructions so infrequently-changing files come first (leverages Docker layer cache)</li>
+      <li>Pin base image versions (<code>node:20.11-alpine</code>, not <code>node:latest</code>) for reproducibility</li>
+      <li>Parallelize independent stages using the <code>parallel</code> block in Jenkinsfile</li>
+    </ul>
+    <pre><code>// Parallel stage example
+stage('Tests') {
+  parallel {
+    stage('Unit Tests')        { steps { sh 'npm run test:unit' } }
+    stage('Integration Tests') { steps { sh 'npm run test:integration' } }
+    stage('Lint')              { steps { sh 'npm run lint' } }
+  }
+}</code></pre>
+
+    <h3>8.3 Branching Strategy</h3>
+    <table>
+      <tr><th>Branch</th><th>Pipeline Action</th></tr>
+      <tr><td><code>feature/*</code></td><td>Build + test only — no Docker push, no deploy</td></tr>
+      <tr><td><code>develop</code></td><td>Build + test + Docker push to ACR with <code>:dev</code> tag — deploy to dev</td></tr>
+      <tr><td><code>main</code></td><td>Full pipeline — push <code>:latest</code> and <code>:&lt;build&gt;</code> tags — deploy to production</td></tr>
+      <tr><td><code>release/*</code></td><td>Full pipeline — deploy to staging for UAT</td></tr>
+    </table>
+
+    <h3>8.4 Troubleshooting Reference</h3>
+    <table>
+      <tr><th>Error / Symptom</th><th>Fix</th></tr>
+      <tr><td><code>docker: command not found</code> in pipeline</td><td>Bind mount the host socket and install Docker CLI inside the container, or use a Jenkins agent with Docker pre-installed</td></tr>
+      <tr><td><code>unauthorized: authentication required</code> on docker push</td><td>The ACR credential ID in Jenkinsfile doesn't match what you saved in Jenkins Credentials — check spelling exactly</td></tr>
+      <tr><td>Webhook not triggering build</td><td>Verify the webhook URL is accessible from the internet (use ngrok locally). Check Jenkins → Manage Jenkins → System Log</td></tr>
+      <tr><td>AKS pod stuck in <code>ImagePullBackOff</code></td><td>AKS can't pull from ACR. Ensure you ran <code>az aks update --attach-acr</code> to link them</td></tr>
+      <tr><td><code>kubectl: command not found</code> in Jenkins</td><td>Install the Kubernetes CLI plugin in Jenkins, or add kubectl to the Jenkins agent PATH</td></tr>
+      <tr><td><code>Permission denied</code> on <code>/var/run/docker.sock</code></td><td>Add jenkins user to docker group: <code>usermod -aG docker jenkins</code> then restart Jenkins</td></tr>
+    </table>
+
+    <h3>8.5 Useful Diagnostic Commands</h3>
+    <pre><code># View Jenkins container logs
+docker logs jenkins -f
+
+# Shell into Jenkins container for debugging
+docker exec -it jenkins bash
+
+# Check ACR images
+az acr repository list --name mycicdregistry --output table
+az acr repository show-tags --name mycicdregistry --repository myapp
+
+# AKS diagnostics
+kubectl describe pod <pod-name> -n default
+kubectl logs <pod-name> -n default
+kubectl get events -n default --sort-by='.lastTimestamp'
+
+# Rollback a failed deployment
+kubectl rollout undo deployment/myapp -n default</code></pre>
+
+    <h2>9. Learning Checkpoints</h2>
+
+    <h3>After Parts 1–2</h3>
+    <ul>
+      <li>Can you explain what CI and CD stand for and the difference between them?</li>
+      <li>Can you list the four tools used in this guide and the role of each?</li>
+      <li>Is Docker Desktop installed and does <code>docker --version</code> work?</li>
+    </ul>
+
+    <h3>After Parts 3–4</h3>
+    <ul>
+      <li>Can you start Jenkins in Docker and access the UI at port 8080?</li>
+      <li>Can you build a Docker image from a Dockerfile and run it locally?</li>
+      <li>Have you added ACR credentials to Jenkins with the correct ID?</li>
+    </ul>
+
+    <h3>After Parts 5–6</h3>
+    <ul>
+      <li>Can you push a Docker image to Azure Container Registry using the CLI?</li>
+      <li>Can you explain each block in the Jenkinsfile (agent, environment, stages, post)?</li>
+      <li>Can you identify where in the Jenkinsfile secrets are injected?</li>
+    </ul>
+
+    <h3>After Parts 7–8</h3>
+    <ul>
+      <li>Did a code push trigger an automatic Jenkins build via webhook?</li>
+      <li>Did the build successfully push an image to ACR and deploy to AKS?</li>
+      <li>Can you use kubectl to verify the deployed pod is running?</li>
+      <li>Can you find and fix at least one error from the troubleshooting table?</li>
+    </ul>
+
+  </div><!-- /body -->
+
+  <div class="divider"></div>
+  <div>
+    <div class="author-name">Prasanna Malode</div>
+    <div class="author-role">Global Head — DevSecOps · Cybersecurity · IT Operations · Bengaluru, India</div>
+  </div>
+</div>
+
+<footer>© 2026 Prasanna Malode · Bengaluru, India · <a href="/cdn-cgi/l/email-protection#166664776577787877387b777a797273567963627a79797d3875797b" style="color:var(--accent);text-decoration:none"><span c

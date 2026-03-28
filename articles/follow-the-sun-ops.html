@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>What managing a 16-person global team taught me about follow-the-sun ops — Prasanna Malode</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#faf8f4;--surface:#fff;--ink:#1a1814;--muted:#7a7468;--accent:#1a5276;--accent-light:#d6eaf8;--border:#e8e2d9;--radius:12px;--max:720px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.7;min-height:100vh}
+nav{position:sticky;top:0;z-index:100;background:rgba(250,248,244,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px}
+.nav-inner{max-width:var(--max);margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}
+.logo{font-family:'Lora',serif;font-size:1rem;font-weight:600;color:var(--ink);text-decoration:none}
+.back-btn{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:.85rem;text-decoration:none;transition:color .2s}
+.back-btn:hover{color:var(--accent)}
+.container{max-width:var(--max);margin:0 auto;padding:56px 24px 80px}
+.tag{display:inline-block;background:var(--accent-light);color:var(--accent);font-size:.72rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:3px 12px;border-radius:20px;margin-bottom:16px}
+h1{font-family:'Lora',serif;font-size:clamp(1.6rem,4vw,2.3rem);line-height:1.2;margin-bottom:16px}
+.meta{display:flex;gap:16px;font-size:.85rem;color:var(--muted);margin-bottom:48px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.body p{margin-bottom:20px;color:#2a2620}
+.body h2{font-family:'Lora',serif;font-size:1.4rem;margin:40px 0 16px;color:var(--ink)}
+.body h3{font-size:1.1rem;font-weight:500;margin:28px 0 12px;color:var(--ink)}
+.body blockquote{border-left:3px solid var(--accent);padding:14px 24px;margin:32px 0;background:var(--accent-light);border-radius:0 8px 8px 0;font-style:italic;color:var(--muted)}
+.body ul,.body ol{margin:0 0 20px 24px}
+.body li{margin-bottom:8px;color:#2a2620}
+.body strong{font-weight:500;color:var(--ink)}
+.divider{height:1px;background:var(--border);margin:48px 0}
+.author{display:flex;gap:16px;align-items:center}
+.author-name{font-weight:500;font-size:.95rem}
+.author-role{font-size:.83rem;color:var(--muted)}
+footer{border-top:1px solid var(--border);text-align:center;padding:24px;font-size:.8rem;color:var(--muted)}
+@media(max-width:600px){.container{padding:40px 18px 60px}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="../index.html">Prasanna Malode</a>
+    <a class="back-btn" href="../index.html#articles">← All Articles</a>
+  </div>
+</nav>
+<div class="container">
+  <span class="tag">Leadership</span>
+  <h1>What managing a 16-person global team taught me about follow-the-sun ops</h1>
+  <div class="meta">
+    <span>January 2026</span>
+    <span>· 7 min read</span>
+    <span>· Prasanna Malode</span>
+  </div>
+  <div class="body">
+    <p>Running a follow-the-sun operation sounds simple on paper: coverage across timezones, seamless handovers, 24×7 continuity. The reality is messier — and more human — than any playbook suggests.</p>
+
+    <h2>The Handover Problem</h2>
+    <p>The single biggest failure mode in follow-the-sun is the handover. Information gets lost. Context doesn't transfer. The incoming shift restarts investigations the outgoing shift already half-solved. We fixed this with a structured handover template — not long, not bureaucratic, but specific about what's in-flight, what's blocked, and what the next 2 hours need.</p>
+    <blockquote>A 5-minute handover done well saves 2 hours of re-investigation. Most teams skip it because they're busy. That busyness is exactly why they need it.</blockquote>
+
+    <h2>Performance Monitoring Across Shifts</h2>
+    <p>You can't manage what you can't see across 8 timezones. We built real-time dashboards giving visibility into SLA compliance, incident queue depth, and team velocity — regardless of shift. This wasn't about surveillance; it was about being able to unblock people quickly and spot patterns that no single shift could see alone.</p>
+
+    <h2>The One Ritual That Keeps Teams Aligned</h2>
+    <p>Weekly all-hands across shifts — 20 minutes, same agenda every time: metrics review, one learning from the week, one shoutout. Simple. Consistent. It built the shared identity that makes distributed teams function like a team rather than isolated shifts doing disconnected work.</p>
+
+    <h2>Mentoring Across Distance</h2>
+    <p>Leading two managers and two DevOps Architects remotely forced me to be more intentional about development than I ever was in person. Written feedback became more important. Regular 1:1s became non-negotiable. Career conversations happened on a cadence — not when someone was already considering leaving.</p>
+    <p>The single biggest thing I learned: presence is not about timezone overlap. It's about reliability. If your team knows you'll respond, unblock, and follow through — they feel supported regardless of where you are.</p>
+  </div>
+  <div class="divider"></div>
+  <div class="author">
+    <div>
+      <div class="author-name">Prasanna Malode</div>
+      <div class="author-role">Global Head — DevSecOps · Cybersecurity · IT Operations · Bengaluru, India</div>
+    </div>
+  </div>
+</div>
+<footer>© 2026 Prasanna Malode · <a href="../index.html" style="color:var(--accent)">prasannamalode.in</a></footer>
+</body>
+</html>

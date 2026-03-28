@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>How ITIL-aligned incident management cut our recurring incidents by 50% — Prasanna Malode</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#faf8f4;--surface:#fff;--ink:#1a1814;--muted:#7a7468;--accent:#1a5276;--accent-light:#d6eaf8;--border:#e8e2d9;--radius:12px;--max:720px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.7;min-height:100vh}
+nav{position:sticky;top:0;z-index:100;background:rgba(250,248,244,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px}
+.nav-inner{max-width:var(--max);margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}
+.logo{font-family:'Lora',serif;font-size:1rem;font-weight:600;color:var(--ink);text-decoration:none}
+.back-btn{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:.85rem;text-decoration:none;transition:color .2s}
+.back-btn:hover{color:var(--accent)}
+.container{max-width:var(--max);margin:0 auto;padding:56px 24px 80px}
+.tag{display:inline-block;background:var(--accent-light);color:var(--accent);font-size:.72rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:3px 12px;border-radius:20px;margin-bottom:16px}
+h1{font-family:'Lora',serif;font-size:clamp(1.6rem,4vw,2.3rem);line-height:1.2;margin-bottom:16px}
+.meta{display:flex;gap:16px;font-size:.85rem;color:var(--muted);margin-bottom:48px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.body p{margin-bottom:20px;color:#2a2620}
+.body h2{font-family:'Lora',serif;font-size:1.4rem;margin:40px 0 16px;color:var(--ink)}
+.body h3{font-size:1.1rem;font-weight:500;margin:28px 0 12px;color:var(--ink)}
+.body blockquote{border-left:3px solid var(--accent);padding:14px 24px;margin:32px 0;background:var(--accent-light);border-radius:0 8px 8px 0;font-style:italic;color:var(--muted)}
+.body ul,.body ol{margin:0 0 20px 24px}
+.body li{margin-bottom:8px;color:#2a2620}
+.body strong{font-weight:500;color:var(--ink)}
+.divider{height:1px;background:var(--border);margin:48px 0}
+.author{display:flex;gap:16px;align-items:center}
+.author-name{font-weight:500;font-size:.95rem}
+.author-role{font-size:.83rem;color:var(--muted)}
+footer{border-top:1px solid var(--border);text-align:center;padding:24px;font-size:.8rem;color:var(--muted)}
+@media(max-width:600px){.container{padding:40px 18px 60px}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="../index.html">Prasanna Malode</a>
+    <a class="back-btn" href="../index.html#articles">← All Articles</a>
+  </div>
+</nav>
+<div class="container">
+  <span class="tag">ITIL / Ops</span>
+  <h1>How ITIL-aligned incident management cut our recurring incidents by 50%</h1>
+  <div class="meta">
+    <span>December 2025</span>
+    <span>· 5 min read</span>
+    <span>· Prasanna Malode</span>
+  </div>
+  <div class="body">
+    <p>ITIL gets a bad reputation — associated with heavy process, slow bureaucracy, and documentation nobody reads. Done right, it's the opposite. Here's what ITIL-aligned incident management actually looked like in practice at IP Infusion.</p>
+
+    <h2>The Recurring Incident Trap</h2>
+    <p>Before the transformation, we were great at closing incidents. We were terrible at preventing them from coming back. The same infrastructure issues, the same application failures, the same network anomalies — cycling through the queue month after month.</p>
+    <blockquote>Closing incidents fast is a metric. Preventing them from recurring is an outcome. Most teams optimise for the metric.</blockquote>
+
+    <h2>Separating Incident from Problem Management</h2>
+    <p>The structural change was treating Incident Management (restore service fast) and Problem Management (find root cause) as separate disciplines with separate owners. Incident managers focused on MTTR. Problem managers focused on permanent fixes. The handoff between them became a defined process, not an afterthought.</p>
+
+    <h2>The ServiceNow Implementation</h2>
+    <p>ServiceNow gave us the data we needed — incident trends by category, MTTR by team, SLA breach patterns. But the data was only useful because we reviewed it weekly and acted on it. Tooling without review cadence is just expensive storage.</p>
+
+    <h2>Results That Mattered to the Business</h2>
+    <p>Recurring incidents down 50%. SLA performance up 40%. But the result I'm most proud of: the team stopped dreading the queue. When you're not firefighting the same fires repeatedly, morale follows. That's the real return on an ITIL investment — not the certification, not the process documentation, but a team that's energised rather than exhausted.</p>
+  </div>
+  <div class="divider"></div>
+  <div class="author">
+    <div>
+      <div class="author-name">Prasanna Malode</div>
+      <div class="author-role">Global Head — DevSecOps · Cybersecurity · IT Operations · Bengaluru, India</div>
+    </div>
+  </div>
+</div>
+<footer>© 2026 Prasanna Malode · <a href="../index.html" style="color:var(--accent)">prasannamalode.in</a></footer>
+</body>
+</html>

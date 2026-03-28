@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Git Command Cheat Sheet — DevOps Quick Reference</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f1117;
+    --ink-2: #2a2d3a;
+    --ink-3: #5a5f7a;
+    --ink-4: #9095b0;
+    --bg: #f4f5fa;
+    --bg-2: #eaecf5;
+    --bg-3: #dde0ef;
+    --accent: #1a56db;
+    --accent-2: #0e3fa3;
+    --accent-bg: #dbeafe;
+    --green: #166534;
+    --green-bg: #dcfce7;
+    --orange: #92400e;
+    --orange-bg: #fef3c7;
+    --red: #991b1b;
+    --red-bg: #fee2e2;
+    --purple: #5b21b6;
+    --purple-bg: #ede9fe;
+    --teal: #115e59;
+    --teal-bg: #ccfbf1;
+    --border: #d1d5e8;
+    --radius: 5px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  /* ── TOP HEADER BAR ── */
+  .top-bar {
+    background: var(--ink);
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 2px solid var(--accent);
+  }
+  .top-bar .brand {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.05rem;
+    color: #fff;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .top-bar .brand span {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.4);
+    border-left: 1px solid rgba(255,255,255,0.15);
+    padding-left: 12px;
+    margin-left: 4px;
+  }
+  .top-bar .actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .btn {
+    padding: 6px 14px;
+    border-radius: var(--radius);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    border: none;
+  }
+  .btn-ghost { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); }
+  .btn-ghost:hover { background: rgba(255,255,255,0.15); color: #fff; }
+  .btn-accent { background: var(--accent); color: #fff; }
+  .btn-accent:hover { background: var(--accent-2); }
+
+  /* ── SEARCH ── */
+  .search-bar {
+    padding: 10px 28px;
+    background: var(--ink-2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .search-input {
+    flex: 1;
+    max-width: 400px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: var(--radius);
+    padding: 7px 14px;
+    color: #fff;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    outline: none;
+  }
+  .search-input::placeholder { color: rgba(255,255,255,0.3); }
+  .search-input:focus { border-color: var(--accent); }
+  .search-hint { font-size: 0.7rem; color: rgba(255,255,255,0.25); }
+
+  /* ── MAIN GRID ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    padding: 16px 20px 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(15,17,23,0.06);
+    break-inside: avoid;
+  }
+
+  .card-head {
+    padding: 9px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .card-head .icon { font-size: 0.9rem; }
+
+  /* Color variants */
+  .head-blue   { background: var(--accent); color: #fff; }
+  .head-green  { background: var(--green); color: #fff; }
+  .head-orange { background: var(--orange); color: #fff; }
+  .head-red    { background: var(--red); color: #fff; }
+  .head-purple { background: var(--purple); color: #fff; }
+  .head-teal   { background: var(--teal); color: #fff; }
+  .head-ink    { background: var(--ink); color: #fff; }
+  .head-gray   { background: var(--bg-3); color: var(--ink-2); }
+
+  /* ── CMD TABLE ── */
+  .cmd-table { width: 100%; border-collapse: collapse; }
+  .cmd-table tr { border-top: 1px solid var(--bg-2); }
+  .cmd-table tr:first-child { border-top: none; }
+  .cmd-table tr:nth-child(even) { background: var(--bg); }
+  .cmd-table tr.highlight { background: #fffbeb; }
+  .cmd-table td {
+    padding: 6px 12px;
+    vertical-align: top;
+    font-size: 0.77rem;
+    line-height: 1.4;
+  }
+  .cmd-table td:first-child {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--accent-2);
+    white-space: nowrap;
+    width: 46%;
+    border-right: 1px solid var(--bg-3);
+  }
+  .cmd-table td:last-child { color: var(--ink-3); }
+  .cmd-table .sub-head td {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-4);
+    background: var(--bg-2);
+    padding: 5px 12px;
+  }
+  .cmd-table .sub-head td:first-child { color: var(--ink-4); border-right: none; }
+
+  /* ── FLOW DIAGRAM ── */
+  .flow-diagram {
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+    background: var(--bg);
+  }
+  .flow-zone {
+    flex: 1;
+    text-align: center;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 8px 6px;
+  }
+  .flow-zone .z-icon { font-size: 1rem; }
+  .flow-zone .z-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.68rem; margin-top: 2px; color: var(--ink); }
+  .flow-zone .z-desc { font-size: 0.62rem; color: var(--ink-4); }
+  .flow-arr {
+    display: flex; flex-direction: column; align-items: center;
+    flex-shrink: 0; padding: 0 2px;
+  }
+  .flow-arr .arr { font-size: 1rem; color: var(--accent); font-weight: 700; }
+  .flow-arr .cmd { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; color: var(--orange); font-weight: 700; white-space: nowrap; }
+
+  /* ── STEPS LIST ── */
+  .steps-list { padding: 8px 12px; }
+  .step-item {
+    display: flex; gap: 8px; align-items: flex-start;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--bg-2);
+    font-size: 0.77rem;
+  }
+  .step-item:last-child { border-bottom: none; }
+  .step-n {
+    width: 18px; height: 18px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700; font-size: 0.62rem;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .step-item code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    background: var(--bg-2);
+    padding: 0 4px;
+    border-radius: 3px;
+    color: var(--accent-2);
+  }
+  .step-item span { color: var(--ink-2); line-height: 1.5; }
+
+  /* ── DANGER LIST ── */
+  .danger-item {
+    display: flex; gap: 8px; align-items: flex-start;
+    padding: 7px 12px;
+    border-bottom: 1px solid var(--red-bg);
+    font-size: 0.77rem;
+    background: #fff;
+  }
+  .danger-item:last-child { border-bottom: none; }
+  .danger-item:nth-child(even) { background: #fff8f8; }
+  .danger-x { color: var(--red); font-weight: 700; font-size: 0.9rem; flex-shrink: 0; }
+  .danger-cmd { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 700; color: var(--red); }
+  .danger-reason { font-size: 0.7rem; color: var(--ink-3); margin-top: 1px; }
+
+  /* ── CONVENTIONAL COMMITS ── */
+  .conv-table { width: 100%; border-collapse: collapse; }
+  .conv-table tr { border-top: 1px solid var(--bg-2); }
+  .conv-table tr:first-child { border-top: none; }
+  .conv-table tr:nth-child(even) { background: var(--bg); }
+  .conv-table td { padding: 5px 12px; font-size: 0.77rem; }
+  .conv-table td:first-child {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem; font-weight: 700;
+    color: var(--orange); width: 28%;
+    border-right: 1px solid var(--bg-3);
+  }
+  .conv-table td:last-child { color: var(--ink-3); }
+
+  /* ── SEARCH HIGHLIGHT ── */
+  .cmd-table tr.hidden { display: none; }
+  mark { background: #fef08a; color: var(--ink); border-radius: 2px; }
+
+  /* ── PRINT ── */
+  @media print {
+    .top-bar, .search-bar { display: none; }
+    .grid { padding: 8px; gap: 8px; }
+    body { background: #fff; }
+    .card { box-shadow: none; }
+  }
+
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; }
+    .top-bar .brand span { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="brand">
+    🔧 Git Command Cheat Sheet
+    <span>DevOps Quick Reference  •  All Essential Commands</span>
+  </div>
+  <div class="actions">
+    <button class="btn btn-ghost" onclick="window.print()">🖨 Print</button>
+    <button class="btn btn-accent" onclick="toggleDark()">🌙 Dark</button>
+  </div>
+</div>
+
+<!-- SEARCH BAR -->
+<div class="search-bar">
+  <input class="search-input" type="text" placeholder="Search commands... (e.g. 'stash', 'rebase', 'merge')" id="searchInput" oninput="filterCmds(this.value)">
+  <span class="search-hint">Filter all commands in real-time</span>
+</div>
+
+<!-- GRID -->
+<div class="grid">
+
+  <!-- COL 1 -->
+
+  <!-- SETUP & CONFIG -->
+  <div class="card" data-section="setup config">
+    <div class="card-head head-blue"><span class="icon">⚙️</span> Setup & Config</div>
+    <table class="cmd-table">
+      <tr><td>git config --global user.name "Name"</td><td>Set global username</td></tr>
+      <tr><td>git config --global user.email "x@y"</td><td>Set global email</td></tr>
+      <tr><td>git config --global init.defaultBranch main</td><td>Default branch = main</td></tr>
+      <tr><td>git config --global core.editor "code --wait"</td><td>Set VS Code as editor</td></tr>
+      <tr><td>git config --global color.ui auto</td><td>Enable colored output</td></tr>
+      <tr><td>git config --global pull.rebase true</td><td>Pull with rebase by default</td></tr>
+      <tr><td>git config --list</td><td>View all settings</td></tr>
+      <tr><td>git config user.name</td><td>View a specific setting</td></tr>
+      <tr><td>git config --global alias.lg "log ..."</td><td>Create shortcut alias</td></tr>
+    </table>
+  </div>
+
+  <!-- REPO -->
+  <div class="card" data-section="repository init clone">
+    <div class="card-head head-green"><span class="icon">📁</span> Repository</div>
+    <table class="cmd-table">
+      <tr><td>git init</td><td>Init new repo in current dir</td></tr>
+      <tr><td>git init &lt;name&gt;</td><td>Init in new folder</td></tr>
+      <tr><td>git clone &lt;url&gt;</td><td>Clone remote repo locally</td></tr>
+      <tr><td>git clone --depth=1 &lt;url&gt;</td><td>Shallow clone (latest only)</td></tr>
+      <tr><td>git clone &lt;url&gt; &lt;folder&gt;</td><td>Clone into specific folder</td></tr>
+      <tr><td>git remote -v</td><td>List configured remotes</td></tr>
+      <tr><td>git remote add origin &lt;url&gt;</td><td>Add a remote</td></tr>
+      <tr><td>git remote set-url origin &lt;url&gt;</td><td>Change remote URL</td></tr>
+      <tr><td>git remote rename origin upstream</td><td>Rename a remote</td></tr>
+      <tr><td>git remote remove &lt;name&gt;</td><td>Remove a remote</td></tr>
+    </table>
+  </div>
+
+  <!-- STATUS & INSPECT -->
+  <div class="card" data-section="status inspect log diff blame">
+    <div class="card-head head-teal"><span class="icon">📊</span> Status & Inspect</div>
+    <table class="cmd-table">
+      <tr><td>git status</td><td>Show working tree status</td></tr>
+      <tr><td>git status -s</td><td>Short / compact status</td></tr>
+      <tr><td>git log --oneline</td><td>Compact commit history</td></tr>
+      <tr><td>git log --oneline --graph --all</td><td>Visual branch graph</td></tr>
+      <tr><td>git log -5</td><td>Last 5 commits</td></tr>
+      <tr><td>git log --author="Name"</td><td>Commits by author</td></tr>
+      <tr><td>git log --since="1 week ago"</td><td>Commits in last week</td></tr>
+      <tr><td>git log --grep="bugfix"</td><td>Search commit messages</td></tr>
+      <tr><td>git show &lt;hash&gt;</td><td>Show details of a commit</td></tr>
+      <tr><td>git diff</td><td>Unstaged changes</td></tr>
+      <tr><td>git diff --staged</td><td>Staged vs last commit</td></tr>
+      <tr><td>git diff main..feature</td><td>Diff between branches</td></tr>
+      <tr><td>git diff --name-only</td><td>Only filenames changed</td></tr>
+      <tr><td>git blame &lt;file&gt;</td><td>Line-by-line authorship</td></tr>
+      <tr><td>git shortlog -sn</td><td>Commit count by author</td></tr>
+    </table>
+  </div>
+
+  <!-- COL 2 -->
+
+  <!-- STAGE & COMMIT -->
+  <div class="card" data-section="stage commit add stash">
+    <div class="card-head head-orange"><span class="icon">✏️</span> Stage & Commit</div>
+    <table class="cmd-table">
+      <tr class="sub-head"><td colspan="2">Staging</td></tr>
+      <tr><td>git add &lt;file&gt;</td><td>Stage a single file</td></tr>
+      <tr><td>git add .</td><td>Stage all changes</td></tr>
+      <tr><td>git add -u</td><td>Stage tracked files only</td></tr>
+      <tr><td>git add -p &lt;file&gt;</td><td>Stage hunks interactively</td></tr>
+      <tr><td>git restore --staged &lt;file&gt;</td><td>Unstage a file</td></tr>
+      <tr><td>git restore &lt;file&gt;</td><td>Discard working dir changes</td></tr>
+      <tr class="sub-head"><td colspan="2">Committing</td></tr>
+      <tr><td>git commit -m "msg"</td><td>Commit with message</td></tr>
+      <tr><td>git commit -am "msg"</td><td>Stage tracked + commit</td></tr>
+      <tr><td>git commit --amend</td><td>Fix last commit (pre-push!)</td></tr>
+      <tr><td>git commit --amend --no-edit</td><td>Add files to last commit</td></tr>
+      <tr class="sub-head"><td colspan="2">Stash</td></tr>
+      <tr><td>git stash</td><td>Stash uncommitted work</td></tr>
+      <tr><td>git stash push -m "note"</td><td>Stash with description</td></tr>
+      <tr><td>git stash list</td><td>View all stashes</td></tr>
+      <tr><td>git stash pop</td><td>Restore and remove latest</td></tr>
+      <tr><td>git stash apply stash@{n}</td><td>Apply specific stash</td></tr>
+      <tr><td>git stash branch &lt;name&gt;</td><td>Create branch from stash</td></tr>
+      <tr><td>git stash drop / clear</td><td>Delete stash(es)</td></tr>
+    </table>
+  </div>
+
+  <!-- BRANCHES -->
+  <div class="card" data-section="branch merge rebase checkout switch">
+    <div class="card-head head-green"><span class="icon">🌿</span> Branches</div>
+    <table class="cmd-table">
+      <tr class="sub-head"><td colspan="2">Managing Branches</td></tr>
+      <tr><td>git branch</td><td>List local branches</td></tr>
+      <tr><td>git branch -a</td><td>List all (local + remote)</td></tr>
+      <tr><td>git branch -v</td><td>Last commit on each</td></tr>
+      <tr><td>git branch --merged</td><td>Show merged branches</td></tr>
+      <tr><td>git checkout -b &lt;name&gt;</td><td>Create &amp; switch branch</td></tr>
+      <tr><td>git switch -c &lt;name&gt;</td><td>Modern: create &amp; switch</td></tr>
+      <tr><td>git switch &lt;name&gt;</td><td>Switch existing branch</td></tr>
+      <tr><td>git branch -m old new</td><td>Rename a branch</td></tr>
+      <tr><td>git branch -d &lt;branch&gt;</td><td>Delete merged branch</td></tr>
+      <tr><td>git branch -D &lt;branch&gt;</td><td>Force delete branch</td></tr>
+      <tr class="sub-head"><td colspan="2">Merging</td></tr>
+      <tr><td>git merge --no-ff &lt;branch&gt;</td><td>Merge with merge commit</td></tr>
+      <tr><td>git merge --abort</td><td>Abort in-progress merge</td></tr>
+      <tr><td>git checkout --ours &lt;file&gt;</td><td>Keep our version in conflict</td></tr>
+      <tr><td>git checkout --theirs &lt;file&gt;</td><td>Keep their version</td></tr>
+      <tr class="sub-head"><td colspan="2">Rebase</td></tr>
+      <tr><td>git rebase main</td><td>Rebase onto main</td></tr>
+      <tr><td>git rebase -i HEAD~3</td><td>Interactive rebase (last 3)</td></tr>
+      <tr><td>git rebase --continue</td><td>Continue after conflict fix</td></tr>
+      <tr><td>git rebase --abort</td><td>Abort rebase</td></tr>
+    </table>
+  </div>
+
+  <!-- SYNC WITH REMOTE -->
+  <div class="card" data-section="remote push pull fetch sync">
+    <div class="card-head head-teal"><span class="icon">🔁</span> Sync with Remote</div>
+    <table class="cmd-table">
+      <tr class="sub-head"><td colspan="2">Pushing</td></tr>
+      <tr><td>git push -u origin main</td><td>Push + set tracking</td></tr>
+      <tr><td>git push</td><td>Push (tracking already set)</td></tr>
+      <tr><td>git push -u origin &lt;branch&gt;</td><td>Push new branch to remote</td></tr>
+      <tr><td>git push --tags</td><td>Push all tags</td></tr>
+      <tr><td>git push origin --delete &lt;br&gt;</td><td>Delete remote branch</td></tr>
+      <tr class="sub-head"><td colspan="2">Fetching &amp; Pulling</td></tr>
+      <tr><td>git fetch origin</td><td>Download (no merge)</td></tr>
+      <tr><td>git fetch --all</td><td>Fetch from all remotes</td></tr>
+      <tr><td>git pull</td><td>Fetch + merge</td></tr>
+      <tr><td>git pull --rebase</td><td>Fetch + rebase (cleaner)</td></tr>
+      <tr><td>git pull origin main</td><td>Pull specific branch</td></tr>
+    </table>
+  </div>
+
+  <!-- COL 3 -->
+
+  <!-- UNDO & RECOVER -->
+  <div class="card" data-section="undo reset revert restore reflog recover">
+    <div class="card-head head-red"><span class="icon">↩️</span> Undo & Recover</div>
+    <table class="cmd-table">
+      <tr class="sub-head"><td colspan="2">Safe Undos</td></tr>
+      <tr><td>git restore &lt;file&gt;</td><td>Discard file changes</td></tr>
+      <tr><td>git restore --staged &lt;file&gt;</td><td>Unstage a file</td></tr>
+      <tr><td>git revert &lt;hash&gt;</td><td>Safe undo (new commit)</td></tr>
+      <tr class="sub-head"><td colspan="2">git reset (careful!)</td></tr>
+      <tr><td>git reset --soft HEAD~1</td><td>Undo commit, keep staged</td></tr>
+      <tr><td>git reset HEAD~1</td><td>Undo commit, keep files</td></tr>
+      <tr><td>git reset --hard HEAD~1</td><td>⚠ Undo + DISCARD all</td></tr>
+      <tr><td>git reset --hard &lt;hash&gt;</td><td>⚠ Reset to specific commit</td></tr>
+      <tr class="sub-head"><td colspan="2">Recovery</td></tr>
+      <tr><td>git reflog</td><td>View ALL HEAD movements</td></tr>
+      <tr><td>git checkout -b recover &lt;hash&gt;</td><td>Restore from reflog hash</td></tr>
+      <tr><td>git cherry-pick &lt;hash&gt;</td><td>Apply specific commit here</td></tr>
+      <tr><td>git cherry-pick h1^..h2</td><td>Cherry-pick a range</td></tr>
+      <tr class="sub-head"><td colspan="2">Bug Hunting</td></tr>
+      <tr><td>git bisect start</td><td>Start binary search</td></tr>
+      <tr><td>git bisect bad / good</td><td>Mark current as bad/good</td></tr>
+      <tr><td>git bisect reset</td><td>End bisect session</td></tr>
+    </table>
+  </div>
+
+  <!-- TAGS & RELEASES -->
+  <div class="card" data-section="tags releases version">
+    <div class="card-head head-purple"><span class="icon">🔖</span> Tags & Releases</div>
+    <table class="cmd-table">
+      <tr><td>git tag</td><td>List all tags</td></tr>
+      <tr><td>git tag -a v1.0.0 -m "msg"</td><td>Annotated tag (recommended)</td></tr>
+      <tr><td>git tag v1.0.0</td><td>Lightweight tag</td></tr>
+      <tr><td>git tag -a v0.9 abc123 -m "msg"</td><td>Tag a past commit</td></tr>
+      <tr><td>git push origin v1.0.0</td><td>Push single tag</td></tr>
+      <tr><td>git push --tags</td><td>Push all tags</td></tr>
+      <tr><td>git tag -d v1.0.0</td><td>Delete local tag</td></tr>
+      <tr><td>git push origin --delete v1.0.0</td><td>Delete remote tag</td></tr>
+      <tr><td>git checkout v1.0.0</td><td>Check out at tag (detached)</td></tr>
+    </table>
+  </div>
+
+  <!-- ADVANCED -->
+  <div class="card" data-section="advanced hooks clean archive submodule">
+    <div class="card-head head-ink"><span class="icon">🚀</span> Advanced</div>
+    <table class="cmd-table">
+      <tr class="sub-head"><td colspan="2">Hooks</td></tr>
+      <tr><td>ls .git/hooks/</td><td>List available hooks</td></tr>
+      <tr><td>chmod +x .git/hooks/pre-commit</td><td>Enable a hook script</td></tr>
+      <tr class="sub-head"><td colspan="2">Cleaning</td></tr>
+      <tr><td>git clean -fd</td><td>Remove untracked files+dirs</td></tr>
+      <tr><td>git clean -n</td><td>Dry run (preview only)</td></tr>
+      <tr class="sub-head"><td colspan="2">Utilities</td></tr>
+      <tr><td>git archive --format=zip HEAD</td><td>Export repo as ZIP</td></tr>
+      <tr><td>git submodule add &lt;url&gt;</td><td>Add a submodule</td></tr>
+      <tr><td>git log -p -- &lt;file&gt;</td><td>History of a specific file</td></tr>
+      <tr><td>git log --diff-filter=D -- &lt;f&gt;</td><td>Find deleted files</td></tr>
+      <tr><td>git grep "pattern"</td><td>Search working tree</td></tr>
+      <tr><td>git check-ignore -v &lt;file&gt;</td><td>Why is file ignored?</td></tr>
+      <tr class="sub-head"><td colspan="2">Aliases (add to ~/.gitconfig)</td></tr>
+      <tr><td>alias.st status</td><td>git st → git status</td></tr>
+      <tr><td>alias.co checkout</td><td>git co → git checkout</td></tr>
+      <tr><td>alias.lg "log --oneline --graph --all"</td><td>git lg → visual graph</td></tr>
+    </table>
+  </div>
+
+  <!-- FLOW DIAGRAM (spans row) -->
+  <div class="card">
+    <div class="card-head head-blue"><span class="icon">🔄</span> Git Three-Zone Flow</div>
+    <div class="flow-diagram">
+      <div class="flow-zone">
+        <div class="z-icon">✏️</div>
+        <div class="z-name">Working Dir</div>
+        <div class="z-desc">Edit files</div>
+      </div>
+      <div class="flow-arr"><div class="arr">→</div><div class="cmd">git add</div></div>
+      <div class="flow-zone">
+        <div class="z-icon">📋</div>
+        <div class="z-name">Staging Area</div>
+        <div class="z-desc">Index</div>
+      </div>
+      <div class="flow-arr"><div class="arr">→</div><div class="cmd">git commit</div></div>
+      <div class="flow-zone">
+        <div class="z-icon">🗄️</div>
+        <div class="z-name">Local Repo</div>
+        <div class="z-desc">.git folder</div>
+      </div>
+      <div class="flow-arr"><div class="arr">→</div><div class="cmd">git push</div></div>
+      <div class="flow-zone">
+        <div class="z-icon">☁️</div>
+        <div class="z-name">Remote</div>
+        <div class="z-desc">GitHub/GitLab</div>
+      </div>
+    </div>
+    <div style="padding:6px 12px;background:var(--bg);border-top:1px solid var(--border);font-size:0.7rem;color:var(--ink-4);text-align:center">
+      Reverse: <strong>git fetch / pull</strong> ← Remote &nbsp;|&nbsp; <strong>git checkout</strong> ← Local Repo &nbsp;|&nbsp; <strong>git restore</strong> ← Staging
+    </div>
+  </div>
+
+  <!-- DAILY WORKFLOW -->
+  <div class="card" data-section="workflow daily">
+    <div class="card-head head-teal"><span class="icon">⚡</span> Daily Developer Workflow</div>
+    <div class="steps-list">
+      <div class="step-item"><div class="step-n">1</div><span><code>git pull --rebase</code> — sync with remote first</span></div>
+      <div class="step-item"><div class="step-n">2</div><span><code>git checkout -b feature/xxx</code> — create branch</span></div>
+      <div class="step-item"><div class="step-n">3</div><span>Code → <code>git add .</code> → <code>git commit -m "feat: ..."</code></span></div>
+      <div class="step-item"><div class="step-n">4</div><span><code>git push -u origin feature/xxx</code> — push branch</span></div>
+      <div class="step-item"><div class="step-n">5</div><span>Open Pull Request on GitHub / GitLab</span></div>
+      <div class="step-item"><div class="step-n">6</div><span>Code review + CI passes → merge PR</span></div>
+      <div class="step-item"><div class="step-n">7</div><span><code>git checkout main && git pull</code> — update local</span></div>
+      <div class="step-item"><div class="step-n">8</div><span><code>git branch -d feature/xxx</code> — clean up</span></div>
+    </div>
+  </div>
+
+  <!-- NEVER DO THIS -->
+  <div class="card" data-section="danger warning never">
+    <div class="card-head head-red"><span class="icon">🚫</span> Never Do This on Shared Branches</div>
+    <div class="danger-item"><div class="danger-x">✗</div><div><div class="danger-cmd">git push --force</div><div class="danger-reason">Overwrites remote history — breaks teammates' clones</div></div></div>
+    <div class="danger-item"><div class="danger-x">✗</div><div><div class="danger-cmd">git reset --hard on main</div><div class="danger-reason">Permanently destroys commits — irrecoverable for others</div></div></div>
+    <div class="danger-item"><div class="danger-x">✗</div><div><div class="danger-cmd">git rebase on pushed branch</div><div class="danger-reason">Rewrites history — everyone's branch diverges</div></div></div>
+    <div class="danger-item"><div class="danger-x">✗</div><div><div class="danger-cmd">git commit .env / secrets</div><div class="danger-reason">Security breach — rotate immediately if this happens</div></div></div>
+    <div class="danger-item"><div class="danger-x">✗</div><div><div class="danger-cmd">git add . without checking diff</div><div class="danger-reason">May stage build artifacts or sensitive files</div></div></div>
+    <div class="danger-item"><div class="danger-x">✗</div><div><div class="danger-cmd">git commit --amend after push</div><div class="danger-reason">Creates diverged history — force push required</div></div></div>
+  </div>
+
+  <!-- CONVENTIONAL COMMITS -->
+  <div class="card" data-section="conventional commits message format">
+    <div class="card-head head-orange"><span class="icon">📝</span> Conventional Commits</div>
+    <div style="padding:8px 12px 4px;font-size:0.72rem;color:var(--ink-4);border-bottom:1px solid var(--bg-3)">
+      Format: <strong style="color:var(--accent-2)">type(scope): description</strong>
+    </div>
+    <table class="conv-table">
+      <tr><td>feat:</td><td>New feature for the user</td></tr>
+      <tr><td>fix:</td><td>Bug fix for the user</td></tr>
+      <tr><td>docs:</td><td>Documentation changes only</td></tr>
+      <tr><td>style:</td><td>Formatting, no logic change</td></tr>
+      <tr><td>refactor:</td><td>Code restructure, no feature/fix</td></tr>
+      <tr><td>test:</td><td>Adding or fixing tests</td></tr>
+      <tr><td>chore:</td><td>Build / config / tooling</td></tr>
+      <tr><td>ci:</td><td>CI/CD pipeline changes</td></tr>
+      <tr><td>perf:</td><td>Performance improvement</td></tr>
+      <tr><td>revert:</td><td>Reverts a previous commit</td></tr>
+    </table>
+    <div style="padding:8px 12px;background:var(--bg);border-top:1px solid var(--border)">
+      <div style="font-size:0.7rem;color:var(--ink-4);margin-bottom:3px">Examples:</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--accent-2);line-height:1.8">
+        feat(auth): add OAuth2 Google sign-in<br>
+        fix(api): handle null response from payment gateway<br>
+        ci: add SAST scan to PR pipeline
+      </div>
+    </div>
+  </div>
+
+  <!-- BRANCHING STRATEGIES -->
+  <div class="card" data-section="branching strategy gitflow trunk github">
+    <div class="card-head head-purple"><span class="icon">🗺️</span> Branching Strategies</div>
+    <table class="cmd-table">
+      <tr class="sub-head"><td colspan="2">Git Flow — Release-based products</td></tr>
+      <tr><td>main</td><td>Production only — always tagged</td></tr>
+      <tr><td>develop</td><td>Integration branch for features</td></tr>
+      <tr><td>feature/xxx</td><td>One branch per feature from develop</td></tr>
+      <tr><td>release/x.y.z</td><td>Release prep — only bug fixes</td></tr>
+      <tr><td>hotfix/xxx</td><td>Emergency fix from main</td></tr>
+      <tr class="sub-head"><td colspan="2">GitHub Flow — Continuous deployment</td></tr>
+      <tr><td>main</td><td>Always deployable</td></tr>
+      <tr><td>feature/xxx</td><td>Branch → PR → merge = deploy</td></tr>
+      <tr class="sub-head"><td colspan="2">Trunk-Based Dev — High-velocity teams</td></tr>
+      <tr><td>main (trunk)</td><td>All devs commit multiple times/day</td></tr>
+      <tr><td>Feature flags</td><td>Hide incomplete features in prod</td></tr>
+      <tr><td>Short branches</td><td>Live &lt; 2 days; requires solid CI</td></tr>
+    </table>
+  </div>
+
+  <!-- TROUBLESHOOTING -->
+  <div class="card" data-section="troubleshoot problem fix error">
+    <div class="card-head head-ink"><span class="icon">🔧</span> Common Problems & Fixes</div>
+    <table class="cmd-table">
+      <tr class="sub-head"><td colspan="2">Frequent Issues</td></tr>
+      <tr><td>Committed to wrong branch</td><td>git reset --soft HEAD~1 → switch branch</td></tr>
+      <tr><td>Detached HEAD</td><td>git checkout main OR git checkout -b &lt;name&gt;</td></tr>
+      <tr><td>Push rejected</td><td>git pull --rebase, resolve, then push</td></tr>
+      <tr><td>Accidentally deleted branch</td><td>git reflog → find hash → git checkout -b name &lt;hash&gt;</td></tr>
+      <tr><td>Committed a secret</td><td>Rotate credential immediately + BFG Repo Cleaner</td></tr>
+      <tr><td>.gitignore not working</td><td>git rm --cached &lt;file&gt; (file already tracked)</td></tr>
+      <tr><td>Large file blocked</td><td>git rm --cached + .gitignore + use Git LFS</td></tr>
+      <tr><td>Wrong commit author</td><td>git commit --amend --author (before push)</td></tr>
+      <tr><td>Merge conflict binary</td><td>git checkout --ours/--theirs &lt;file&gt;</td></tr>
+    </table>
+  </div>
+
+</div><!-- /grid -->
+
+<script>
+function filterCmds(q) {
+  q = q.toLowerCase().trim();
+  document.querySelectorAll('.cmd-table tr').forEach(row => {
+    if (row.classList.contains('sub-head')) return;
+    const text = row.textContent.toLowerCase();
+    row.classList.toggle('hidden', q && !text.includes(q));
+  });
+  document.querySelectorAll('.card').forEach(card => {
+    const section = card.dataset.section || '';
+    const visible = !q || section.includes(q) || card.querySelector('.cmd-table tr:not(.sub-head):not(.hidden)');
+    card.style.display = visible ? '' : 'none';
+  });
+}
+
+let dark = false;
+function toggleDark() {
+  dark = !dark;
+  if (dark) {
+    document.documentElement.style.setProperty('--bg', '#1a1d2e');
+    document.documentElement.style.setProperty('--bg-2', '#20243a');
+    document.documentElement.style.setProperty('--bg-3', '#2a2f4a');
+    document.documentElement.style.setProperty('--border', '#2e3352');
+    document.querySelector('.grid').style.background = '#1a1d2e';
+    document.querySelectorAll('.card').forEach(c => c.style.background = '#20243a');
+    document.querySelectorAll('.cmd-table td:last-child').forEach(t => t.style.color = '#9095b0');
+    document.querySelector('[onclick="toggleDark()"]').textContent = '☀️ Light';
+  } else {
+    location.reload();
+  }
+}
+</script>
+</body>
+</html>
