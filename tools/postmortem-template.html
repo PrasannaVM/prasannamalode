@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Incident Postmortem Template — Prasanna Malode</title>
+<meta name="description" content="A structured, blameless incident postmortem builder. Fill in timeline, impact, contributing factors and actions, then export clean Markdown for your wiki. Runs in your browser.">
+<link rel="canonical" href="https://prasannamalode.in/tools/postmortem-template.html">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Incident Postmortem Template">
+<meta property="og:description" content="Blameless postmortem builder with Markdown export.">
+<meta property="og:image" content="https://prasannamalode.in/assets/og/site.png">
+<meta name="twitter:card" content="summary_large_image">
+<script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+  .rows { display: grid; gap: 8px; }
+  .trow { display: grid; grid-template-columns: 150px 1fr 34px; gap: 8px; align-items: center; }
+  .arow { display: grid; grid-template-columns: 1fr 130px 130px 90px 34px; gap: 8px; align-items: center; }
+  @media (max-width: 720px) { .trow { grid-template-columns: 1fr 34px; } .trow .input:first-child { grid-column: 1 / -1; } .arow { grid-template-columns: 1fr 1fr 34px; } .arow .input:first-child { grid-column: 1 / -1; } }
+  .del { width: 34px; height: 38px; border-radius: 8px; color: var(--muted); border: 1px solid var(--border); background: var(--bg); }
+  .del:hover { color: var(--bad); border-color: var(--bad); }
+  .preview { max-height: none; }
+</style>
+</head>
+<body data-root="..">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">PM</span><span>Prasanna Malode</span></a>
+    <nav aria-label="Primary"><ul class="nav-links">
+      <li><a href="../index.html#/home">Home</a></li>
+      <li><a href="../index.html#/articles">Articles</a></li>
+      <li><a href="../index.html#/tools" aria-current="page">Tools</a></li>
+      <li><a href="../index.html#/about">About</a></li>
+    </ul></nav>
+    <div class="nav-actions">
+      <button class="icon-btn theme-toggle" type="button" title="Toggle dark mode" aria-label="Toggle dark mode"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      <button class="icon-btn menu-btn" type="button" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap tool-head fade-up">
+    <a class="tag" href="../index.html#/tools">Tool</a>
+    <h1>Incident Postmortem Template</h1>
+    <p>A blameless postmortem builder. Work through the sections in order, then copy or download the Markdown for your wiki or ticket. The structure forces the questions that prevent recurrence: not "who", but "what made this possible and what made it hard to see".</p>
+    <p class="note">Drafts autosave in this browser only. Nothing is uploaded.</p>
+  </div>
+
+  <div class="wrap two-col">
+    <div>
+      <section class="panel fade-up d1">
+        <h2>Header</h2>
+        <div class="field-row">
+          <div class="field" style="grid-column:1/-1"><label for="title">Incident title</label><input class="input" id="title" data-f="title" placeholder="Payment API returned 5xx for 38 minutes"></div>
+          <div class="field"><label for="incid">Incident ID</label><input class="input" id="incid" data-f="incid" placeholder="INC-2041"></div>
+          <div class="field"><label for="date">Date</label><input class="input" id="date" data-f="date" type="date"></div>
+          <div class="field"><label for="sev">Severity</label><select class="select" id="sev" data-f="sev"><option>SEV1 — Critical</option><option>SEV2 — Major</option><option selected>SEV3 — Minor</option><option>SEV4 — Low</option></select></div>
+          <div class="field"><label for="status">Status</label><select class="select" id="status" data-f="status"><option>Draft</option><option>In review</option><option>Final</option></select></div>
+          <div class="field"><label for="owner">Postmortem owner</label><input class="input" id="owner" data-f="owner" placeholder="Name"></div>
+          <div class="field"><label for="ic">Incident commander</label><input class="input" id="ic" data-f="ic" placeholder="Name"></div>
+          <div class="field"><label for="duration">Duration</label><input class="input" id="duration" data-f="duration" placeholder="38 min"></div>
+          <div class="field"><label for="services">Affected services</label><input class="input" id="services" data-f="services" placeholder="payments-api, checkout-web"></div>
+        </div>
+      </section>
+
+      <section class="panel fade-up d1">
+        <h2>Summary & impact</h2>
+        <div class="field"><label for="summary">Summary</label><span class="help">Two to four sentences a director could read in 30 seconds. What happened, how long, who noticed.</span><textarea class="textarea" id="summary" data-f="summary"></textarea></div>
+        <div class="field"><label for="impact">Customer / business impact</label><span class="help">Users affected, transactions failed, revenue or SLA impact, regulatory exposure.</span><textarea class="textarea" id="impact" data-f="impact"></textarea></div>
+        <div class="field"><label for="detection">Detection</label><span class="help">How did we find out? Alert, customer report, someone noticed a graph? How long between start and detection?</span><textarea class="textarea" id="detection" data-f="detection"></textarea></div>
+      </section>
+
+      <section class="panel fade-up d2">
+        <h2>Timeline</h2>
+        <p class="hint">UTC, one row per event. Include when it started, detected, acknowledged, escalated, mitigated, resolved.</p>
+        <div class="rows" id="timeline"></div>
+        <div class="actions"><button class="btn btn-secondary btn-sm" type="button" id="add-t">+ Add event</button></div>
+      </section>
+
+      <section class="panel fade-up d2">
+        <h2>Analysis</h2>
+        <div class="field"><label for="root">Root cause & contributing factors</label><span class="help">Be systemic. "Engineer made a typo" is never a root cause. Why was a typo able to reach production? Why was it not caught?</span><textarea class="textarea" id="root" data-f="root"></textarea></div>
+        <div class="field"><label for="trigger">Trigger</label><span class="help">The specific change or event that set it off (deploy, config change, traffic spike, dependency outage).</span><input class="input" id="trigger" data-f="trigger"></div>
+        <div class="field"><label for="mitigation">Mitigation & resolution</label><span class="help">What stopped the bleeding, and what fixed it for good.</span><textarea class="textarea" id="mitigation" data-f="mitigation"></textarea></div>
+        <div class="field-row">
+          <div class="field"><label for="well">What went well</label><textarea class="textarea" id="well" data-f="well" placeholder="One per line"></textarea></div>
+          <div class="field"><label for="badly">What went badly</label><textarea class="textarea" id="badly" data-f="badly" placeholder="One per line"></textarea></div>
+          <div class="field"><label for="lucky">Where we got lucky</label><textarea class="textarea" id="lucky" data-f="lucky" placeholder="One per line"></textarea></div>
+        </div>
+      </section>
+
+      <section class="panel fade-up d3">
+        <h2>Action items</h2>
+        <p class="hint">Every action has an owner and a due date, or it is a wish. Prefer actions that remove a class of failure over actions that add a checklist step.</p>
+        <div class="rows" id="actions"></div>
+        <div class="actions"><button class="btn btn-secondary btn-sm" type="button" id="add-a">+ Add action</button></div>
+      </section>
+
+      <section class="panel fade-up d3">
+        <h2>Lessons</h2>
+        <div class="field"><label for="lessons">Lessons learned</label><span class="help">What should every team take away from this? Which assumption turned out to be false?</span><textarea class="textarea" id="lessons" data-f="lessons"></textarea></div>
+      </section>
+    </div>
+
+    <div class="sticky-col">
+      <section class="panel fade-up d2">
+        <div class="section-head" style="margin-bottom:12px"><h2 style="margin:0">Markdown</h2><span id="saved" style="font-size:.78rem;color:var(--muted-2)"></span></div>
+        <div class="actions" style="margin:0 0 14px">
+          <button class="btn btn-primary btn-sm" id="copy" type="button">Copy Markdown</button>
+          <button class="btn btn-secondary btn-sm" id="download" type="button">Download .md</button>
+          <button class="btn btn-secondary btn-sm" id="sample" type="button">Load example</button>
+          <button class="btn btn-ghost btn-sm" id="reset" type="button">Clear</button>
+        </div>
+        <pre class="output preview" id="preview"></pre>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="footer"><div class="wrap footer-grid"><div>© <span data-year>2026</span> Prasanna Malode · <a href="../index.html#/tools">More tools</a> · Read: <a href="../articles/itil-incident-management.html">Recurring incidents down 50%</a></div><div class="footer-links"><a href="../index.html#/articles">Articles</a><a href="../index.html#/about">About</a><a href="../feed.xml">RSS</a></div></div></footer>
+
+<script src="../assets/site.js"></script>
+<script>
+(function () {
+  var KEY = 'postmortem-draft-v1';
+  var $ = function (s) { return document.querySelector(s); };
+  var state = { f: {}, timeline: [], actions: [] };
+  try { var s = JSON.parse(localStorage.getItem(KEY)); if (s && s.f) state = s; } catch (e) {}
+
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); $('#saved').textContent = 'Saved ' + new Date().toLocaleTimeString(); } catch (e) {} }
+  function fields() { return document.querySelectorAll('[data-f]'); }
+  function loadFields() { fields().forEach(function (el) { var k = el.getAttribute('data-f'); if (state.f[k] != null) el.value = state.f[k]; }); }
+  function readFields() { fields().forEach(function (el) { state.f[el.getAttribute('data-f')] = el.value; }); }
+
+  function renderRows() {
+    if (!state.timeline.length) state.timeline.push({ t: '', e: '' });
+    if (!state.actions.length) state.actions.push({ a: '', o: '', d: '', p: 'P1' });
+    $('#timeline').innerHTML = state.timeline.map(function (r, i) {
+      return '<div class="trow"><input class="input" placeholder="2026-03-04 09:15" value="' + escapeHtml(r.t) + '" data-t="' + i + '" data-k="t" aria-label="Time"><input class="input" placeholder="What happened" value="' + escapeHtml(r.e) + '" data-t="' + i + '" data-k="e" aria-label="Event"><button type="button" class="del" data-del-t="' + i + '" aria-label="Remove">×</button></div>';
+    }).join('');
+    $('#actions').innerHTML = state.actions.map(function (r, i) {
+      return '<div class="arow"><input class="input" placeholder="Action" value="' + escapeHtml(r.a) + '" data-a="' + i + '" data-k="a" aria-label="Action"><input class="input" placeholder="Owner" value="' + escapeHtml(r.o) + '" data-a="' + i + '" data-k="o" aria-label="Owner"><input class="input" type="date" value="' + escapeHtml(r.d) + '" data-a="' + i + '" data-k="d" aria-label="Due"><select class="select" data-a="' + i + '" data-k="p" aria-label="Priority">' + ['P1', 'P2', 'P3'].map(function (p) { return '<option' + (r.p === p ? ' selected' : '') + '>' + p + '</option>'; }).join('') + '</select><button type="button" class="del" data-del-a="' + i + '" aria-label="Remove">×</button></div>';
+    }).join('');
+  }
+  function lines(s) { return String(s || '').split(/\n/).map(function (l) { return l.trim(); }).filter(Boolean).map(function (l) { return '- ' + l.replace(/^[-*]\s*/, ''); }).join('\n') || '- '; }
+  function md() {
+    var f = state.f;
+    var out = [];
+    out.push('# Postmortem: ' + (f.title || 'Untitled incident'));
+    out.push('');
+    out.push('| | |\n|---|---|');
+    out.push('| **Incident** | ' + (f.incid || '—') + ' |');
+    out.push('| **Date** | ' + (f.date || '—') + ' |');
+    out.push('| **Severity** | ' + (f.sev || '—') + ' |');
+    out.push('| **Duration** | ' + (f.duration || '—') + ' |');
+    out.push('| **Affected services** | ' + (f.services || '—') + ' |');
+    out.push('| **Incident commander** | ' + (f.ic || '—') + ' |');
+    out.push('| **Postmortem owner** | ' + (f.owner || '—') + ' |');
+    out.push('| **Status** | ' + (f.status || 'Draft') + ' |');
+    out.push('');
+    out.push('> This is a blameless postmortem. We assume everyone acted with the best intent given the information they had. The goal is to change the system, not to find fault.');
+    out.push('');
+    out.push('## Summary\n\n' + (f.summary || '_TODO_'));
+    out.push('\n## Impact\n\n' + (f.impact || '_TODO_'));
+    out.push('\n## Detection\n\n' + (f.detection || '_TODO_'));
+    out.push('\n## Timeline (UTC)\n\n| Time | Event |\n|---|---|');
+    state.timeline.filter(function (r) { return r.t || r.e; }).forEach(function (r) { out.push('| ' + (r.t || '') + ' | ' + (r.e || '') + ' |'); });
+    out.push('\n## Root cause and contributing factors\n\n' + (f.root || '_TODO_'));
+    out.push('\n**Trigger:** ' + (f.trigger || '_TODO_'));
+    out.push('\n## Mitigation and resolution\n\n' + (f.mitigation || '_TODO_'));
+    out.push('\n## What went well\n\n' + lines(f.well));
+    out.push('\n## What went badly\n\n' + lines(f.badly));
+    out.push('\n## Where we got lucky\n\n' + lines(f.lucky));
+    out.push('\n## Action items\n\n| # | Action | Owner | Due | Priority | Status |\n|---|---|---|---|---|---|');
+    state.actions.filter(function (r) { return r.a; }).forEach(function (r, i) { out.push('| ' + (i + 1) + ' | ' + r.a + ' | ' + (r.o || 'TBD') + ' | ' + (r.d || 'TBD') + ' | ' + r.p + ' | Open |'); });
+    out.push('\n## Lessons learned\n\n' + (f.lessons || '_TODO_'));
+    out.push('\n---\n_Template: https://prasannamalode.in/tools/postmortem-template.html_');
+    return out.join('\n');
+  }
+  function render() { $('#preview').textContent = md(); }
+
+  document.addEventListener('input', function (e) {
+    var el = e.target; if (!el || !el.hasAttribute) return;
+    if (el.hasAttribute('data-f')) { readFields(); }
+    else if (el.hasAttribute('data-t')) { state.timeline[+el.getAttribute('data-t')][el.getAttribute('data-k')] = el.value; }
+    else if (el.hasAttribute('data-a')) { state.actions[+el.getAttribute('data-a')][el.getAttribute('data-k')] = el.value; }
+    else return;
+    save(); render();
+  });
+  document.addEventListener('change', function (e) {
+    var el = e.target; if (!el || !el.hasAttribute) return;
+    if (el.hasAttribute('data-f')) readFields();
+    else if (el.hasAttribute('data-a')) state.actions[+el.getAttribute('data-a')][el.getAttribute('data-k')] = el.value;
+    else if (el.hasAttribute('data-t')) state.timeline[+el.getAttribute('data-t')][el.getAttribute('data-k')] = el.value;
+    else return;
+    save(); render();
+  });
+  document.addEventListener('click', function (e) {
+    var t;
+    if ((t = e.target.closest('[data-del-t]'))) { state.timeline.splice(+t.getAttribute('data-del-t'), 1); renderRows(); save(); render(); }
+    if ((t = e.target.closest('[data-del-a]'))) { state.actions.splice(+t.getAttribute('data-del-a'), 1); renderRows(); save(); render(); }
+  });
+  $('#add-t').addEventListener('click', function () { state.timeline.push({ t: '', e: '' }); renderRows(); var els = document.querySelectorAll('[data-k="t"]'); els[els.length - 1].focus(); });
+  $('#add-a').addEventListener('click', function () { state.actions.push({ a: '', o: '', d: '', p: 'P2' }); renderRows(); var els = document.querySelectorAll('[data-k="a"]'); els[els.length - 1].focus(); });
+  $('#copy').addEventListener('click', function () { copyText(md(), 'Postmortem copied as Markdown'); });
+  $('#download').addEventListener('click', function () {
+    var name = ((state.f.incid || 'postmortem') + '-' + (state.f.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')).replace(/-$/, '') + '.md';
+    var blob = new Blob([md()], { type: 'text/markdown;charset=utf-8' });
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  });
+  $('#reset').addEventListener('click', function () {
+    if (!confirm('Clear the draft?')) return;
+    state = { f: {}, timeline: [], actions: [] }; try { localStorage.removeItem(KEY); } catch (e) {}
+    fields().forEach(function (el) { el.value = el.tagName === 'SELECT' ? el.options[0].value : ''; }); $('#sev').value = 'SEV3 — Minor';
+    renderRows(); render(); $('#saved').textContent = '';
+  });
+  $('#sample').addEventListener('click', function () {
+    state = { f: {
+      title: 'Payment API returned 5xx for 38 minutes', incid: 'INC-2041', date: '2026-03-04', sev: 'SEV2 — Major', status: 'In review', owner: 'A. Rao', ic: 'S. Iyer', duration: '38 min', services: 'payments-api, checkout-web',
+      summary: 'A configuration change reduced the payments-api connection pool from 200 to 20. Under normal morning load the pool saturated within four minutes and requests queued until they timed out. Checkout showed a generic error for 38 minutes. Detected by an error-rate alert after 6 minutes; rolled back after 31 minutes once the change was identified.',
+      impact: 'Approximately 4,200 checkout attempts failed. 61% of affected users retried successfully within the hour. Estimated unrecovered revenue ~USD 18k. No data loss. SLA breach on the payments availability objective for March.',
+      detection: 'Error-rate alert (5xx > 2% for 5 min) fired at 09:08 UTC. Two customer support tickets arrived at 09:11. Time from start to detection: ~6 minutes.',
+      root: 'The connection pool size is set in a shared config repository with no schema validation and no review requirement for production values. The change was intended for a staging tuning experiment and was applied to the production overlay by mistake. Contributing factors: (1) staging and production overlays live in the same directory with near-identical names; (2) no canary stage for config-only changes; (3) the pool saturation metric existed but had no alert; (4) rollback required knowing which of three recent config commits was responsible.',
+      trigger: 'Config commit 8f2c1a applied to production overlay at 09:02 UTC.',
+      mitigation: 'Reverted the config commit and restarted the payments-api pods (09:40). Verified error rate returned to baseline by 09:43. Permanent fix: schema validation with a minimum pool size, and config-only changes now go through the same canary stage as code.',
+      well: 'Alert fired within 6 minutes\nIncident channel opened and IC assigned in under 3 minutes\nClear customer comms posted at 09:20',
+      badly: 'Took 25 minutes to identify which change caused it\nNo alert on pool saturation, only on the downstream symptom\nStaging and production overlays are too easy to confuse',
+      lucky: 'Happened during business hours with the owning team online\nThe change did not also touch the database timeout, which would have masked the signal',
+      lessons: 'Config is code and needs the same gates. A symptom alert without a cause alert doubles time to resolution. Naming things almost the same is a latent incident.'
+    }, timeline: [
+      { t: '09:02', e: 'Config change merged and applied to production' }, { t: '09:06', e: 'Connection pool saturates, latency climbs' }, { t: '09:08', e: 'Error-rate alert fires, on-call acknowledged' },
+      { t: '09:11', e: 'Incident declared SEV2, IC assigned, status page updated' }, { t: '09:15', e: 'Suspected deploy rolled back (wrong suspect), no improvement' }, { t: '09:33', e: 'Config commit 8f2c1a identified via pool-size dashboard' },
+      { t: '09:40', e: 'Config reverted, pods restarted' }, { t: '09:43', e: 'Error rate back to baseline, incident mitigated' }, { t: '10:30', e: 'Incident resolved, postmortem scheduled' }
+    ], actions: [
+      { a: 'Add schema validation with min/max bounds for all production config values', o: 'Platform team', d: '2026-03-18', p: 'P1' },
+      { a: 'Route config-only changes through the canary stage', o: 'Release eng', d: '2026-03-25', p: 'P1' },
+      { a: 'Alert on connection pool utilisation > 80% for 2 min', o: 'SRE', d: '2026-03-11', p: 'P2' },
+      { a: 'Rename overlays: prod/ and staging/ in separate top-level directories', o: 'Platform team', d: '2026-03-11', p: 'P2' },
+      { a: 'Add "recent config changes" panel to the incident dashboard', o: 'SRE', d: '2026-04-01', p: 'P3' }
+    ] };
+    loadFields(); renderRows(); save(); render();
+  });
+
+  loadFields(); renderRows(); render();
+})();
+</script>
+</body>
+</html>

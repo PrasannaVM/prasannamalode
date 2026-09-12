@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DevSecOps Maturity Mapper — Prasanna Malode</title>
+<meta name="description" content="Assess DevSecOps maturity across eight pipeline stages on a five-level scale. Get an overall level, a heat map, and a prioritised roadmap of the next moves. Runs in your browser.">
+<link rel="canonical" href="https://prasannamalode.in/tools/devsecops-maturity.html">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="DevSecOps Maturity Mapper">
+<meta property="og:description" content="Eight stages, five levels, one prioritised roadmap.">
+<meta property="og:image" content="https://prasannamalode.in/assets/og/site.png">
+<meta name="twitter:card" content="summary_large_image">
+<script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+  .heat { display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px; }
+  .heat .h { border-radius: 8px; padding: 10px 6px; text-align: center; font-size: .72rem; font-weight: 600; color: var(--ink); background: var(--surface-2); border: 1px solid var(--border); }
+  .heat .h b { display: block; font-family: var(--serif); font-size: 1.3rem; margin-top: 2px; }
+  .heat .l1 { background: var(--bad-bg); color: var(--bad); } .heat .l2 { background: var(--warn-bg); color: var(--warn); } .heat .l3 { background: var(--accent-tint); color: var(--accent); } .heat .l4, .heat .l5 { background: var(--ok-bg); color: var(--ok); }
+  @media (max-width: 600px) { .heat { grid-template-columns: repeat(4, 1fr); } }
+  .practice { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: .92rem; }
+  .practice:last-child { border-bottom: 0; }
+  .practice .lvl { font-family: var(--mono); font-size: .7rem; color: var(--muted-2); margin-right: 8px; }
+  .tri { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .tri button { padding: 6px 10px; font-size: .78rem; color: var(--muted); background: var(--bg); border-right: 1px solid var(--border); }
+  .tri button:last-child { border-right: 0; }
+  .tri button.active { background: var(--accent); color: var(--on-accent); }
+  .tri button.active[data-v="0"] { background: var(--bad); } .tri button.active[data-v="1"] { background: var(--warn); } .tri button.active[data-v="2"] { background: var(--ok); }
+</style>
+</head>
+<body data-root="..">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">PM</span><span>Prasanna Malode</span></a>
+    <nav aria-label="Primary"><ul class="nav-links">
+      <li><a href="../index.html#/home">Home</a></li>
+      <li><a href="../index.html#/articles">Articles</a></li>
+      <li><a href="../index.html#/tools" aria-current="page">Tools</a></li>
+      <li><a href="../index.html#/about">About</a></li>
+    </ul></nav>
+    <div class="nav-actions">
+      <button class="icon-btn theme-toggle" type="button" title="Toggle dark mode" aria-label="Toggle dark mode"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      <button class="icon-btn menu-btn" type="button" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap tool-head fade-up">
+    <a class="tag" href="../index.html#/tools">Tool</a>
+    <h1>DevSecOps Maturity Mapper</h1>
+    <p>Eight stages from plan to monitor, four practices each, ordered from foundational to advanced. Mark each practice as <em>No</em>, <em>Partial</em> or <em>Yes</em>. Your level in a stage is the highest rung you have fully climbed, so a fancy practice does not compensate for a missing basic one.</p>
+    <p class="note">Levels: 1 Initial · 2 Managed · 3 Defined · 4 Measured · 5 Optimising. Answers stay in this browser.</p>
+  </div>
+
+  <div class="wrap two-col">
+    <div id="stages"></div>
+    <div class="sticky-col">
+      <section class="panel fade-up d1">
+        <div class="section-head" style="margin-bottom:8px"><h2 style="margin:0">Maturity</h2><span id="answered" style="font-size:.8rem;color:var(--muted-2)"></span></div>
+        <div id="overall" style="text-align:center;margin:6px 0 16px"></div>
+        <div class="heat" id="heat"></div>
+        <h3>Roadmap: next moves</h3>
+        <p class="hint" style="margin-top:-4px">The lowest unfilled rung in your weakest stages. Fix these before anything shinier.</p>
+        <div id="roadmap"></div>
+        <div class="actions">
+          <button class="btn btn-primary" id="export" type="button">Copy roadmap</button>
+          <button class="btn btn-ghost" id="reset" type="button">Reset</button>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="footer"><div class="wrap footer-grid"><div>© <span data-year>2026</span> Prasanna Malode · <a href="../index.html#/tools">More tools</a> · Read: <a href="../articles/code-review-at-machine-scale.html">Review at machine scale</a></div><div class="footer-links"><a href="../index.html#/articles">Articles</a><a href="../index.html#/about">About</a><a href="../feed.xml">RSS</a></div></div></footer>
+
+<script src="../assets/site.js"></script>
+<script>
+(function () {
+  var STAGES = [
+    { key: 'plan', name: 'Plan', p: ['Security requirements are captured in the backlog for new features and services.', 'Threat modelling happens for significant changes, with outputs tracked as work items.', 'Risk acceptance has a named approver and an expiry date.', 'Security debt is visible on the same roadmap as feature work and is reviewed quarterly.'] },
+    { key: 'code', name: 'Code', p: ['Secret detection runs pre-commit or on push and blocks merges.', 'Secure coding standards exist and are enforced by linters where possible.', 'Pull requests require review; AI-generated code is owned by the person who opens the PR.', 'Dependency additions require an explicit, separate decision (policy or bot check).'] },
+    { key: 'build', name: 'Build', p: ['Builds are reproducible with pinned dependency versions.', 'Static analysis (SAST) and software composition analysis (SCA) run on every build.', 'An SBOM is generated as a build output and attached to the artifact by hash.', 'Artifacts are signed and provenance is verified before deployment.'] },
+    { key: 'test', name: 'Test', p: ['Unit tests run on every change with a coverage floor on the diff.', 'DAST or API security tests run against an ephemeral environment before release.', 'Memory, performance and abuse-case tests run automatically with thresholds.', 'Security tests are tracked as first-class quality signals on the pipeline dashboard.'] },
+    { key: 'release', name: 'Release', p: ['A defined release process exists with approvals and a rollback plan.', 'Blocking quality gates (critical vulnerabilities, license violations) stop a release automatically.', 'Exceptions to gates are time-boxed, tracked and reviewed.', 'Release decisions use data (change failure rate, risk score) rather than a meeting.'] },
+    { key: 'deploy', name: 'Deploy', p: ['Deployments are automated from a versioned pipeline definition (no manual steps).', 'Infrastructure is code, scanned for misconfiguration before apply.', 'Progressive delivery (canary, blue/green or flags) limits blast radius.', 'Deployments verify health automatically and roll back without a human.'] },
+    { key: 'operate', name: 'Operate', p: ['Production access is least-privilege with MFA and is logged.', 'Incidents follow a defined process with blameless postmortems and tracked actions.', 'Vulnerability remediation has SLAs by severity and the ageing backlog is reported.', 'Runtime protection (WAF, container/host controls) is tuned from real incidents.'] },
+    { key: 'monitor', name: 'Monitor', p: ['Logs are centralised and retained per policy; deploys are marked in telemetry.', 'Security alerts are triaged with enrichment and correlation, not raw volume.', 'DORA and security metrics (MTTR, patch latency, gate pass rate) are on one dashboard reviewed weekly.', 'Detection efficacy is measured and tuned (false positive rate, shadow-mode comparisons before automation).'] },
+  ];
+  var LEVEL_NAMES = ['', 'Initial', 'Managed', 'Defined', 'Measured', 'Optimising'];
+  var KEY = 'devsecops-maturity-v1';
+  var ans = {}; try { ans = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) {}
+
+  document.getElementById('stages').innerHTML = STAGES.map(function (s) {
+    return '<section class="panel fade-up"><h2>' + s.name + '</h2><p class="hint">Rung 1 is foundational, rung 4 is advanced.</p>' + s.p.map(function (p, i) {
+      var id = s.key + i, v = ans[id];
+      return '<div class="practice"><div><span class="lvl">L' + (i + 2) + '</span>' + escapeHtml(p) + '</div><div class="tri" role="radiogroup">' +
+        ['No', 'Partial', 'Yes'].map(function (l, li) { return '<button type="button" class="' + (v === li ? 'active' : '') + '" role="radio" aria-checked="' + (v === li) + '" data-q="' + id + '" data-v="' + li + '">' + l + '</button>'; }).join('') + '</div></div>';
+    }).join('') + '</section>';
+  }).join('');
+
+  document.getElementById('stages').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-q]'); if (!b) return;
+    ans[b.getAttribute('data-q')] = +b.getAttribute('data-v');
+    b.parentNode.querySelectorAll('button').forEach(function (c) { var on = c === b; c.classList.toggle('active', on); c.setAttribute('aria-checked', on); });
+    try { localStorage.setItem(KEY, JSON.stringify(ans)); } catch (err) {}
+    render();
+  });
+
+  function stageLevel(s) {
+    // Level 1 baseline; each fully "Yes" rung in order adds a level. Partial gives half credit but does not unlock the next rung.
+    var lvl = 1, done = true, partialBonus = 0, answered = 0;
+    for (var i = 0; i < s.p.length; i++) {
+      var v = ans[s.key + i];
+      if (v != null) answered++;
+      if (done && v === 2) lvl++;
+      else { if (done && v === 1) partialBonus = 0.5; done = false; }
+    }
+    return { level: lvl, score: Math.min(5, lvl + partialBonus), answered: answered, firstGap: (function () { for (var i = 0; i < s.p.length; i++) { if (ans[s.key + i] !== 2) return i; } return -1; })() };
+  }
+  var lastReport = '';
+  function render() {
+    var total = 0, answered = 0, n = 0, results = [];
+    STAGES.forEach(function (s) { var r = stageLevel(s); r.stage = s; results.push(r); total += r.score; answered += r.answered; n += s.p.length; });
+    var avg = total / STAGES.length;
+    var overallLevel = Math.max(1, Math.min(5, Math.floor(avg + 0.25)));
+    document.getElementById('answered').textContent = answered + ' / ' + n + ' answered';
+    document.getElementById('overall').innerHTML = '<div style="font-family:var(--serif);font-size:2.4rem;font-weight:700;color:var(--accent);line-height:1">Level ' + overallLevel + '</div><div style="font-weight:600;margin-top:4px">' + LEVEL_NAMES[overallLevel] + '</div><div style="font-size:.8rem;color:var(--muted)">average stage score ' + avg.toFixed(1) + ' / 5</div>';
+    document.getElementById('heat').innerHTML = results.map(function (r) { return '<div class="h l' + r.level + '" title="' + r.stage.name + ': level ' + r.level + '">' + r.stage.name + '<b>' + r.level + '</b></div>'; }).join('');
+    var weak = results.filter(function (r) { return r.firstGap >= 0; }).sort(function (a, b) { return a.score - b.score || a.firstGap - b.firstGap; }).slice(0, 4);
+    document.getElementById('roadmap').innerHTML = weak.length ? weak.map(function (r, i) {
+      var cur = ans[r.stage.key + r.firstGap];
+      return '<div class="reco"><div class="pri p' + Math.min(3, i + 1) + '">' + (i + 1) + '</div><div><strong>' + r.stage.name + ' · level ' + r.level + ' → ' + (r.level + 1) + '</strong><span>' + (cur === 1 ? 'Finish: ' : 'Start: ') + escapeHtml(r.stage.p[r.firstGap]) + '</span></div></div>';
+    }).join('') : '<p class="hint">' + (answered === n ? 'Every rung is in place. Level 5 across the board. Now measure whether the controls are still effective.' : 'Your roadmap appears as you answer.') + '</p>';
+    lastReport = '# DevSecOps maturity assessment\n\nOverall: **Level ' + overallLevel + ' — ' + LEVEL_NAMES[overallLevel] + '** (average ' + avg.toFixed(1) + '/5, ' + answered + '/' + n + ' answered)\n\n| Stage | Level |\n|---|---|\n' +
+      results.map(function (r) { return '| ' + r.stage.name + ' | ' + r.level + ' ' + LEVEL_NAMES[r.level] + ' |'; }).join('\n') +
+      '\n\n## Roadmap\n' + (weak.length ? weak.map(function (r, i) { return (i + 1) + '. **' + r.stage.name + '** (L' + r.level + ' → L' + (r.level + 1) + '): ' + r.stage.p[r.firstGap]; }).join('\n') : 'All practices in place.') +
+      '\n\nGenerated with https://prasannamalode.in/tools/devsecops-maturity.html\n';
+  }
+  document.getElementById('export').addEventListener('click', function () { copyText(lastReport, 'Roadmap copied as Markdown'); });
+  document.getElementById('reset').addEventListener('click', function () {
+    if (!confirm('Clear all answers?')) return;
+    ans = {}; try { localStorage.removeItem(KEY); } catch (e) {}
+    document.querySelectorAll('[data-q]').forEach(function (c) { c.classList.remove('active'); c.setAttribute('aria-checked', 'false'); });
+    render();
+  });
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompt Injection Is Not a New Class of Vulnerability — Prasanna Malode</title>
+<meta name="description" content="Prompt injection is a confused deputy problem we have known about since 1988. Threat model the tools, not the prompt.">
+<meta name="author" content="Prasanna Malode">
+<meta name="theme-color" content="#faf8f4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14151a" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://prasannamalode.in/articles/prompt-injection-confused-deputy.html">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="alternate" type="application/rss+xml" title="Prasanna Malode — Articles" href="https://prasannamalode.in/feed.xml">
+<meta property="og:site_name" content="Prasanna Malode">
+<meta property="og:title" content="Prompt Injection Is Not a New Class of Vulnerability — Prasanna Malode">
+<meta property="og:description" content="Prompt injection is a confused deputy problem we have known about since 1988. Threat model the tools, not the prompt.">
+<meta property="og:url" content="https://prasannamalode.in/articles/prompt-injection-confused-deputy.html">
+<meta property="og:image" content="https://prasannamalode.in/assets/og/prompt-injection-confused-deputy.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Prompt Injection Is Not a New Class of Vulnerability — Prasanna Malode">
+<meta name="twitter:description" content="Prompt injection is a confused deputy problem we have known about since 1988. Threat model the tools, not the prompt.">
+<meta name="twitter:image" content="https://prasannamalode.in/assets/og/prompt-injection-confused-deputy.png">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-06-16">
+<meta property="article:author" content="Prasanna Malode">
+<meta property="article:section" content="AI Governance">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Prompt Injection Is Not a New Class of Vulnerability", "description": "Prompt injection is a confused deputy problem we have known about since 1988. Threat model the tools, not the prompt.", "datePublished": "2026-06-16", "dateModified": "2026-06-16", "author": {"@type": "Person", "name": "Prasanna Malode", "url": "https://prasannamalode.in/index.html#/about", "jobTitle": "Global Head — DevSecOps · Cybersecurity · IT Operations"}, "publisher": {"@type": "Person", "name": "Prasanna Malode"}, "mainEntityOfPage": "https://prasannamalode.in/articles/prompt-injection-confused-deputy.html", "image": "https://prasannamalode.in/assets/og/prompt-injection-confused-deputy.png", "keywords": "AI Governance", "isPartOf": {"@type": "CreativeWorkSeries", "name": "AI Governance for Engineering Leaders"}}</script>
+<script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body data-root="..">
+<div class="progress" aria-hidden="true"></div>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">PM</span><span>Prasanna Malode</span></a>
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a id="nav-home" href="../index.html#/home">Home</a></li>
+        <li><a id="nav-articles" href="../index.html#/articles" aria-current="page">Articles</a></li>
+        <li><a id="nav-tools" href="../index.html#/tools">Tools</a></li>
+        <li><a id="nav-about" href="../index.html#/about">About</a></li>
+      </ul>
+    </nav>
+    <div class="nav-actions">
+      <a class="icon-btn" href="../feed.xml" title="RSS feed" aria-label="RSS feed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg></a>
+      <button class="icon-btn theme-toggle" type="button" title="Toggle dark mode" aria-label="Toggle dark mode"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      <button class="icon-btn menu-btn" type="button" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+  <article>
+    <header class="article-head">
+      <div class="wrap-read fade-up">
+        <a class="tag" href="../index.html#/articles?tag=AI Governance">AI Governance</a>
+        <h1>Prompt Injection Is Not a New Class of Vulnerability</h1>
+        <div class="meta">
+          <img class="avatar" src="../assets/photo-sm.jpg" alt="" width="26" height="26">
+          <span>Prasanna Malode</span>
+          <span aria-hidden="true">·</span>
+          <time datetime="2026-06-16">June 16, 2026</time>
+          <span aria-hidden="true">·</span>
+          <span>6 min read</span>
+        </div>
+        <p class="lede">Prompt injection is a confused deputy problem we have known about since 1988. Threat model the tools, not the prompt.</p>
+      </div>
+    </header>
+    <div class="wrap" style="max-width:calc(var(--max-read) + 220px + 56px + 48px)">
+      <div class="article-layout">
+        <div>
+          <aside class="series-box" aria-label="Series navigation">
+  <div class="eyebrow">Series · Part 4 of 8</div>
+  <strong>AI Governance for Engineering Leaders</strong>
+  <ol><li class=""><a href="../articles/who-spent-this.html">Who Spent This?</a></li><li class=""><a href="../articles/invoice-as-intrusion-detection.html">The Invoice as an Intrusion Detection System</a></li><li class=""><a href="../articles/the-queue-is-still-there.html">The Queue Is Still There</a></li><li class="current"><a href="../articles/prompt-injection-confused-deputy.html">Prompt Injection Is Not a New Class of Vulnerability</a></li><li class=""><a href="../articles/the-ban-that-didnt-work.html">The Ban That Didn&#x27;t Work</a></li><li class=""><a href="../articles/same-binary-under-four-names.html">The Same Binary Under Four Names</a></li><li class=""><a href="../articles/code-review-at-machine-scale.html">When Review Breaks: Code at Machine Scale</a></li><li class=""><a href="../articles/the-demo-you-didnt-choose.html">The Demo You Didn&#x27;t Choose</a></li></ol>
+</aside>
+          <nav class="toc-inline" data-toc aria-label="Contents"><div class="eyebrow">In this article</div><div data-toc-list></div></nav>
+          <div class="prose">
+<p>Someone built a helpful thing. That is how these always start.</p>
+<p>It was an internal assistant that answered questions about our documentation. Ask it how a process worked, and it would search the wiki, read the relevant pages, and answer. Useful, popular, built quickly by a good engineer in the spirit of making everyone's life easier.</p>
+<p>Then, to make it more useful, it was given the ability to read from a ticketing system too. Also sensible. Most of the questions people asked involved work in flight.</p>
+<p>The demonstration that ended the conversation took about a minute. A ticket was created containing, in its description field, a paragraph of ordinary-looking text that concluded with an instruction addressed to the assistant. When the next person asked a question that caused the assistant to search tickets, it read that paragraph, and it did what the paragraph said.</p>
+<p>Nobody had exploited a model. Someone had typed text into a field that the system treated as instructions.</p>
+<h2>Where the security industry went briefly strange</h2>
+<p>For a while the discussion around prompt injection had an air of novelty about it, as though we had encountered a genuinely new phenomenon requiring genuinely new theory. Papers, taxonomies, a small industry of detection products.</p>
+<p>I want to argue for a more boring framing, because I think the boring framing is the one that actually leads to fixes.</p>
+<p>Prompt injection is a confused deputy problem. It has a name because we have known about it since 1988. A program with legitimate authority is induced by a less-privileged party to exercise that authority on their behalf. SQL injection is this. Cross-site request forgery is this. Server-side request forgery is this. The LLM variant is this.</p>
+<p>What makes it feel new is that the boundary between instruction and data, which in SQL we could at least in principle draw with parameterized queries, cannot be drawn cleanly here. The model consumes one stream of tokens. There is no prepared statement. There is no escaping function that reliably works, and I would be cautious about anyone selling you one.</p>
+<p>But "we cannot fix it at the parser" does not mean "we cannot fix it." It means we fix it where we have always fixed problems we could not fix at the parser: at the boundary of what the deputy is permitted to do.</p>
+<h2>The question that actually matters</h2>
+<p>Stop asking whether the model can be tricked. Assume it can. Every serious attempt to prevent that through instruction-hardening has been defeated, usually quickly, usually by someone doing it for fun.</p>
+<p>Ask instead: when it is tricked, what can happen?</p>
+<p>If the answer is "it writes a wrong answer to a user's screen," you have a quality problem. Annoying, not urgent.</p>
+<p>If the answer is "it calls an API that modifies a record," you have a vulnerability, and the severity is defined entirely by what that API can reach.</p>
+<p>If the answer is "it reads from a privileged source and then writes to somewhere the attacker can observe," you have data exfiltration, and the model is not the interesting part of the chain. The interesting part is that you connected a read capability and a write capability through a component that will follow instructions from anywhere.</p>
+<p>That last one is the pattern to watch for, and it is why the retrieval-plus-tools architecture is where most of the real damage lives. Retrieval brings untrusted content into the context. Tools give the context consequences. Either alone is mostly fine. The combination is where you need to be deliberate.</p>
+<h2>Controls that are already in your toolkit</h2>
+<p>None of what follows will be unfamiliar. That is the point.</p>
+<p><strong>Least privilege, applied to the tool layer.</strong> The credentials the assistant uses should be its own, scoped to exactly the actions it needs. If it only answers questions, it gets read access and nothing else. I have seen assistants running with a service account inherited from an existing integration, carrying permissions that made sense for a nightly batch job and no sense at all for a component that reads user input.</p>
+<p><strong>User-context propagation.</strong> If the assistant acts for a person, it should act with that person's authority, not with a superset of everyone's. Otherwise it becomes an access-control bypass with a chat interface, and the first person to notice will not report it.</p>
+<p><strong>Human confirmation on state change.</strong> Reads are recoverable. Writes, sends, deletes, and payments are not. A confirmation step on consequential actions is unglamorous and defeats the entire exfiltration-by-tool-call category, because the loop passes through a person who did not ask for that.</p>
+<p><strong>Egress control on the output path.</strong> If the assistant can render images from arbitrary URLs, or follow links, or call a webhook with data it has assembled, it has a channel out. Treat that with the same suspicion you would treat any outbound connection from a component processing untrusted input.</p>
+<p><strong>Provenance in the context.</strong> You cannot reliably teach a model to disregard instructions in retrieved content. You can mark which parts of the context came from trusted configuration and which came from a wiki page anyone can edit, and you can make policy decisions about what actions are permitted when untrusted content is in play. This is defense in depth, not a boundary. It reduces the severity distribution; it does not eliminate the tail.</p>
+<h2>The part I would put on a slide</h2>
+<p>Threat model the tools, not the prompt.</p>
+<p>Write down every capability the system has. For each one, ask what an attacker would do with it if they controlled the model's output completely, because in the worst case they do. Whatever survives that exercise is your real security posture. Whatever you were planning to achieve with careful system prompt wording is not a control; it is a preference, and it will be honored until someone decides otherwise.</p>
+<p>The engineer who built our assistant was not careless. He had built a document search tool that happened to be conversational, and the day it gained a second data source it silently became a different kind of system — one where content written by one user could steer behavior on behalf of another. That transition happened in a pull request that looked like a feature addition, because it was one.</p>
+<p>The failure was not in the model. It was that we had no review step that noticed the architecture had changed. That is a process gap, and process gaps are something our field already knows how to close. We just have to recognize the problem as ours.</p>
+          </div>
+          <footer class="article-foot">
+            <div class="share">
+              <span class="label">Share</span>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="linkedin">LinkedIn</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="x">X</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="email">Email</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="copy">Copy link</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="native">Share…</button>
+            </div>
+            <div class="author-card">
+              <img src="../assets/photo-sm.jpg" alt="Prasanna Malode" width="64" height="64">
+              <div>
+                <div class="name">Prasanna Malode</div>
+                <div class="role">Global Head — DevSecOps · Cybersecurity · IT Operations · Bengaluru, India</div>
+                <p>20+ years leading global IT, DevOps, cybersecurity and service operations. I write about making speed, security and reliability the same conversation. <a href="../index.html#/about">More about me</a>.</p>
+              </div>
+            </div>
+            <nav class="pager" aria-label="More articles">
+              <a class="prev" href="../articles/the-queue-is-still-there.html"><div class="dir">← Older</div><div class="title">The Queue Is Still There</div></a>
+              <a class="next" href="../articles/the-ban-that-didnt-work.html"><div class="dir">Newer →</div><div class="title">The Ban That Didn&#x27;t Work</div></a>
+            </nav>
+          </footer>
+        </div>
+        <nav class="toc-side" data-toc aria-label="Contents"><div class="eyebrow">In this article</div><div data-toc-list></div></nav>
+      </div>
+    </div>
+  </article>
+</main>
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">PM</span><span>Prasanna Malode</span></a>
+      <div style="margin-top:8px">DevSecOps · Cybersecurity · IT Operations · Bengaluru, India</div>
+      <div style="margin-top:4px">© <span data-year>2026</span> Prasanna Malode. Opinions are my own.</div>
+    </div>
+    <div class="footer-links">
+      <a href="../index.html#/articles">Articles</a>
+      <a href="../index.html#/tools">Tools</a>
+      <a href="../index.html#/about">About</a>
+      <a href="https://linkedin.com/in/prasannamalode" target="_blank" rel="noopener me">LinkedIn</a>
+      <a href="mailto:prasanna.malode@outlook.com">Email</a>
+      <a href="../feed.xml">RSS</a>
+    </div>
+  </div>
+</footer>
+<script src="../assets/articles-data.js" defer></script>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

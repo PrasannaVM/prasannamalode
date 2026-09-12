@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Invoice as an Intrusion Detection System — Prasanna Malode</title>
+<meta name="description" content="Token spend is unforgeable, baselined for free, and denominated in a unit finance already tracks. Read it as a detection signal.">
+<meta name="author" content="Prasanna Malode">
+<meta name="theme-color" content="#faf8f4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14151a" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://prasannamalode.in/articles/invoice-as-intrusion-detection.html">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="alternate" type="application/rss+xml" title="Prasanna Malode — Articles" href="https://prasannamalode.in/feed.xml">
+<meta property="og:site_name" content="Prasanna Malode">
+<meta property="og:title" content="The Invoice as an Intrusion Detection System — Prasanna Malode">
+<meta property="og:description" content="Token spend is unforgeable, baselined for free, and denominated in a unit finance already tracks. Read it as a detection signal.">
+<meta property="og:url" content="https://prasannamalode.in/articles/invoice-as-intrusion-detection.html">
+<meta property="og:image" content="https://prasannamalode.in/assets/og/invoice-as-intrusion-detection.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Invoice as an Intrusion Detection System — Prasanna Malode">
+<meta name="twitter:description" content="Token spend is unforgeable, baselined for free, and denominated in a unit finance already tracks. Read it as a detection signal.">
+<meta name="twitter:image" content="https://prasannamalode.in/assets/og/invoice-as-intrusion-detection.png">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-05-05">
+<meta property="article:author" content="Prasanna Malode">
+<meta property="article:section" content="AI Governance">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "The Invoice as an Intrusion Detection System", "description": "Token spend is unforgeable, baselined for free, and denominated in a unit finance already tracks. Read it as a detection signal.", "datePublished": "2026-05-05", "dateModified": "2026-05-05", "author": {"@type": "Person", "name": "Prasanna Malode", "url": "https://prasannamalode.in/index.html#/about", "jobTitle": "Global Head — DevSecOps · Cybersecurity · IT Operations"}, "publisher": {"@type": "Person", "name": "Prasanna Malode"}, "mainEntityOfPage": "https://prasannamalode.in/articles/invoice-as-intrusion-detection.html", "image": "https://prasannamalode.in/assets/og/invoice-as-intrusion-detection.png", "keywords": "AI Governance", "isPartOf": {"@type": "CreativeWorkSeries", "name": "AI Governance for Engineering Leaders"}}</script>
+<script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body data-root="..">
+<div class="progress" aria-hidden="true"></div>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">PM</span><span>Prasanna Malode</span></a>
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a id="nav-home" href="../index.html#/home">Home</a></li>
+        <li><a id="nav-articles" href="../index.html#/articles" aria-current="page">Articles</a></li>
+        <li><a id="nav-tools" href="../index.html#/tools">Tools</a></li>
+        <li><a id="nav-about" href="../index.html#/about">About</a></li>
+      </ul>
+    </nav>
+    <div class="nav-actions">
+      <a class="icon-btn" href="../feed.xml" title="RSS feed" aria-label="RSS feed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg></a>
+      <button class="icon-btn theme-toggle" type="button" title="Toggle dark mode" aria-label="Toggle dark mode"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      <button class="icon-btn menu-btn" type="button" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+  <article>
+    <header class="article-head">
+      <div class="wrap-read fade-up">
+        <a class="tag" href="../index.html#/articles?tag=AI Governance">AI Governance</a>
+        <h1>The Invoice as an Intrusion Detection System</h1>
+        <div class="meta">
+          <img class="avatar" src="../assets/photo-sm.jpg" alt="" width="26" height="26">
+          <span>Prasanna Malode</span>
+          <span aria-hidden="true">·</span>
+          <time datetime="2026-05-05">May 5, 2026</time>
+          <span aria-hidden="true">·</span>
+          <span>6 min read</span>
+        </div>
+        <p class="lede">Token spend is unforgeable, baselined for free, and denominated in a unit finance already tracks. Read it as a detection signal.</p>
+      </div>
+    </header>
+    <div class="wrap" style="max-width:calc(var(--max-read) + 220px + 56px + 48px)">
+      <div class="article-layout">
+        <div>
+          <aside class="series-box" aria-label="Series navigation">
+  <div class="eyebrow">Series · Part 2 of 8</div>
+  <strong>AI Governance for Engineering Leaders</strong>
+  <ol><li class=""><a href="../articles/who-spent-this.html">Who Spent This?</a></li><li class="current"><a href="../articles/invoice-as-intrusion-detection.html">The Invoice as an Intrusion Detection System</a></li><li class=""><a href="../articles/the-queue-is-still-there.html">The Queue Is Still There</a></li><li class=""><a href="../articles/prompt-injection-confused-deputy.html">Prompt Injection Is Not a New Class of Vulnerability</a></li><li class=""><a href="../articles/the-ban-that-didnt-work.html">The Ban That Didn&#x27;t Work</a></li><li class=""><a href="../articles/same-binary-under-four-names.html">The Same Binary Under Four Names</a></li><li class=""><a href="../articles/code-review-at-machine-scale.html">When Review Breaks: Code at Machine Scale</a></li><li class=""><a href="../articles/the-demo-you-didnt-choose.html">The Demo You Didn&#x27;t Choose</a></li></ol>
+</aside>
+          <nav class="toc-inline" data-toc aria-label="Contents"><div class="eyebrow">In this article</div><div data-toc-list></div></nav>
+          <div class="prose">
+<p>The first sign was not an alert. It was a graph with a step in it.</p>
+<p>Saturday, some time after two in the morning, token consumption on one of our internal keys went from a flat weekend baseline to roughly forty times that, and stayed there. No error spike. No failed authentications. No unusual source geography that anyone had configured us to care about. Just a service that normally spent almost nothing overnight, suddenly working very hard at something.</p>
+<p>Nobody was awake to see it. We found it on Monday, in a cost dashboard, because someone was doing budget planning.</p>
+<p>It turned out to be a runaway retry loop — a misbehaving job that failed, retried, failed, retried, with no backoff and no ceiling. Expensive, embarrassing, not malicious. But the thing that stayed with me was not the root cause. It was that the same graph, with the same shape, is what a stolen API key looks like.</p>
+<h2>Spend is behavior, rendered in a unit finance already tracks</h2>
+<p>We spend a lot of effort building telemetry for security. We ship logs, we normalize them, we write detections, we tune them. Meanwhile, sitting in a completely different part of the organization, there is a continuously updated, high-fidelity record of exactly how much work every credential has caused something to do.</p>
+<p>Token consumption is a behavioral signal. It has properties that most of our detections would love to have.</p>
+<p>It is unforgeable by the client. The consuming application does not get to report its own usage; the gateway counts it. Someone abusing a key cannot make the counter say something friendlier.</p>
+<p>It is baselined almost for free. Most workloads are boringly regular. A summarization service handles roughly the number of documents that arrive. A coding assistant tracks the working hours of the people using it. Variance exists, but the shape of a week is stable enough that departures are visible without sophisticated modeling.</p>
+<p>And it is denominated in a unit that non-security people already care about. This matters more than it sounds. You will never have to justify why you are monitoring cost.</p>
+<h2>The shapes worth naming</h2>
+<p>Not every anomaly is interesting. These are the ones I have learned to look at.</p>
+<p><strong>The step function.</strong> Flat, then high, then flat at the new level. Automation, either yours misbehaving or someone else's. The overnight version is the one to care about, because legitimate step changes usually accompany a deploy, and deploys usually happen when people are awake. Correlate against your release calendar before you page anyone.</p>
+<p><strong>The slow ramp.</strong> Consumption climbing a few percent a day for weeks. Almost never an attack. Almost always a product decision nobody costed — a feature quietly expanded to more users, or a prompt that grew a few hundred tokens of context each time someone improved it. Worth catching anyway, because this is how a budget dies without a single alarming day.</p>
+<p><strong>The pattern break.</strong> Total volume unchanged, but the mix is different. A key that has only ever called a small fast model starts calling the largest one. A service that has always sent short requests starts sending very long ones. This one is the most interesting from a security standpoint, because it is the least likely to be accidental. Software does not spontaneously develop new preferences. Something changed the caller, or something else is using the credential.</p>
+<p><strong>The weekend floor that lifts.</strong> Every environment has a natural quiet period. When the floor of that quiet period rises and stays risen, something now runs continuously that did not before.</p>
+<h2>Why this catches things your other controls miss</h2>
+<p>A leaked LLM gateway key is an awkward artifact. It is not a database credential, so your data-access monitoring does not see it. It usually does not touch your network perimeter in an interesting way, because the traffic is ordinary HTTPS to an endpoint you have deliberately allowed. It rarely triggers authentication alerting, because the authentication succeeds — that is the entire point of a stolen credential.</p>
+<p>What it cannot hide is that it costs money to use. Whoever has it is using it for something, and using it is the only thing that makes it worth having.</p>
+<p>That is an unusually good property for a detection to rest on. You are not watching for a signature that can be changed or an anomaly that can be smoothed out. You are watching the one behavior that is inseparable from the motive.</p>
+<h2>Making it actually work</h2>
+<p>Three practical notes, because the idea is easy and the implementation is where it goes quiet.</p>
+<p>First, this requires the attribution I have written about elsewhere. A single shared key gives you one aggregate line, and aggregates hide everything. Forty times normal on one team's key is obvious. The same absolute increase spread across company-wide totals is a rounding error you will never notice.</p>
+<p>Second, alert on rate of change, not on absolute thresholds. Absolute limits are a budget control, and they should exist, but they fire when you have already spent the money. A derivative-based alert — this key is consuming at N times its trailing baseline — fires while it is happening. Set the baseline per key, not globally, because a key serving a batch pipeline and a key serving an internal chat tool have nothing in common.</p>
+<p>Third, route it somewhere a human reads at odd hours, or accept that you will find these on Monday. I am not going to pretend every organization should page for this. But decide consciously. Our Saturday event ran for roughly thirty hours because the answer to "who sees this" was nobody, and nobody had ever been asked.</p>
+<h2>The wider point</h2>
+<p>There is a habit in security of assuming that a good signal must come from a security tool. It leads to us instrumenting elaborately for detections that a billing system was already providing for free.</p>
+<p>Your gateway is producing cost telemetry whether you look at it or not. Someone in finance is already looking at it, once a month, for entirely different reasons. The distance between their dashboard and a working detection is smaller than the distance between where you are and most of the detections on your roadmap.</p>
+<p>Go and read that graph. You may find, as we did, that the interesting event happened weeks ago and has been sitting there patiently, correctly recorded, waiting for someone to ask what it was.</p>
+          </div>
+          <footer class="article-foot">
+            <div class="share">
+              <span class="label">Share</span>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="linkedin">LinkedIn</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="x">X</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="email">Email</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="copy">Copy link</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="native">Share…</button>
+            </div>
+            <div class="author-card">
+              <img src="../assets/photo-sm.jpg" alt="Prasanna Malode" width="64" height="64">
+              <div>
+                <div class="name">Prasanna Malode</div>
+                <div class="role">Global Head — DevSecOps · Cybersecurity · IT Operations · Bengaluru, India</div>
+                <p>20+ years leading global IT, DevOps, cybersecurity and service operations. I write about making speed, security and reliability the same conversation. <a href="../index.html#/about">More about me</a>.</p>
+              </div>
+            </div>
+            <nav class="pager" aria-label="More articles">
+              <a class="prev" href="../articles/who-spent-this.html"><div class="dir">← Older</div><div class="title">Who Spent This?</div></a>
+              <a class="next" href="../articles/the-queue-is-still-there.html"><div class="dir">Newer →</div><div class="title">The Queue Is Still There</div></a>
+            </nav>
+          </footer>
+        </div>
+        <nav class="toc-side" data-toc aria-label="Contents"><div class="eyebrow">In this article</div><div data-toc-list></div></nav>
+      </div>
+    </div>
+  </article>
+</main>
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">PM</span><span>Prasanna Malode</span></a>
+      <div style="margin-top:8px">DevSecOps · Cybersecurity · IT Operations · Bengaluru, India</div>
+      <div style="margin-top:4px">© <span data-year>2026</span> Prasanna Malode. Opinions are my own.</div>
+    </div>
+    <div class="footer-links">
+      <a href="../index.html#/articles">Articles</a>
+      <a href="../index.html#/tools">Tools</a>
+      <a href="../index.html#/about">About</a>
+      <a href="https://linkedin.com/in/prasannamalode" target="_blank" rel="noopener me">LinkedIn</a>
+      <a href="mailto:prasanna.malode@outlook.com">Email</a>
+      <a href="../feed.xml">RSS</a>
+    </div>
+  </div>
+</footer>
+<script src="../assets/articles-data.js" defer></script>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

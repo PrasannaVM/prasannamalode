@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Follow-the-Sun Shift Planner — Prasanna Malode</title>
+<meta name="description" content="Plan 24x7 coverage across time zones. Add teams, set local shift windows, and see coverage, handover overlaps and gaps on one UTC timeline. Runs in your browser.">
+<link rel="canonical" href="https://prasannamalode.in/tools/shift-planner.html">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Follow-the-Sun Shift Planner">
+<meta property="og:description" content="See 24-hour coverage, handovers and gaps across your regions.">
+<meta property="og:image" content="https://prasannamalode.in/assets/og/site.png">
+<meta name="twitter:card" content="summary_large_image">
+<script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+  .team { display: grid; grid-template-columns: 1.3fr 1.4fr .8fr .8fr 34px; gap: 8px; align-items: end; padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .team:last-child { border-bottom: 0; }
+  .team .field { margin: 0; }
+  .team .del { width: 34px; height: 40px; border-radius: 8px; color: var(--muted); border: 1px solid var(--border); background: var(--bg); }
+  .team .del:hover { color: var(--bad); border-color: var(--bad); }
+  @media (max-width: 720px) { .team { grid-template-columns: 1fr 1fr; } .team .del { justify-self: end; } }
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: .78rem; color: var(--muted); margin-top: 10px; }
+  .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -2px; margin-right: 5px; }
+  .grid-wrap { overflow-x: auto; padding-bottom: 6px; }
+  .shift-grid { min-width: 720px; }
+</style>
+</head>
+<body data-root="..">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">PM</span><span>Prasanna Malode</span></a>
+    <nav aria-label="Primary"><ul class="nav-links">
+      <li><a href="../index.html#/home">Home</a></li>
+      <li><a href="../index.html#/articles">Articles</a></li>
+      <li><a href="../index.html#/tools" aria-current="page">Tools</a></li>
+      <li><a href="../index.html#/about">About</a></li>
+    </ul></nav>
+    <div class="nav-actions">
+      <button class="icon-btn theme-toggle" type="button" title="Toggle dark mode" aria-label="Toggle dark mode"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      <button class="icon-btn menu-btn" type="button" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap tool-head fade-up">
+    <a class="tag" href="../index.html#/tools">Tool</a>
+    <h1>Follow-the-Sun Shift Planner</h1>
+    <p>Add the teams that share your on-call or operations rota, give each a local shift window, and see the whole day in UTC: who is on, where shifts overlap for handover, and where nobody is watching.</p>
+    <p class="note">Offsets use each zone's current UTC offset as computed by your browser, so daylight saving is handled automatically for today's date.</p>
+  </div>
+
+  <div class="wrap">
+    <section class="panel fade-up d1">
+      <div class="section-head" style="margin-bottom:6px"><h2 style="margin:0">Teams</h2>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-secondary btn-sm" type="button" id="preset-3">Preset: 3-region</button>
+          <button class="btn btn-secondary btn-sm" type="button" id="preset-2">Preset: India + US</button>
+          <button class="btn btn-ghost btn-sm" type="button" id="clear">Clear</button>
+        </div>
+      </div>
+      <p class="hint">Shift start is local time. Length in hours. A one-hour overlap at each handover is the minimum that works in practice.</p>
+      <div id="teams"></div>
+      <div class="actions"><button class="btn btn-primary btn-sm" type="button" id="add">+ Add team</button>
+        <label style="display:flex;align-items:center;gap:8px;font-size:.86rem;color:var(--muted);margin-left:auto">Minimum handover overlap
+          <select class="select" id="min-ov" style="width:auto;padding:6px 10px"><option value="0">0h</option><option value="1" selected>1h</option><option value="2">2h</option></select></label>
+      </div>
+    </section>
+
+    <section class="panel fade-up d2" style="margin-top:18px">
+      <div class="section-head" style="margin-bottom:12px"><h2 style="margin:0">Coverage timeline (UTC)</h2><button class="btn btn-secondary btn-sm" type="button" id="copy">Copy summary</button></div>
+      <div class="grid-wrap"><div class="shift-grid" id="grid"></div></div>
+      <div class="legend"><span><i style="background:var(--accent)"></i>On shift</span><span><i style="background:var(--ok)"></i>Covered by one team</span><span><i style="background:var(--warn)"></i>Overlap / handover</span><span><i style="background:var(--bad)"></i>Gap</span></div>
+      <div class="metric-grid" id="metrics" style="margin-top:18px"></div>
+      <h3>Handovers & gaps</h3>
+      <div id="findings" style="font-size:.9rem"></div>
+    </section>
+  </div>
+</main>
+
+<footer class="footer"><div class="wrap footer-grid"><div>© <span data-year>2026</span> Prasanna Malode · <a href="../index.html#/tools">More tools</a> · Read: <a href="../articles/follow-the-sun-ops.html">Follow-the-sun ops</a></div><div class="footer-links"><a href="../index.html#/articles">Articles</a><a href="../index.html#/about">About</a><a href="../feed.xml">RSS</a></div></div></footer>
+
+<script src="../assets/site.js"></script>
+<script>
+(function () {
+  var ZONES = [
+    ['Asia/Kolkata', 'Bengaluru / India'], ['Asia/Singapore', 'Singapore'], ['Asia/Tokyo', 'Tokyo'], ['Australia/Sydney', 'Sydney'], ['Asia/Dubai', 'Dubai'],
+    ['Europe/London', 'London'], ['Europe/Berlin', 'Berlin / CET'], ['Europe/Helsinki', 'Helsinki / EET'], ['America/Sao_Paulo', 'São Paulo'],
+    ['America/New_York', 'US East'], ['America/Chicago', 'US Central'], ['America/Denver', 'US Mountain'], ['America/Los_Angeles', 'US West'], ['UTC', 'UTC']
+  ];
+  var KEY = 'shift-planner-v1';
+  var $ = function (s) { return document.querySelector(s); };
+  var teams = [];
+  try { teams = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) {}
+  if (!Array.isArray(teams) || !teams.length) teams = preset3();
+
+  function preset3() { return [{ name: 'Bengaluru', tz: 'Asia/Kolkata', start: 9, len: 9 }, { name: 'London', tz: 'Europe/London', start: 9, len: 9 }, { name: 'US West', tz: 'America/Los_Angeles', start: 9, len: 9 }]; }
+  function preset2() { return [{ name: 'Bengaluru day', tz: 'Asia/Kolkata', start: 8, len: 9 }, { name: 'Bengaluru evening', tz: 'Asia/Kolkata', start: 16, len: 9 }, { name: 'US East', tz: 'America/New_York', start: 8, len: 9 }]; }
+
+  function offsetHours(tz) {
+    try {
+      var now = new Date();
+      var f = new Intl.DateTimeFormat('en-US', { timeZone: tz, hour12: false, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+      var p = {}; f.formatToParts(now).forEach(function (x) { p[x.type] = x.value; });
+      var local = Date.UTC(+p.year, +p.month - 1, +p.day, +p.hour % 24, +p.minute);
+      var utc = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes());
+      return Math.round((local - utc) / 3600000 * 2) / 2;
+    } catch (e) { return 0; }
+  }
+  function fmtOff(o) { var s = o >= 0 ? '+' : '−'; var a = Math.abs(o); return 'UTC' + s + Math.floor(a) + (a % 1 ? ':30' : ''); }
+  function hh(h) { h = ((h % 24) + 24) % 24; return (h < 10 ? '0' : '') + Math.floor(h) + ':' + (h % 1 ? '30' : '00'); }
+
+  function renderTeams() {
+    $('#teams').innerHTML = teams.map(function (t, i) {
+      return '<div class="team">' +
+        '<div class="field"><label>Team</label><input class="input" value="' + escapeHtml(t.name) + '" data-i="' + i + '" data-k="name" placeholder="Team name"></div>' +
+        '<div class="field"><label>Time zone</label><select class="select" data-i="' + i + '" data-k="tz">' + ZONES.map(function (z) { return '<option value="' + z[0] + '"' + (z[0] === t.tz ? ' selected' : '') + '>' + z[1] + ' (' + fmtOff(offsetHours(z[0])) + ')</option>'; }).join('') + '</select></div>' +
+        '<div class="field"><label>Local start</label><select class="select" data-i="' + i + '" data-k="start">' + Array.apply(null, Array(24)).map(function (_, h) { return '<option value="' + h + '"' + (h === +t.start ? ' selected' : '') + '>' + hh(h) + '</option>'; }).join('') + '</select></div>' +
+        '<div class="field"><label>Length (h)</label><input class="input" type="number" min="1" max="24" value="' + (+t.len || 8) + '" data-i="' + i + '" data-k="len"></div>' +
+        '<button type="button" class="del" data-del="' + i + '" aria-label="Remove team">×</button></div>';
+    }).join('');
+  }
+  var lastSummary = '';
+  function compute() {
+    var cov = []; for (var h = 0; h < 24; h++) cov.push([]);
+    var rows = teams.map(function (t) {
+      var off = offsetHours(t.tz);
+      var startUtc = (+t.start - off + 48) % 24;
+      var on = []; for (var i = 0; i < 24; i++) on.push(false);
+      for (var k = 0; k < Math.min(24, +t.len || 0); k++) { var hu = Math.floor(startUtc + k) % 24; on[hu] = true; cov[hu].push(t.name); }
+      return { t: t, off: off, startUtc: startUtc, on: on };
+    });
+    var hdr = '<div></div>' + cov.map(function (_, h) { return '<div class="hdr">' + (h % 3 === 0 ? (h < 10 ? '0' : '') + h : '') + '</div>'; }).join('');
+    var body = rows.map(function (r) {
+      return '<div class="lbl" title="' + escapeHtml(r.t.name) + ' ' + hh(+r.t.start) + '–' + hh(+r.t.start + +r.t.len) + ' local">' + escapeHtml(r.t.name || 'Team') + ' <span style="color:var(--muted-2);font-size:.7rem;margin-left:6px">' + fmtOff(r.off) + '</span></div>' +
+        r.on.map(function (o, h) { var night = false; if (o) { var lh = ((h + r.off) % 24 + 24) % 24; night = lh >= 22 || lh < 6; } return '<div class="cell' + (o ? ' on' : '') + (night ? ' night' : '') + '" title="' + hh(h) + ' UTC = ' + hh(h + r.off) + ' local"></div>'; }).join('');
+    }).join('');
+    var covRow = '<div class="lbl" style="font-weight:600">Coverage</div>' + cov.map(function (c, h) { return '<div class="cov c' + (c.length === 0 ? 0 : c.length === 1 ? 1 : 2) + '" title="' + hh(h) + ' UTC: ' + (c.length ? c.join(', ') : 'nobody') + '"></div>'; }).join('');
+    $('#grid').innerHTML = hdr + body + covRow;
+
+    var gaps = cov.filter(function (c) { return !c.length; }).length;
+    var overlaps = cov.filter(function (c) { return c.length > 1; }).length;
+    var personHours = rows.reduce(function (a, r) { return a + r.on.filter(Boolean).length; }, 0);
+    function metric(k, v, cls, s) { return '<div class="metric ' + cls + '"><div class="k">' + k + '</div><div class="v">' + v + '</div><div class="s">' + s + '</div></div>'; }
+    $('#metrics').innerHTML =
+      metric('Covered', (24 - gaps) + 'h', gaps ? (gaps > 4 ? 'bad' : 'warn') : 'ok', Math.round((24 - gaps) / 24 * 100) + '% of the day') +
+      metric('Gaps', gaps + 'h', gaps ? 'bad' : 'ok', gaps ? 'nobody on shift' : 'true 24x7') +
+      metric('Overlap', overlaps + 'h', '', 'handover windows') +
+      metric('Team-hours', personHours + 'h', '', teams.length + ' team' + (teams.length === 1 ? '' : 's') + ' · efficiency ' + (personHours ? Math.round((24 - gaps) / personHours * 100) : 0) + '%');
+
+    // find contiguous segments of gaps and handovers
+    var minOv = +$('#min-ov').value;
+    var findings = [], summary = [];
+    var segs = [];
+    for (var h = 0; h < 24; h++) {
+      var kind = cov[h].length === 0 ? 'gap' : cov[h].length > 1 ? 'ov' : 'one';
+      if (segs.length && segs[segs.length - 1].kind === kind && segs[segs.length - 1].end === h) segs[segs.length - 1].end = h + 1;
+      else segs.push({ kind: kind, start: h, end: h + 1, who: cov[h].slice() });
+    }
+    // merge wrap-around
+    if (segs.length > 1 && segs[0].kind === segs[segs.length - 1].kind && segs[segs.length - 1].end === 24 && segs[0].start === 0) { segs[segs.length - 1].end = 24 + segs[0].end; segs.shift(); }
+    segs.forEach(function (s) {
+      var len = s.end - s.start, range = hh(s.start) + '–' + hh(s.end % 24) + ' UTC';
+      if (s.kind === 'gap') { findings.push('<div class="reco"><div class="pri p1">!</div><div><strong>Gap ' + range + ' (' + len + 'h)</strong><span>Nobody is on shift. Extend the team that ends at ' + hh(s.start) + ' or starts at ' + hh(s.end % 24) + ', or add an on-call layer for these hours.</span></div></div>'); summary.push('- GAP ' + range + ' (' + len + 'h)'); }
+      else if (s.kind === 'ov') { var ok = len >= minOv; findings.push('<div class="reco"><div class="pri ' + (ok ? 'p3' : 'p2') + '">' + len + 'h</div><div><strong>Handover ' + range + '</strong><span>' + escapeHtml(s.who.join(' + ')) + '. ' + (ok ? 'Enough overlap for a structured handover.' : 'Below your minimum. Shift one team by an hour.') + '</span></div></div>'); summary.push('- Handover ' + range + ': ' + s.who.join(' + ')); }
+    });
+    // detect adjacent single-team segments with zero overlap (hard cutovers)
+    for (var i = 0; i < segs.length; i++) {
+      var a = segs[i], b = segs[(i + 1) % segs.length];
+      if (a.kind === 'one' && b.kind === 'one' && a.who[0] !== b.who[0] && (a.end % 24) === (b.start % 24)) {
+        findings.push('<div class="reco"><div class="pri p2">0h</div><div><strong>Hard cutover at ' + hh(a.end % 24) + ' UTC</strong><span>' + escapeHtml(a.who[0]) + ' → ' + escapeHtml(b.who[0]) + ' with no overlap. Context will be lost. Add at least ' + Math.max(1, minOv) + 'h.</span></div></div>');
+        summary.push('- Hard cutover at ' + hh(a.end % 24) + ' UTC: ' + a.who[0] + ' -> ' + b.who[0]);
+      }
+    }
+    if (!findings.length) findings.push('<p class="hint">Continuous single-team coverage with no handovers. Either one team works 24 hours (check the length) or there are no teams.</p>');
+    $('#findings').innerHTML = findings.join('');
+    lastSummary = '# Follow-the-sun coverage plan\n\n' + rows.map(function (r) { return '- ' + r.t.name + ' (' + r.t.tz + ', ' + fmtOff(r.off) + '): ' + hh(+r.t.start) + '–' + hh(+r.t.start + +r.t.len) + ' local = ' + hh(r.startUtc) + '–' + hh(r.startUtc + +r.t.len) + ' UTC'; }).join('\n') +
+      '\n\nCovered ' + (24 - gaps) + 'h of 24 · Gaps ' + gaps + 'h · Overlap ' + overlaps + 'h\n\n' + summary.join('\n') + '\n\nGenerated with https://prasannamalode.in/tools/shift-planner.html\n';
+  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(teams)); } catch (e) {} }
+  function all() { renderTeams(); compute(); save(); }
+
+  $('#teams').addEventListener('input', function (e) { var el = e.target; if (!el.hasAttribute('data-i')) return; var t = teams[+el.getAttribute('data-i')]; var k = el.getAttribute('data-k'); t[k] = k === 'name' || k === 'tz' ? el.value : +el.value; compute(); save(); });
+  $('#teams').addEventListener('change', function (e) { var el = e.target; if (!el.hasAttribute('data-i')) return; var t = teams[+el.getAttribute('data-i')]; var k = el.getAttribute('data-k'); t[k] = k === 'name' || k === 'tz' ? el.value : +el.value; compute(); save(); });
+  $('#teams').addEventListener('click', function (e) { var d = e.target.closest('[data-del]'); if (!d) return; teams.splice(+d.getAttribute('data-del'), 1); all(); });
+  $('#add').addEventListener('click', function () { teams.push({ name: 'Team ' + (teams.length + 1), tz: 'UTC', start: 9, len: 8 }); all(); });
+  $('#preset-3').addEventListener('click', function () { teams = preset3(); all(); });
+  $('#preset-2').addEventListener('click', function () { teams = preset2(); all(); });
+  $('#clear').addEventListener('click', function () { teams = []; all(); });
+  $('#min-ov').addEventListener('change', compute);
+  $('#copy').addEventListener('click', function () { copyText(lastSummary, 'Coverage summary copied'); });
+  all();
+})();
+</script>
+</body>
+</html>

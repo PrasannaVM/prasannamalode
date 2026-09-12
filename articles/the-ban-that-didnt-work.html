@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Ban That Didn&#x27;t Work — Prasanna Malode</title>
+<meta name="description" content="A one-sentence AI policy, a four-month DNS log, and why making the sanctioned path the fast path beat every prohibition we tried.">
+<meta name="author" content="Prasanna Malode">
+<meta name="theme-color" content="#faf8f4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14151a" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://prasannamalode.in/articles/the-ban-that-didnt-work.html">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="alternate" type="application/rss+xml" title="Prasanna Malode — Articles" href="https://prasannamalode.in/feed.xml">
+<meta property="og:site_name" content="Prasanna Malode">
+<meta property="og:title" content="The Ban That Didn&#x27;t Work — Prasanna Malode">
+<meta property="og:description" content="A one-sentence AI policy, a four-month DNS log, and why making the sanctioned path the fast path beat every prohibition we tried.">
+<meta property="og:url" content="https://prasannamalode.in/articles/the-ban-that-didnt-work.html">
+<meta property="og:image" content="https://prasannamalode.in/assets/og/the-ban-that-didnt-work.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Ban That Didn&#x27;t Work — Prasanna Malode">
+<meta name="twitter:description" content="A one-sentence AI policy, a four-month DNS log, and why making the sanctioned path the fast path beat every prohibition we tried.">
+<meta name="twitter:image" content="https://prasannamalode.in/assets/og/the-ban-that-didnt-work.png">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-07-07">
+<meta property="article:author" content="Prasanna Malode">
+<meta property="article:section" content="AI Governance">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "The Ban That Didn't Work", "description": "A one-sentence AI policy, a four-month DNS log, and why making the sanctioned path the fast path beat every prohibition we tried.", "datePublished": "2026-07-07", "dateModified": "2026-07-07", "author": {"@type": "Person", "name": "Prasanna Malode", "url": "https://prasannamalode.in/index.html#/about", "jobTitle": "Global Head — DevSecOps · Cybersecurity · IT Operations"}, "publisher": {"@type": "Person", "name": "Prasanna Malode"}, "mainEntityOfPage": "https://prasannamalode.in/articles/the-ban-that-didnt-work.html", "image": "https://prasannamalode.in/assets/og/the-ban-that-didnt-work.png", "keywords": "AI Governance", "isPartOf": {"@type": "CreativeWorkSeries", "name": "AI Governance for Engineering Leaders"}}</script>
+<script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body data-root="..">
+<div class="progress" aria-hidden="true"></div>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">PM</span><span>Prasanna Malode</span></a>
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a id="nav-home" href="../index.html#/home">Home</a></li>
+        <li><a id="nav-articles" href="../index.html#/articles" aria-current="page">Articles</a></li>
+        <li><a id="nav-tools" href="../index.html#/tools">Tools</a></li>
+        <li><a id="nav-about" href="../index.html#/about">About</a></li>
+      </ul>
+    </nav>
+    <div class="nav-actions">
+      <a class="icon-btn" href="../feed.xml" title="RSS feed" aria-label="RSS feed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg></a>
+      <button class="icon-btn theme-toggle" type="button" title="Toggle dark mode" aria-label="Toggle dark mode"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      <button class="icon-btn menu-btn" type="button" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+  <article>
+    <header class="article-head">
+      <div class="wrap-read fade-up">
+        <a class="tag" href="../index.html#/articles?tag=AI Governance">AI Governance</a>
+        <h1>The Ban That Didn&#x27;t Work</h1>
+        <div class="meta">
+          <img class="avatar" src="../assets/photo-sm.jpg" alt="" width="26" height="26">
+          <span>Prasanna Malode</span>
+          <span aria-hidden="true">·</span>
+          <time datetime="2026-07-07">July 7, 2026</time>
+          <span aria-hidden="true">·</span>
+          <span>6 min read</span>
+        </div>
+        <p class="lede">A one-sentence AI policy, a four-month DNS log, and why making the sanctioned path the fast path beat every prohibition we tried.</p>
+      </div>
+    </header>
+    <div class="wrap" style="max-width:calc(var(--max-read) + 220px + 56px + 48px)">
+      <div class="article-layout">
+        <div>
+          <aside class="series-box" aria-label="Series navigation">
+  <div class="eyebrow">Series · Part 5 of 8</div>
+  <strong>AI Governance for Engineering Leaders</strong>
+  <ol><li class=""><a href="../articles/who-spent-this.html">Who Spent This?</a></li><li class=""><a href="../articles/invoice-as-intrusion-detection.html">The Invoice as an Intrusion Detection System</a></li><li class=""><a href="../articles/the-queue-is-still-there.html">The Queue Is Still There</a></li><li class=""><a href="../articles/prompt-injection-confused-deputy.html">Prompt Injection Is Not a New Class of Vulnerability</a></li><li class="current"><a href="../articles/the-ban-that-didnt-work.html">The Ban That Didn&#x27;t Work</a></li><li class=""><a href="../articles/same-binary-under-four-names.html">The Same Binary Under Four Names</a></li><li class=""><a href="../articles/code-review-at-machine-scale.html">When Review Breaks: Code at Machine Scale</a></li><li class=""><a href="../articles/the-demo-you-didnt-choose.html">The Demo You Didn&#x27;t Choose</a></li></ol>
+</aside>
+          <nav class="toc-inline" data-toc aria-label="Contents"><div class="eyebrow">In this article</div><div data-toc-list></div></nav>
+          <div class="prose">
+<p>The policy was one sentence long and it was not unreasonable: no company code or configuration is to be entered into external AI tools.</p>
+<p>It was communicated well. People acknowledged it. Nobody argued with it, because nobody disagrees with the principle in the abstract.</p>
+<p>Four months later I was looking at DNS logs for an unrelated reason and found steady traffic to consumer AI domains from engineering subnets, all day, every working day. Not a spike. Not one person. A baseline.</p>
+<p>My first reaction was the wrong one. I started thinking about enforcement — blocklists, egress filtering, a stern follow-up message. It took a conversation with one of the engineers to understand what I was actually looking at.</p>
+<p>She was not being reckless. She had a debugging problem at four in the afternoon, a stack trace she did not recognize, and a tool that could help. The sanctioned alternative required a ticket to request access. The ticket queue was measured in days. Her problem was measured in minutes.</p>
+<p>She had not decided to violate policy. She had decided to do her job, and the policy had not offered her a way to do both.</p>
+<h2>Prohibition has a prerequisite</h2>
+<p>Bans work when the prohibited thing is not very useful, or when the sanctioned substitute is at least as convenient. AI tools fail both conditions badly.</p>
+<p>They are extremely useful for exactly the tasks engineers spend their days on — reading unfamiliar code, drafting boilerplate, explaining an error, writing the regex nobody wants to write, turning a vague requirement into a starting draft. And they are effortless to reach. No install, no procurement, no approval. A browser tab.</p>
+<p>So a ban does not remove the behavior. It removes your visibility of the behavior. The usage moves from corporate laptops to personal phones, from the network you monitor to the one you don't, and from something you could have shaped into something you will now only learn about from the outside.</p>
+<p>I have come to think of it as a rule: when a control makes a behavior invisible rather than absent, you have made your position worse than when you started. You have traded a governable risk for an ungovernable one and given yourself a compliance artifact that says otherwise.</p>
+<h2>Make the sanctioned path the fast path</h2>
+<p>The thing that actually reduced our external traffic was not a stronger prohibition. It was reducing time-to-access from days to zero.</p>
+<p>Concretely: every engineer got access by default, on joining, through our internal gateway. No request, no approval, no ticket. The credential existed before they needed it.</p>
+<p>That single change did more than every message I had sent. Not because the engineers suddenly cared more about data governance, but because the friction that had pushed them outward disappeared. Given two tools of similar quality, people use the one that is already there.</p>
+<p>A few things made it work, and they are worth being specific about.</p>
+<p><strong>The internal option has to be good.</strong> If the sanctioned tool is a lesser model behind a slow interface with a restrictive filter, people will use it for things that do not matter and go elsewhere for things that do — which inverts your intent perfectly. Budget for the good model. It is cheaper than the incident.</p>
+<p><strong>Onboarding by default, not by request.</strong> Any approval step reintroduces the delay you are trying to remove. If a class of user needs gating, gate that class; do not gate everyone to manage the exception.</p>
+<p><strong>Say what is logged, in plain language.</strong> People assume the worst about monitoring they have not had explained. A short, honest note about what is captured and retained produces far less avoidance than silence does. Vagueness reads as surveillance.</p>
+<p><strong>Keep the guardrails about consequences, not vocabulary.</strong> Blocking on keyword lists frustrates legitimate work constantly and stops determined misuse approximately never. Scope what the credential can reach, log what was done, and put your effort into the tail risks that would genuinely hurt.</p>
+<h2>What the gateway gives you that the ban never could</h2>
+<p>Once the traffic is yours, the security work becomes ordinary work.</p>
+<p>You have per-team attribution, so an exposed key is a scoped incident rather than a company-wide one. You have usage telemetry, which turns out to be a decent anomaly signal in its own right. You have a single place to change models, apply policy, and respond to a provider incident without touching forty applications.</p>
+<p>And you have something less tangible that I did not anticipate: you find out what people are actually doing. Our usage patterns told me which teams had adopted these tools deeply and which had not touched them, which informed training, tooling decisions, and a couple of conversations about processes that were clearly painful enough that people were reaching for help.</p>
+<p>None of that is available from a blocklist. A blocklist tells you a request was denied. It tells you nothing about the need that produced it, and the need does not go away when the request does.</p>
+<h2>The part that is uncomfortable to say out loud</h2>
+<p>Shadow AI is a symptom, and the diagnosis is usually about us.</p>
+<p>People go around controls when the controls cost more than the rule is worth to them. That is not a character flaw; it is a rational response to a badly priced obstacle. When I find a widely violated policy, the most useful question is not who is violating it. It is what it costs to comply, and whether we ever measured that before we wrote the rule.</p>
+<p>We had written a sentence that was easy to write and expensive to follow, and then treated the resulting gap as a discipline problem.</p>
+<p>The fix was not a better sentence. It was making compliance the path of least resistance, so that doing the right thing stopped requiring anyone to be heroic about it at four in the afternoon with a stack trace they did not recognize.</p>
+          </div>
+          <footer class="article-foot">
+            <div class="share">
+              <span class="label">Share</span>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="linkedin">LinkedIn</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="x">X</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="email">Email</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="copy">Copy link</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="native">Share…</button>
+            </div>
+            <div class="author-card">
+              <img src="../assets/photo-sm.jpg" alt="Prasanna Malode" width="64" height="64">
+              <div>
+                <div class="name">Prasanna Malode</div>
+                <div class="role">Global Head — DevSecOps · Cybersecurity · IT Operations · Bengaluru, India</div>
+                <p>20+ years leading global IT, DevOps, cybersecurity and service operations. I write about making speed, security and reliability the same conversation. <a href="../index.html#/about">More about me</a>.</p>
+              </div>
+            </div>
+            <nav class="pager" aria-label="More articles">
+              <a class="prev" href="../articles/prompt-injection-confused-deputy.html"><div class="dir">← Older</div><div class="title">Prompt Injection Is Not a New Class of Vulnerability</div></a>
+              <a class="next" href="../articles/same-binary-under-four-names.html"><div class="dir">Newer →</div><div class="title">The Same Binary Under Four Names</div></a>
+            </nav>
+          </footer>
+        </div>
+        <nav class="toc-side" data-toc aria-label="Contents"><div class="eyebrow">In this article</div><div data-toc-list></div></nav>
+      </div>
+    </div>
+  </article>
+</main>
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">PM</span><span>Prasanna Malode</span></a>
+      <div style="margin-top:8px">DevSecOps · Cybersecurity · IT Operations · Bengaluru, India</div>
+      <div style="margin-top:4px">© <span data-year>2026</span> Prasanna Malode. Opinions are my own.</div>
+    </div>
+    <div class="footer-links">
+      <a href="../index.html#/articles">Articles</a>
+      <a href="../index.html#/tools">Tools</a>
+      <a href="../index.html#/about">About</a>
+      <a href="https://linkedin.com/in/prasannamalode" target="_blank" rel="noopener me">LinkedIn</a>
+      <a href="mailto:prasanna.malode@outlook.com">Email</a>
+      <a href="../feed.xml">RSS</a>
+    </div>
+  </div>
+</footer>
+<script src="../assets/articles-data.js" defer></script>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

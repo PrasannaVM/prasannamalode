@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Who Spent This? — Prasanna Malode</title>
+<meta name="description" content="Attribution in an LLM gateway is not a reporting problem. It is a key-issuance decision, and it has to be made before the first request.">
+<meta name="author" content="Prasanna Malode">
+<meta name="theme-color" content="#faf8f4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14151a" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://prasannamalode.in/articles/who-spent-this.html">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="alternate" type="application/rss+xml" title="Prasanna Malode — Articles" href="https://prasannamalode.in/feed.xml">
+<meta property="og:site_name" content="Prasanna Malode">
+<meta property="og:title" content="Who Spent This? — Prasanna Malode">
+<meta property="og:description" content="Attribution in an LLM gateway is not a reporting problem. It is a key-issuance decision, and it has to be made before the first request.">
+<meta property="og:url" content="https://prasannamalode.in/articles/who-spent-this.html">
+<meta property="og:image" content="https://prasannamalode.in/assets/og/who-spent-this.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Who Spent This? — Prasanna Malode">
+<meta name="twitter:description" content="Attribution in an LLM gateway is not a reporting problem. It is a key-issuance decision, and it has to be made before the first request.">
+<meta name="twitter:image" content="https://prasannamalode.in/assets/og/who-spent-this.png">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-04-14">
+<meta property="article:author" content="Prasanna Malode">
+<meta property="article:section" content="AI Governance">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Who Spent This?", "description": "Attribution in an LLM gateway is not a reporting problem. It is a key-issuance decision, and it has to be made before the first request.", "datePublished": "2026-04-14", "dateModified": "2026-04-14", "author": {"@type": "Person", "name": "Prasanna Malode", "url": "https://prasannamalode.in/index.html#/about", "jobTitle": "Global Head — DevSecOps · Cybersecurity · IT Operations"}, "publisher": {"@type": "Person", "name": "Prasanna Malode"}, "mainEntityOfPage": "https://prasannamalode.in/articles/who-spent-this.html", "image": "https://prasannamalode.in/assets/og/who-spent-this.png", "keywords": "AI Governance", "isPartOf": {"@type": "CreativeWorkSeries", "name": "AI Governance for Engineering Leaders"}}</script>
+<script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body data-root="..">
+<div class="progress" aria-hidden="true"></div>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">PM</span><span>Prasanna Malode</span></a>
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a id="nav-home" href="../index.html#/home">Home</a></li>
+        <li><a id="nav-articles" href="../index.html#/articles" aria-current="page">Articles</a></li>
+        <li><a id="nav-tools" href="../index.html#/tools">Tools</a></li>
+        <li><a id="nav-about" href="../index.html#/about">About</a></li>
+      </ul>
+    </nav>
+    <div class="nav-actions">
+      <a class="icon-btn" href="../feed.xml" title="RSS feed" aria-label="RSS feed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg></a>
+      <button class="icon-btn theme-toggle" type="button" title="Toggle dark mode" aria-label="Toggle dark mode"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      <button class="icon-btn menu-btn" type="button" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+  <article>
+    <header class="article-head">
+      <div class="wrap-read fade-up">
+        <a class="tag" href="../index.html#/articles?tag=AI Governance">AI Governance</a>
+        <h1>Who Spent This?</h1>
+        <div class="meta">
+          <img class="avatar" src="../assets/photo-sm.jpg" alt="" width="26" height="26">
+          <span>Prasanna Malode</span>
+          <span aria-hidden="true">·</span>
+          <time datetime="2026-04-14">April 14, 2026</time>
+          <span aria-hidden="true">·</span>
+          <span>6 min read</span>
+        </div>
+        <p class="lede">Attribution in an LLM gateway is not a reporting problem. It is a key-issuance decision, and it has to be made before the first request.</p>
+      </div>
+    </header>
+    <div class="wrap" style="max-width:calc(var(--max-read) + 220px + 56px + 48px)">
+      <div class="article-layout">
+        <div>
+          <aside class="series-box" aria-label="Series navigation">
+  <div class="eyebrow">Series · Part 1 of 8</div>
+  <strong>AI Governance for Engineering Leaders</strong>
+  <ol><li class="current"><a href="../articles/who-spent-this.html">Who Spent This?</a></li><li class=""><a href="../articles/invoice-as-intrusion-detection.html">The Invoice as an Intrusion Detection System</a></li><li class=""><a href="../articles/the-queue-is-still-there.html">The Queue Is Still There</a></li><li class=""><a href="../articles/prompt-injection-confused-deputy.html">Prompt Injection Is Not a New Class of Vulnerability</a></li><li class=""><a href="../articles/the-ban-that-didnt-work.html">The Ban That Didn&#x27;t Work</a></li><li class=""><a href="../articles/same-binary-under-four-names.html">The Same Binary Under Four Names</a></li><li class=""><a href="../articles/code-review-at-machine-scale.html">When Review Breaks: Code at Machine Scale</a></li><li class=""><a href="../articles/the-demo-you-didnt-choose.html">The Demo You Didn&#x27;t Choose</a></li></ol>
+</aside>
+          <nav class="toc-inline" data-toc aria-label="Contents"><div class="eyebrow">In this article</div><div data-toc-list></div></nav>
+          <div class="prose">
+<p>There is a particular kind of silence that follows a simple question in a meeting.</p>
+<p>Ours came in month three of running an internal LLM gateway. Someone from finance had the usage report open and asked what should have been a trivial question: which teams were driving the spend? Engineering wanted to know before they asked for more budget. Finance wanted to know before they approved it.</p>
+<p>The report had one number. A big one, technically accurate, and completely useless. Every request had gone through the same API key.</p>
+<p>We had done the hard part well. We had stood up a proxy, centralized model access, kept raw provider keys out of application code, and given ourselves a single place to enforce rate limits. On any architecture diagram it looked correct. The one thing we had not done was decide, before the first request, who each request belonged to.</p>
+<h2>Attribution is a design decision</h2>
+<p>This is the part I got wrong, and I think a lot of teams get wrong in the same way: attribution feels like a reporting problem. It presents as a dashboard gap. It seems like the sort of thing you fix later by adding a column.</p>
+<p>It is not a reporting problem. It is a key issuance problem, and key issuance happens at the beginning.</p>
+<p>Whatever your gateway is — a commercial product, an open-source proxy, something you wrote yourself — it will let you mint virtual keys that sit in front of the real provider credentials. The question is what those keys map to. One key for the whole company. One per application. One per team. One per user.</p>
+<p>Every answer downstream of that choice is fixed by it. Your usage data can only ever be as granular as your keys. If one key serves forty engineers, no amount of clever querying recovers which engineer did what. The information was never captured. You are not missing a report; you are missing a fact.</p>
+<p>And the retrofit is genuinely painful, because it is not a schema change. It is a credential rotation across every integration you have built, coordinated with every team that depends on them, while the old key stays alive long enough that nobody's pipeline breaks. I have watched that project consume weeks that a fifteen-minute decision at the start would have saved entirely.</p>
+<h2>Why security ends up caring more than finance</h2>
+<p>The budget conversation is what forces the issue. It is not the reason the issue matters.</p>
+<p>Consider what happens when a key leaks. Someone commits it, or pastes it into a support ticket, or it ends up baked into a container image that gets pushed somewhere public. You find out — maybe from a spend anomaly, maybe from a scanner, maybe from someone outside the company being kind enough to tell you.</p>
+<p>Now you are in incident response. The first questions are always the same. What could this credential reach? How long was it exposed? What was done with it? Who else is affected if we kill it right now?</p>
+<p>With one shared key, every one of those questions returns the worst possible answer. It could reach everything. It was exposed since whenever it was created. What was done with it is indistinguishable from normal traffic, because normal traffic looks exactly the same. And revoking it takes the entire company offline, which means you will feel pressure to wait, investigate more, be careful — while the credential stays live.</p>
+<p>With per-team or per-user keys, the same incident is a different event. Blast radius is scoped by construction. The traffic on that one key is a narrow, readable slice. Revocation affects one team, who you can notify in a Slack message. You go from an organizational emergency to a Tuesday.</p>
+<p>That difference was not created during the incident. It was created months earlier, by someone deciding how to issue keys.</p>
+<h2>The uncomfortable part about per-user</h2>
+<p>Per-user attribution is the most useful and the most contentious, so it deserves an honest paragraph rather than a recommendation.</p>
+<p>Per-user keys give you the cleanest audit trail available. They also mean you are now holding a per-person record of interactions with a language model, and people use these tools to think out loud. Some of what they type is half-formed, or personal, or about problems they have not told anyone about yet. Depending on where your employees sit, that record may carry obligations you have not thought about.</p>
+<p>I do not think there is a universal right answer. What I think is wrong is arriving at an answer by accident. Decide it deliberately, write down what you retain and for how long, tell people plainly what is logged, and be able to explain why. A team that knows the shape of the logging will work with it. A team that discovers it later will route around it, and then you have shadow AI on top of everything else.</p>
+<p>If per-user is too heavy for your context, per-team is a defensible middle. It is coarse enough to avoid individual surveillance and fine enough that incident scoping and cost allocation both work. What is not defensible is one key for everyone, which is the option that feels like no decision at all.</p>
+<h2>What I would tell myself at the start</h2>
+<p>Before the first request goes through the gateway, answer three things.</p>
+<p>What is the smallest unit you need to attribute to? Pick it based on the incident you would least like to handle, not the report you would most like to see.</p>
+<p>Who issues keys, and how does someone get one? If the answer involves a ticket that takes four days, you have just designed your shadow AI problem. Make the sanctioned path the fast path.</p>
+<p>What happens when a key has to die? Write the runbook while nothing is on fire. It should be short. If it is long, your key structure is wrong.</p>
+<p>None of this is sophisticated. It is the same least-privilege reasoning we have applied to service accounts for twenty years, pointed at a new kind of credential. The only reason it gets skipped is that the gateway works fine without it, right up until the moment it doesn't.</p>
+<p>The number in that report was correct. That was the problem. It was one correct number where we needed forty, and the only moment we could have had forty was before we started.</p>
+          </div>
+          <footer class="article-foot">
+            <div class="share">
+              <span class="label">Share</span>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="linkedin">LinkedIn</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="x">X</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="email">Email</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="copy">Copy link</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="native">Share…</button>
+            </div>
+            <div class="author-card">
+              <img src="../assets/photo-sm.jpg" alt="Prasanna Malode" width="64" height="64">
+              <div>
+                <div class="name">Prasanna Malode</div>
+                <div class="role">Global Head — DevSecOps · Cybersecurity · IT Operations · Bengaluru, India</div>
+                <p>20+ years leading global IT, DevOps, cybersecurity and service operations. I write about making speed, security and reliability the same conversation. <a href="../index.html#/about">More about me</a>.</p>
+              </div>
+            </div>
+            <nav class="pager" aria-label="More articles">
+              <a class="prev" href="../articles/cicd-80-percent.html"><div class="dir">← Older</div><div class="title">How I increased release frequency by 80% without sacrificing security</div></a>
+              <a class="next" href="../articles/invoice-as-intrusion-detection.html"><div class="dir">Newer →</div><div class="title">The Invoice as an Intrusion Detection System</div></a>
+            </nav>
+          </footer>
+        </div>
+        <nav class="toc-side" data-toc aria-label="Contents"><div class="eyebrow">In this article</div><div data-toc-list></div></nav>
+      </div>
+    </div>
+  </article>
+</main>
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">PM</span><span>Prasanna Malode</span></a>
+      <div style="margin-top:8px">DevSecOps · Cybersecurity · IT Operations · Bengaluru, India</div>
+      <div style="margin-top:4px">© <span data-year>2026</span> Prasanna Malode. Opinions are my own.</div>
+    </div>
+    <div class="footer-links">
+      <a href="../index.html#/articles">Articles</a>
+      <a href="../index.html#/tools">Tools</a>
+      <a href="../index.html#/about">About</a>
+      <a href="https://linkedin.com/in/prasannamalode" target="_blank" rel="noopener me">LinkedIn</a>
+      <a href="mailto:prasanna.malode@outlook.com">Email</a>
+      <a href="../feed.xml">RSS</a>
+    </div>
+  </div>
+</footer>
+<script src="../assets/articles-data.js" defer></script>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

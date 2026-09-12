@@ -1,378 +1,266 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Prasanna Malode — DevSecOps & IT Leadership</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        colors: {
-          brand: '#1a5276',
-          surface: '#faf8f4',
-          ink: '#1a1814',
-          muted: '#7a7468',
-          accent: '#1a5276',
-          'accent-light': '#d6eaf8',
-          border: '#e8e2d9',
-          'tag-bg': '#eaf2fb',
-        },
-        fontFamily: {
-          serif: ['Lora', 'serif'],
-          sans: ['DM Sans', 'sans-serif'],
-        },
-        animation: {
-          'fade-up': 'fadeUp 0.45s ease both',
-        },
-        keyframes: {
-          fadeUp: {
-            'from': { opacity: '0', transform: 'translateY(16px)' },
-            'to': { opacity: '1', transform: 'translateY(0)' },
-          }
-        }
-      }
-    }
-  }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prasanna Malode — DevSecOps, Cybersecurity & IT Leadership</title>
+<meta name="description" content="Essays and tools from 20+ years leading global DevSecOps, cybersecurity and IT operations. Speed, security and reliability are not trade-offs.">
+<meta name="author" content="Prasanna Malode">
+<meta name="theme-color" content="#faf8f4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14151a" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://prasannamalode.in/">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="alternate" type="application/rss+xml" title="Prasanna Malode — Articles" href="https://prasannamalode.in/feed.xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Prasanna Malode">
+<meta property="og:title" content="Prasanna Malode — DevSecOps, Cybersecurity & IT Leadership">
+<meta property="og:description" content="Essays and tools from 20+ years leading global DevSecOps, cybersecurity and IT operations.">
+<meta property="og:url" content="https://prasannamalode.in/">
+<meta property="og:image" content="https://prasannamalode.in/assets/og/site.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Prasanna Malode — DevSecOps, Cybersecurity & IT Leadership">
+<meta name="twitter:description" content="Essays and tools from 20+ years leading global DevSecOps, cybersecurity and IT operations.">
+<meta name="twitter:image" content="https://prasannamalode.in/assets/og/site.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Prasanna Malode","url":"https://prasannamalode.in/","image":"https://prasannamalode.in/assets/photo.jpg","jobTitle":"Global Head — DevSecOps, Cybersecurity & IT Operations","worksFor":{"@type":"Organization","name":"IP Infusion"},"address":{"@type":"PostalAddress","addressLocality":"Bengaluru","addressCountry":"IN"},"sameAs":["https://linkedin.com/in/prasannamalode"],"email":"mailto:prasanna.malode@outlook.com","knowsAbout":["DevSecOps","CI/CD","Cybersecurity","ISO 27001","ITIL","Kubernetes","AI Governance","IT Operations"]}
 </script>
-<style type="text/tailwindcss">
-  @layer base {
-    body { @apply bg-surface text-ink font-sans leading-relaxed min-h-screen; }
-    section { @apply hidden; }
-    section.active { @apply block; }
-  }
-  @layer components {
-    .btn { @apply inline-flex items-center px-5 py-2.5 rounded-lg text-sm font-medium cursor-pointer transition-all duration-200 border-none no-underline; }
-    .btn-primary { @apply bg-brand text-white hover:bg-[#154360]; }
-    .btn-secondary { @apply bg-white text-ink border border-border hover:border-brand hover:text-brand; }
-    .nav-link { @apply text-muted no-underline text-[0.88rem] font-medium transition-colors duration-200 cursor-pointer hover:text-brand; }
-    .nav-link.active { @apply text-brand; }
-    .card-tag { @apply inline-block bg-tag-bg text-brand text-[0.7rem] font-medium tracking-wider uppercase px-2.5 py-1 rounded-full mb-2.5; }
-  }
-</style>
+<script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
 </head>
-<body>
-<nav class="sticky top-0 z-[100] bg-surface/90 backdrop-blur-md border-b border-border px-6">
-  <div class="max-w-[880px] mx-auto flex items-center justify-between h-[60px]">
-    <span class="font-serif text-[1.1rem] font-semibold text-ink cursor-pointer" onclick="showSection('home')">Prasanna Malode</span>
-    <ul class="flex gap-6 list-none">
-      <li><a onclick="showSection('home')" id="nav-home" class="nav-link active">Home</a></li>
-      <li><a onclick="showSection('articles')" id="nav-articles" class="nav-link">Articles</a></li>
-      <li><a onclick="showSection('tools')" id="nav-tools" class="nav-link">Tools</a></li>
-      <li><a onclick="showSection('about')" id="nav-about" class="nav-link">About</a></li>
-    </ul>
-  </div>
-</nav>
-
-<section id="home" class="active">
-  <div class="max-w-[880px] mx-auto py-16 px-6 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-12 items-center animate-fade-up">
-    <div class="space-y-4">
-      <h1 class="font-serif text-4xl md:text-5xl font-bold leading-tight">Prasanna Malode</h1>
-      <p class="text-brand font-medium text-base">Global Head — DevSecOps · Cybersecurity · IT Operations</p>
-      <p class="text-muted text-[0.97rem] max-w-[500px]">I write about DevSecOps transformation, cybersecurity leadership, and building high-performing engineering teams — drawing from 20+ years leading global IT at IP Infusion, Oracle, and EMC².</p>
-      <div class="flex flex-wrap gap-3 pt-4">
-        <button class="btn btn-primary" onclick="showSection('articles')">Read Articles</button>
-        <button class="btn btn-secondary" onclick="showSection('tools')">Explore Tools</button>
-      </div>
-    </div>
-    <div class="w-[150px] h-[150px] rounded-full overflow-hidden border-3 border-border shrink-0 shadow-2xl">
-      <img id="hero-photo" src="" alt="Prasanna Malode" class="w-full h-full object-cover object-top"/>
+<body data-root=".">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html#/home"><span class="brand-mark" aria-hidden="true">PM</span><span>Prasanna Malode</span></a>
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a id="nav-home" href="#/home" aria-current="page">Home</a></li>
+        <li><a id="nav-articles" href="#/articles">Articles</a></li>
+        <li><a id="nav-tools" href="#/tools">Tools</a></li>
+        <li><a id="nav-about" href="#/about">About</a></li>
+      </ul>
+    </nav>
+    <div class="nav-actions">
+      <a class="icon-btn" href="feed.xml" title="RSS feed" aria-label="RSS feed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg></a>
+      <button class="icon-btn theme-toggle" type="button" title="Toggle dark mode" aria-label="Toggle dark mode"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      <button class="icon-btn menu-btn" type="button" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </div>
-  
-  <div class="max-w-[880px] mx-auto px-6 pb-16">
-    <div class="flex flex-wrap bg-white border border-border rounded-xl overflow-hidden mb-12 animate-fade-up">
-      <div class="flex-1 p-5 text-center border-r border-border last:border-r-0 min-w-[45%] md:min-w-0">
-        <div class="font-serif text-2xl text-brand font-semibold">80%↑</div>
-        <div class="text-[0.75rem] text-muted mt-0.5">Release Frequency</div>
-      </div>
-      <div class="flex-1 p-5 text-center border-r border-border last:border-r-0 min-w-[45%] md:min-w-0">
-        <div class="font-serif text-2xl text-brand font-semibold">60%↓</div>
-        <div class="text-[0.75rem] text-muted mt-0.5">Deployment Failures</div>
-      </div>
-      <div class="flex-1 p-5 text-center border-r border-border last:border-r-0 min-w-[45%] md:min-w-0">
-        <div class="font-serif text-2xl text-brand font-semibold">50%↓</div>
-        <div class="text-[0.75rem] text-muted mt-0.5">Security Incidents</div>
-      </div>
-      <div class="flex-1 p-5 text-center border-r border-border last:border-r-0 min-w-[45%] md:min-w-0">
-        <div class="font-serif text-2xl text-brand font-semibold">20+</div>
-        <div class="text-[0.75rem] text-muted mt-0.5">Years Experience</div>
-      </div>
-      <div class="flex-1 p-5 text-center border-r border-border last:border-r-0 min-w-[45%] md:min-w-0">
-        <div class="font-serif text-2xl text-brand font-semibold">16</div>
-        <div class="text-[0.75rem] text-muted mt-0.5">Global Team Size</div>
-      </div>
-    </div>
+</header>
 
-    <p class="text-[0.75rem] font-medium tracking-widest uppercase text-muted mb-4">Recent Articles</p>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12" id="home-articles-grid"></div>
+<main id="main">
 
-    <p class="text-[0.75rem] font-medium tracking-widest uppercase text-muted mb-4">Tools I've Built</p>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div class="bg-white border border-border rounded-xl p-5 cursor-pointer transition-all duration-200 hover:border-brand hover:-translate-y-0.5 hover:shadow-lg animate-fade-up">
-        <div class="flex gap-4 items-start">
-          <div class="w-10 h-10 rounded-lg bg-accent-light flex items-center justify-center text-xl shrink-0">📊</div>
-          <div class="space-y-1">
-            <h3 class="text-[0.97rem] font-medium">MTTR / MTTA / MTTI Calculator</h3>
-            <p class="text-muted text-[0.84rem]">Paste your incident data and get instant SLA health metrics.</p>
-            <span class="inline-flex items-center gap-1 mt-2 text-[0.8rem] text-brand font-medium">Try it →</span>
-          </div>
+<!-- ================= HOME ================= -->
+<section id="home" aria-labelledby="home-title">
+  <div class="wrap hero">
+    <div class="hero-grid">
+      <div class="fade-up">
+        <h1 id="home-title">Speed, security and reliability are the same conversation.</h1>
+        <p class="role">Prasanna Malode · Global Head — DevSecOps · Cybersecurity · IT Operations</p>
+        <p class="lede">I write about DevSecOps transformation, cybersecurity leadership, AI governance and building high-performing engineering teams, drawing on 20+ years leading global IT at IP Infusion, Oracle and EMC².</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#/articles">Read the articles</a>
+          <a class="btn btn-secondary" href="#/tools">Try the tools</a>
         </div>
       </div>
-      <div class="bg-white border border-border rounded-xl p-5 cursor-pointer transition-all duration-200 hover:border-brand hover:-translate-y-0.5 hover:shadow-lg animate-fade-up">
-        <div class="flex gap-4 items-start">
-          <div class="w-10 h-10 rounded-lg bg-accent-light flex items-center justify-center text-xl shrink-0">🔐</div>
-          <div class="space-y-1">
-            <h3 class="text-[0.97rem] font-medium">ISO 27001 Readiness Checklist</h3>
-            <p class="text-muted text-[0.84rem]">Self-assess your InfoSec posture in 5 minutes.</p>
-            <span class="inline-flex items-center gap-1 mt-2 text-[0.8rem] text-brand font-medium">Try it →</span>
-          </div>
-        </div>
+      <div class="portrait fade-up d1">
+        <picture>
+          <source srcset="assets/photo.webp" type="image/webp">
+          <img src="assets/photo.jpg" alt="Portrait of Prasanna Malode" width="176" height="176" fetchpriority="high">
+        </picture>
       </div>
     </div>
   </div>
-</section>
 
-<section id="articles">
-  <div class="max-w-[880px] mx-auto py-16 px-6">
-    <div class="mb-9 animate-fade-up">
-      <h2 class="font-serif text-3xl font-bold mb-1.5">Articles</h2>
-      <p class="text-muted">Real lessons from leading DevSecOps, cybersecurity, and IT operations at global scale.</p>
+  <div class="wrap">
+    <div class="stats fade-up d1" aria-label="Outcomes">
+      <div class="stat"><div class="stat-value">80%↑</div><div class="stat-label">Release frequency</div></div>
+      <div class="stat"><div class="stat-value">60%↓</div><div class="stat-label">Deployment failures</div></div>
+      <div class="stat"><div class="stat-value">50%↓</div><div class="stat-label">Security incidents</div></div>
+      <div class="stat"><div class="stat-value">20+</div><div class="stat-label">Years leading IT</div></div>
+      <div class="stat"><div class="stat-value">16</div><div class="stat-label">Person global team</div></div>
     </div>
-    <div class="flex flex-col gap-3.5" id="articles-list"></div>
   </div>
-</section>
 
-<section id="tools">
-  <div class="max-w-[880px] mx-auto py-16 px-6">
-    <div class="mb-9 animate-fade-up">
-      <h2 class="font-serif text-3xl font-bold mb-1.5">Tools</h2>
-      <p class="text-muted">Practical tools built from real DevSecOps and IT operations work. Free to use.</p>
+  <div class="wrap section" style="padding-bottom:0">
+    <div class="series-banner fade-up d2">
+      <div>
+        <div class="eyebrow">New series · 8 parts</div>
+        <h3>AI Governance for Engineering Leaders</h3>
+        <p>Field notes from running LLM gateways, AI-assisted SOCs and coding assistants inside a real engineering organisation. Key attribution, spend as a detection signal, prompt injection as a confused deputy, shadow AI, review at machine scale, and the questions to ask vendors.</p>
+      </div>
+      <a class="btn" href="articles/who-spent-this.html">Start with Part 1 →</a>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div class="bg-white border border-border rounded-xl p-5 flex gap-4 items-start transition-all duration-200 hover:border-brand hover:-translate-y-0.5 hover:shadow-lg animate-fade-up">
-        <div class="w-10 h-10 rounded-lg bg-accent-light flex items-center justify-center text-xl shrink-0">📊</div>
-        <div class="space-y-1">
-          <h3 class="text-[0.97rem] font-medium">MTTR / MTTA / MTTI Calculator</h3>
-          <p class="text-muted text-[0.84rem]">Input incident timestamps and get MTTR, MTTA, MTTI with SLA compliance.</p>
-          <span class="inline-flex items-center gap-1 mt-2 text-[0.8rem] text-brand font-medium">Try it →</span>
-        </div>
-      </div>
-      <div class="bg-white border border-border rounded-xl p-5 flex gap-4 items-start transition-all duration-200 hover:border-brand hover:-translate-y-0.5 hover:shadow-lg animate-fade-up">
-        <div class="w-10 h-10 rounded-lg bg-accent-light flex items-center justify-center text-xl shrink-0">🔐</div>
-        <div class="space-y-1">
-          <h3 class="text-[0.97rem] font-medium">ISO 27001 Readiness Checklist</h3>
-          <p class="text-muted text-[0.84rem]">20-question self-assessment to gauge InfoSec maturity before a formal audit.</p>
-          <span class="inline-flex items-center gap-1 mt-2 text-[0.8rem] text-brand font-medium">Try it →</span>
-        </div>
-      </div>
-      <div class="bg-white border border-border rounded-xl p-5 flex gap-4 items-start transition-all duration-200 hover:border-brand hover:-translate-y-0.5 hover:shadow-lg animate-fade-up">
-        <div class="w-10 h-10 rounded-lg bg-accent-light flex items-center justify-center text-xl shrink-0">🚀</div>
-        <div class="space-y-1">
-          <h3 class="text-[0.97rem] font-medium">CI/CD Pipeline Health Scorecard</h3>
-          <p class="text-muted text-[0.84rem]">Rate your pipeline across 6 dimensions: speed, reliability, security, coverage, observability, rollback.</p>
-          <span class="inline-flex items-center gap-1 mt-2 text-[0.8rem] text-brand font-medium">Try it →</span>
-        </div>
-      </div>
-      <div class="bg-white border border-border rounded-xl p-5 flex gap-4 items-start transition-all duration-200 hover:border-brand hover:-translate-y-0.5 hover:shadow-lg animate-fade-up">
-        <div class="w-10 h-10 rounded-lg bg-accent-light flex items-center justify-center text-xl shrink-0">📋</div>
-        <div class="space-y-1">
-          <h3 class="text-[0.97rem] font-medium">Incident Postmortem Template</h3>
-          <p class="text-muted text-[0.84rem]">A structured template for blameless postmortems that prevent recurrence.</p>
-          <span class="inline-flex items-center gap-1 mt-2 text-[0.8rem] text-brand font-medium">Try it →</span>
-        </div>
-      </div>
-      <div class="bg-white border border-border rounded-xl p-5 flex gap-4 items-start transition-all duration-200 hover:border-brand hover:-translate-y-0.5 hover:shadow-lg animate-fade-up">
-        <div class="w-10 h-10 rounded-lg bg-accent-light flex items-center justify-center text-xl shrink-0">👥</div>
-        <div class="space-y-1">
-          <h3 class="text-[0.97rem] font-medium">Follow-the-Sun Shift Planner</h3>
-          <p class="text-muted text-[0.84rem]">Plan 24×7 on-call schedules across timezones with handover optimization.</p>
-          <span class="inline-flex items-center gap-1 mt-2 text-[0.8rem] text-brand font-medium">Try it →</span>
-        </div>
-      </div>
-      <div class="bg-white border border-border rounded-xl p-5 flex gap-4 items-start transition-all duration-200 hover:border-brand hover:-translate-y-0.5 hover:shadow-lg animate-fade-up">
-        <div class="w-10 h-10 rounded-lg bg-accent-light flex items-center justify-center text-xl shrink-0">🛡️</div>
-        <div class="space-y-1">
-          <h3 class="text-[0.97rem] font-medium">DevSecOps Maturity Mapper</h3>
-          <p class="text-muted text-[0.84rem]">Assess your DevSecOps maturity and get a prioritized improvement roadmap.</p>
-          <span class="inline-flex items-center gap-1 mt-2 text-[0.8rem] text-brand font-medium">Try it →</span>
-        </div>
-      </div>
+  </div>
+
+  <div class="wrap section">
+    <div class="section-head">
+      <p class="eyebrow">Latest articles</p>
+      <a href="#/articles">All articles →</a>
+    </div>
+    <div class="grid-3" id="home-articles-grid"></div>
+  </div>
+
+  <div class="wrap" style="padding-bottom:24px">
+    <div class="section-head">
+      <p class="eyebrow">Tools I've built</p>
+      <a href="#/tools">All tools →</a>
+    </div>
+    <div class="grid-3">
+      <a class="card card-link tool-card fade-up" href="tools/mttr-calculator.html">
+        <div class="tool-icon" aria-hidden="true">📊</div>
+        <div><h3>MTTR / MTTA / MTTI Calculator</h3><p>Paste incident timestamps and get response metrics with SLA compliance by priority.</p><span class="cta">Open tool →</span></div>
+      </a>
+      <a class="card card-link tool-card fade-up d1" href="tools/iso27001-readiness.html">
+        <div class="tool-icon" aria-hidden="true">🔐</div>
+        <div><h3>ISO 27001 Readiness Check</h3><p>A 20-question self-assessment mapped to the 2022 Annex A themes.</p><span class="cta">Open tool →</span></div>
+      </a>
+      <a class="card card-link tool-card fade-up d2" href="tools/devsecops-maturity.html">
+        <div class="tool-icon" aria-hidden="true">🛡️</div>
+        <div><h3>DevSecOps Maturity Mapper</h3><p>Score eight pipeline stages and get a prioritised improvement roadmap.</p><span class="cta">Open tool →</span></div>
+      </a>
     </div>
   </div>
 </section>
 
-<section id="about">
-  <div class="max-w-[880px] mx-auto py-16 px-6">
-    <div class="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-11 items-start animate-fade-up">
-      <div class="w-[130px] h-[130px] rounded-full overflow-hidden border-3 border-border shrink-0">
-        <img id="about-photo" src="" alt="Prasanna Malode" class="w-full h-full object-cover object-top"/>
-      </div>
-      <div class="space-y-3.5">
-        <h2 class="font-serif text-3xl font-bold">Prasanna Malode</h2>
-        <p class="text-ink text-[0.96rem]"><strong>Global Head — DevSecOps, Cybersecurity & IT Operations</strong> · Bengaluru, India</p>
-        <p class="text-muted text-[0.96rem]">I'm a Director/VP-level technology leader with 20+ years bridging CXO strategy with ground-level engineering execution. Currently leading global IT, DevOps, Cybersecurity, and IT Service Operations at IP Infusion.</p>
-        <p class="text-muted text-[0.96rem]">My belief: <em class="italic">Speed, Security, and Reliability are not trade-offs — they are the foundation of scale.</em></p>
-        <p class="text-muted text-[0.96rem]">I hold an MBA, MSc (Electronics), PGDCA, PMP, and ITIL Foundation.</p>
-        <div class="flex flex-wrap gap-2 my-5">
-          <span class="bg-tag-bg text-brand text-[0.78rem] font-medium px-3 py-1 rounded-full border border-accent-light">DevSecOps</span>
-          <span class="bg-tag-bg text-brand text-[0.78rem] font-medium px-3 py-1 rounded-full border border-accent-light">CI/CD</span>
-          <span class="bg-tag-bg text-brand text-[0.78rem] font-medium px-3 py-1 rounded-full border border-accent-light">Cybersecurity</span>
-          <span class="bg-tag-bg text-brand text-[0.78rem] font-medium px-3 py-1 rounded-full border border-accent-light">ISO 27001</span>
-          <span class="bg-tag-bg text-brand text-[0.78rem] font-medium px-3 py-1 rounded-full border border-accent-light">ITIL</span>
-          <span class="bg-tag-bg text-brand text-[0.78rem] font-medium px-3 py-1 rounded-full border border-accent-light">Kubernetes</span>
-          <span class="bg-tag-bg text-brand text-[0.78rem] font-medium px-3 py-1 rounded-full border border-accent-light">Jenkins</span>
-          <span class="bg-tag-bg text-brand text-[0.78rem] font-medium px-3 py-1 rounded-full border border-accent-light">ServiceNow</span>
-          <span class="bg-tag-bg text-brand text-[0.78rem] font-medium px-3 py-1 rounded-full border border-accent-light">Global IT Strategy</span>
-          <span class="bg-tag-bg text-brand text-[0.78rem] font-medium px-3 py-1 rounded-full border border-accent-light">Team Leadership</span>
-          <span class="bg-tag-bg text-brand text-[0.78rem] font-medium px-3 py-1 rounded-full border border-accent-light">Gen AI in CI/CD</span>
-          <span class="bg-tag-bg text-brand text-[0.78rem] font-medium px-3 py-1 rounded-full border border-accent-light">PMP</span>
-        </div>
-        <div class="flex flex-wrap gap-2.5 mt-5">
-          <a class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border text-[0.83rem] font-medium text-ink bg-white no-underline transition-colors duration-200 hover:border-brand hover:text-brand" href="https://linkedin.com/in/prasannamalode" target="_blank">🔗 LinkedIn</a>
-          <a class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border text-[0.83rem] font-medium text-ink bg-white no-underline transition-colors duration-200 hover:border-brand hover:text-brand" href="mailto:prasanna.malode@outlook.com">✉️ prasanna.malode@outlook.com</a>
-          <a class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border text-[0.83rem] font-medium text-ink bg-white no-underline transition-colors duration-200 hover:border-brand hover:text-brand" href="tel:+918884161655">📞 +91-888-416-1655</a>
-        </div>
-      </div>
+<!-- ================= ARTICLES ================= -->
+<section id="articles" hidden aria-labelledby="articles-title">
+  <div class="wrap section">
+    <div class="fade-up">
+      <p class="eyebrow">Writing</p>
+      <h2 id="articles-title" style="font-family:var(--serif);font-size:2rem;font-weight:700;margin-bottom:6px">Articles</h2>
+      <p style="color:var(--muted);max-width:620px">Real lessons from leading DevSecOps, cybersecurity, AI governance and IT operations at global scale. No vendor pitches, no theory without a scar behind it.</p>
+    </div>
+    <div class="toolbar fade-up d1">
+      <label class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="article-search" type="search" placeholder="Search titles and summaries…" autocomplete="off" aria-label="Search articles">
+      </label>
+      <span id="articles-count" style="font-size:.8rem;color:var(--muted-2)"></span>
+    </div>
+    <div class="filters fade-up d1" id="article-filters" role="group" aria-label="Filter by topic"></div>
+    <div class="list" id="articles-list" style="margin-top:18px"></div>
+  </div>
+</section>
+
+<!-- ================= TOOLS ================= -->
+<section id="tools" hidden aria-labelledby="tools-title">
+  <div class="wrap section">
+    <div class="fade-up">
+      <p class="eyebrow">Free to use</p>
+      <h2 id="tools-title" style="font-family:var(--serif);font-size:2rem;font-weight:700;margin-bottom:6px">Tools</h2>
+      <p style="color:var(--muted);max-width:620px">Practical calculators and templates distilled from real DevSecOps and IT operations work. Everything runs in your browser. Nothing you type leaves your machine.</p>
+    </div>
+    <div class="grid-2" style="margin-top:26px">
+      <a class="card card-link tool-card fade-up" href="tools/mttr-calculator.html">
+        <div class="tool-icon" aria-hidden="true">📊</div>
+        <div><h3>MTTR / MTTA / MTTI Calculator</h3><p>Paste incident data (CSV) and get mean and median time to identify, acknowledge and resolve, plus SLA compliance by priority and the worst offenders.</p><span class="cta">Open tool →</span></div>
+      </a>
+      <a class="card card-link tool-card fade-up d1" href="tools/iso27001-readiness.html">
+        <div class="tool-icon" aria-hidden="true">🔐</div>
+        <div><h3>ISO 27001 Readiness Checklist</h3><p>Twenty questions across the organisational, people, physical and technological themes of ISO/IEC 27001:2022 Annex A. Get a readiness score and the gaps to close first.</p><span class="cta">Open tool →</span></div>
+      </a>
+      <a class="card card-link tool-card fade-up d1" href="tools/cicd-scorecard.html">
+        <div class="tool-icon" aria-hidden="true">🚀</div>
+        <div><h3>CI/CD Pipeline Health Scorecard</h3><p>Rate your pipeline across speed, reliability, security, test coverage, observability and rollback. See a radar chart and where to invest next.</p><span class="cta">Open tool →</span></div>
+      </a>
+      <a class="card card-link tool-card fade-up d2" href="tools/postmortem-template.html">
+        <div class="tool-icon" aria-hidden="true">📋</div>
+        <div><h3>Incident Postmortem Template</h3><p>A structured, blameless postmortem builder. Fill in the timeline, impact, contributing factors and actions, then export clean Markdown for your wiki.</p><span class="cta">Open tool →</span></div>
+      </a>
+      <a class="card card-link tool-card fade-up d2" href="tools/shift-planner.html">
+        <div class="tool-icon" aria-hidden="true">🌍</div>
+        <div><h3>Follow-the-Sun Shift Planner</h3><p>Pick your regions and shift windows, then see 24-hour coverage, handover overlaps and gaps on a single timeline in UTC.</p><span class="cta">Open tool →</span></div>
+      </a>
+      <a class="card card-link tool-card fade-up d3" href="tools/devsecops-maturity.html">
+        <div class="tool-icon" aria-hidden="true">🛡️</div>
+        <div><h3>DevSecOps Maturity Mapper</h3><p>Assess eight stages from plan to monitor on a five-level scale, get an overall maturity level and a prioritised roadmap of the next moves.</p><span class="cta">Open tool →</span></div>
+      </a>
     </div>
   </div>
 </section>
 
-<footer class="border-t border-border text-center py-6 px-6 text-[0.8rem] text-muted">
-  © 2026 Prasanna Malode · Bengaluru, India · <a href="mailto:prasanna.malode@outlook.com" class="text-brand no-underline">prasanna.malode@outlook.com</a>
+<!-- ================= ABOUT ================= -->
+<section id="about" hidden aria-labelledby="about-title" class="about">
+  <div class="wrap section">
+    <div class="about-grid fade-up">
+      <div class="portrait">
+        <picture>
+          <source srcset="assets/photo.webp" type="image/webp">
+          <img src="assets/photo.jpg" alt="Prasanna Malode" width="200" height="200" loading="lazy">
+        </picture>
+      </div>
+      <div>
+        <p class="eyebrow">About</p>
+        <h2 id="about-title">Prasanna Malode</h2>
+        <p class="role">Global Head — DevSecOps, Cybersecurity & IT Operations · Bengaluru, India</p>
+        <p>I'm a Director/VP-level technology leader with more than twenty years bridging CXO strategy and ground-level engineering execution. Today I lead global IT, DevOps, cybersecurity and IT service operations at IP Infusion, with a 16-person team working follow-the-sun across time zones.</p>
+        <p>Before that I spent years in engineering and operations roles at Oracle and EMC², which is where I learned that most reliability problems are organisational problems wearing a technical costume.</p>
+        <div class="quote-block">Speed, security and reliability are not trade-offs. They are the foundation of scale.</div>
+        <p>I hold an MBA, an MSc in Electronics, a PGDCA, PMP and ITIL Foundation certifications. I write here because the useful lessons rarely make it into the vendor decks, and because writing them down forces me to be honest about what actually worked.</p>
+        <div class="pills">
+          <span class="pill pill-accent">DevSecOps</span><span class="pill pill-accent">CI/CD</span><span class="pill pill-accent">Cybersecurity</span><span class="pill pill-accent">ISO 27001</span><span class="pill pill-accent">AI Governance</span><span class="pill pill-accent">ITIL</span><span class="pill pill-accent">Kubernetes</span><span class="pill pill-accent">Jenkins</span><span class="pill pill-accent">ServiceNow</span><span class="pill pill-accent">Global IT Strategy</span><span class="pill pill-accent">Team Leadership</span><span class="pill pill-accent">PMP</span>
+        </div>
+        <div class="contact-row">
+          <a class="btn btn-secondary btn-sm" href="https://linkedin.com/in/prasannamalode" target="_blank" rel="noopener me">LinkedIn</a>
+          <a class="btn btn-secondary btn-sm" href="mailto:prasanna.malode@outlook.com">prasanna.malode@outlook.com</a>
+          <a class="btn btn-secondary btn-sm" href="tel:+918884161655">+91 88841 61655</a>
+          <a class="btn btn-secondary btn-sm" href="feed.xml">RSS</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" style="padding-bottom:0">
+      <p class="eyebrow">How I work</p>
+      <div class="principles">
+        <div class="principle fade-up"><div class="num">01</div><h4>Measure before you move</h4><p>Lead time, failure rate, MTTR, incident recurrence. Uncomfortable numbers are the only ones that buy change.</p></div>
+        <div class="principle fade-up d1"><div class="num">02</div><h4>Make the right thing the easy thing</h4><p>Quality gates people route around are theatre. Controls that feel like safety nets get adopted on their own.</p></div>
+        <div class="principle fade-up d2"><div class="num">03</div><h4>Capture facts when they are cheap</h4><p>Key attribution, build provenance, handover notes. Decide early what you will need to know later, because you cannot reconstruct it afterwards.</p></div>
+        <div class="principle fade-up"><div class="num">04</div><h4>Automate the job, not the paperwork</h4><p>If a tool makes the wrong amount of work more pleasant, the queue is still there. Reduce the count or do the work.</p></div>
+        <div class="principle fade-up d1"><div class="num">05</div><h4>Earn automation in shadow mode</h4><p>Advisory first, compared against human decisions, promoted per class with evidence. Trust is the whole asset.</p></div>
+        <div class="principle fade-up d2"><div class="num">06</div><h4>Presence is reliability</h4><p>Distributed teams don't need time-zone overlap. They need to know you will respond, unblock and follow through.</p></div>
+      </div>
+    </div>
+
+    <div class="section" style="padding-bottom:0">
+      <p class="eyebrow">Journey</p>
+      <ol class="timeline">
+        <li><div class="when">Now</div><div class="what">Global Head — DevSecOps, Cybersecurity & IT Operations</div><div class="where">IP Infusion · Bengaluru. Built the InfoSec function from zero to ISO 27001 with no major findings. Release frequency up 80%, deployment failures down 60%, recurring incidents down 50%.</div></li>
+        <li><div class="when">Earlier</div><div class="what">Engineering & operations leadership</div><div class="where">Oracle · EMC². Enterprise-scale infrastructure, release engineering and service operations.</div></li>
+        <li><div class="when">Foundation</div><div class="what">MBA · MSc Electronics · PGDCA · PMP · ITIL Foundation</div><div class="where">The management vocabulary and the engineering grounding, in that order of usefulness on any given day.</div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">PM</span><span>Prasanna Malode</span></a>
+      <div style="margin-top:8px">DevSecOps · Cybersecurity · IT Operations · Bengaluru, India</div>
+      <div style="margin-top:4px">© <span data-year>2026</span> Prasanna Malode. Opinions are my own.</div>
+    </div>
+    <div class="footer-links">
+      <a href="#/articles">Articles</a>
+      <a href="#/tools">Tools</a>
+      <a href="#/about">About</a>
+      <a href="https://linkedin.com/in/prasannamalode" target="_blank" rel="noopener me">LinkedIn</a>
+      <a href="mailto:prasanna.malode@outlook.com">Email</a>
+      <a href="feed.xml">RSS</a>
+    </div>
+  </div>
 </footer>
 
-<script src="photo.js"></script>
-<script>
-var allArticles = [
-  {
-    "id": "cicd-80-percent",
-    "title": "How I increased release frequency by 80% — without sacrificing security",
-    "tag": "DevSecOps",
-    "date": "Mar 2026",
-    "read": "6 min read",
-    "summary": "The CI/CD transformation framework, quality gates, and governance model that delivered measurable results at IP Infusion.",
-    "file": "articles/cicd-80-percent.html"
-  },
-  {
-    "id": "iso-27001-from-scratch",
-    "title": "Building a cybersecurity function from scratch: lessons from zero to ISO 27001",
-    "tag": "Cybersecurity",
-    "date": "Feb 2026",
-    "read": "5 min read",
-    "summary": "From no InfoSec function to zero major audit findings — the people, process, and tools decisions that got us there.",
-    "file": "articles/iso-27001-from-scratch.html"
-  },
-  {
-    "id": "follow-the-sun-ops",
-    "title": "What managing a 16-person global team taught me about follow-the-sun ops",
-    "tag": "Leadership",
-    "date": "Jan 2026",
-    "read": "7 min read",
-    "summary": "Handovers, shift scheduling, and the one ritual that keeps 24x7 teams sane and aligned.",
-    "file": "articles/follow-the-sun-ops.html"
-  },
-  {
-    "id": "itil-incident-management",
-    "title": "How ITIL-aligned incident management cut our recurring incidents by 50%",
-    "tag": "ITIL / Ops",
-    "date": "Dec 2025",
-    "read": "5 min read",
-    "summary": "The exact process changes, tooling decisions, and cultural shifts that drove the improvement.",
-    "file": "articles/itil-incident-management.html"
-  },
-  {
-    "id": "genai-cicd-pipelines",
-    "title": "How we integrated Gen AI into CI/CD pipelines — and what surprised us",
-    "tag": "Gen AI",
-    "date": "Nov 2025",
-    "read": "6 min read",
-    "summary": "Real-world implementation of AI-assisted code reviews, decision gates, and memory leak detection in production CI/CD.",
-    "file": "articles/genai-cicd-pipelines.html"
-  },
-  {
-    "id": "cicd-jenkins-azure-docker",
-    "title": "CI/CD Pipeline: Complete Training Guide — Jenkins, Azure & Docker",
-    "tag": "DevOps",
-    "date": "2021",
-    "read": "Training Guide",
-    "summary": "Step-by-step guide covering CI/CD foundations, Jenkins setup in Docker, Azure Container Registry, AKS deployment, Jenkinsfile writing, and troubleshooting.",
-    "file": "articles/cicd-jenkins-azure-docker.html"
-  },
-  {
-    "id": "git-hands-on-guide",
-    "title": "Git Fundamentals for DevOps Engineers — Hands-On Training Guide",
-    "tag": "DevOps",
-    "date": "2010",
-    "read": "Training Guide",
-    "summary": "Comprehensive hands-on Git guide: version control, architecture, branching strategies, SSH setup, and real-world workflows.",
-    "file": "articles/Git_HandsOn_Guide.html",
-    "external": true
-  },
-  {
-    "id": "git-cheatsheet",
-    "title": "Git Command Cheat Sheet — DevOps Quick Reference",
-    "tag": "DevOps",
-    "date": "2010",
-    "read": "Cheat Sheet",
-    "summary": "Searchable quick-reference covering every Git command: setup, branching, remotes, undo, tags, workflows, and troubleshooting.",
-    "file": "articles/Git_CheatSheet.html",
-    "external": true
-  }
-];
-
-document.getElementById('hero-photo').src = 'data:image/jpeg;base64,' + PHOTO;
-document.getElementById('about-photo').src = 'data:image/jpeg;base64,' + PHOTO;
-
-function renderHomeArticles(){
-  document.getElementById('home-articles-grid').innerHTML = allArticles.slice(0,2).map(a => `
-    <div class="bg-white border border-border rounded-xl p-5 cursor-pointer transition-all duration-200 hover:border-brand hover:-translate-y-0.5 hover:shadow-lg animate-fade-up" onclick="openArticle('${a.id}')">
-      <span class="card-tag">${a.tag}</span>
-      <h3 class="font-serif text-base font-semibold mb-1.5 leading-tight">${a.title}</h3>
-      <p class="text-muted text-[0.86rem] leading-relaxed">${a.summary}</p>
-      <div class="flex items-center gap-2 mt-3 text-[0.78rem] text-muted">
-        <span>${a.date}</span>
-        <span>·</span>
-        <span>${a.read}</span>
-      </div>
-    </div>
-  `).join('');
-}
-
-function renderArticlesList(){
-  document.getElementById('articles-list').innerHTML = allArticles.map(a => `
-    <div class="bg-white border border-border rounded-xl p-5 md:px-6 md:py-5 cursor-pointer transition-all duration-200 hover:border-brand hover:shadow-md flex justify-between items-start gap-4 animate-fade-up" onclick="openArticle('${a.id}')">
-      <div>
-        <span class="card-tag">${a.tag}</span>
-        <h3 class="font-serif text-[1.05rem] font-semibold mb-1.5">${a.title}</h3>
-        <p class="text-muted text-[0.86rem]">${a.summary}</p>
-      </div>
-      <div class="text-[0.78rem] text-muted whitespace-nowrap mt-1 text-right min-w-[80px]">
-        ${a.date}<br>${a.read}
-      </div>
-    </div>
-  `).join('');
-}
-
-function openArticle(id){ 
-  const a = allArticles.find(art => art.id === id);
-  if(a) window.location.href = a.file; 
-}
-
-function showSection(id){
-  document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.nav-link').forEach(a=>a.classList.remove('active'));
-  var sec=document.getElementById(id); if(sec) sec.classList.add('active');
-  var nav=document.getElementById('nav-'+id); if(nav) nav.classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-renderHomeArticles();
-renderArticlesList();
-</script>
+<script src="assets/articles-data.js"></script>
+<script src="assets/site.js"></script>
 </body>
 </html>

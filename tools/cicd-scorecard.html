@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CI/CD Pipeline Health Scorecard — Prasanna Malode</title>
+<meta name="description" content="Rate your CI/CD pipeline across speed, reliability, security, test coverage, observability and rollback. Get a radar chart, an overall grade and where to invest next.">
+<link rel="canonical" href="https://prasannamalode.in/tools/cicd-scorecard.html">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="CI/CD Pipeline Health Scorecard">
+<meta property="og:description" content="Six dimensions, eighteen questions, one honest picture of your pipeline.">
+<meta property="og:image" content="https://prasannamalode.in/assets/og/site.png">
+<meta name="twitter:card" content="summary_large_image">
+<script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body data-root="..">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">PM</span><span>Prasanna Malode</span></a>
+    <nav aria-label="Primary"><ul class="nav-links">
+      <li><a href="../index.html#/home">Home</a></li>
+      <li><a href="../index.html#/articles">Articles</a></li>
+      <li><a href="../index.html#/tools" aria-current="page">Tools</a></li>
+      <li><a href="../index.html#/about">About</a></li>
+    </ul></nav>
+    <div class="nav-actions">
+      <button class="icon-btn theme-toggle" type="button" title="Toggle dark mode" aria-label="Toggle dark mode"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      <button class="icon-btn menu-btn" type="button" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap tool-head fade-up">
+    <a class="tag" href="../index.html#/tools">Tool</a>
+    <h1>CI/CD Pipeline Health Scorecard</h1>
+    <p>Eighteen questions across six dimensions. Each answer maps to a 0–4 scale. The radar shows the shape of your pipeline, and the recommendations tell you where the next unit of effort pays back most.</p>
+    <p class="note">Answers are saved in this browser only. Score one pipeline at a time. Compare teams by exporting each report.</p>
+  </div>
+
+  <div class="wrap two-col">
+    <div id="questions"></div>
+    <div class="sticky-col">
+      <section class="panel fade-up d1">
+        <div class="section-head" style="margin-bottom:8px"><h2 style="margin:0">Scorecard</h2><span id="answered" style="font-size:.8rem;color:var(--muted-2)"></span></div>
+        <div id="radar" style="display:grid;place-items:center"></div>
+        <div id="grade" style="text-align:center;margin:4px 0 16px"></div>
+        <div id="dims"></div>
+        <h3>Invest next</h3>
+        <div id="recos"></div>
+        <div class="actions">
+          <button class="btn btn-primary" id="export" type="button">Copy report</button>
+          <button class="btn btn-ghost" id="reset" type="button">Reset</button>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="footer"><div class="wrap footer-grid"><div>© <span data-year>2026</span> Prasanna Malode · <a href="../index.html#/tools">More tools</a> · Read: <a href="../articles/cicd-80-percent.html">Release frequency up 80%</a></div><div class="footer-links"><a href="../index.html#/articles">Articles</a><a href="../index.html#/about">About</a><a href="../feed.xml">RSS</a></div></div></footer>
+
+<script src="../assets/site.js"></script>
+<script>
+(function () {
+  var DIMS = [
+    { key: 'speed', name: 'Speed', qs: [
+      { q: 'How long from commit to a deployable artifact (build + unit tests)?', opts: ['> 60 min', '30–60 min', '10–30 min', '5–10 min', '< 5 min'] },
+      { q: 'How long from merge to production for a typical change?', opts: ['Weeks', 'Days', '1 day', 'Hours', '< 1 hour'] },
+      { q: 'How often do you deploy to production?', opts: ['Quarterly or less', 'Monthly', 'Weekly', 'Daily', 'Multiple times a day'] },
+    ], fix: 'Cache dependencies, parallelise test stages, and cut the release train to smaller batches. Speed is mostly waiting.' },
+    { key: 'rel', name: 'Reliability', qs: [
+      { q: 'What share of pipeline runs fail for reasons unrelated to the change (flaky tests, infra, timeouts)?', opts: ['> 25%', '10–25%', '5–10%', '1–5%', '< 1%'] },
+      { q: 'What share of production deployments cause an incident or need a hotfix?', opts: ['> 30%', '15–30%', '5–15%', '1–5%', '< 1%'] },
+      { q: 'Are builds reproducible (pinned dependencies, hermetic build, same input → same output)?', opts: ['No', 'Partly, by convention', 'Pinned but not verified', 'Pinned and verified', 'Hermetic and attested'] },
+    ], fix: 'Quarantine flaky tests, pin every dependency, and treat a red pipeline as a stop-the-line event.' },
+    { key: 'sec', name: 'Security', qs: [
+      { q: 'Static analysis (SAST) and dependency/SCA scanning run in the pipeline?', opts: ['Neither', 'One, advisory', 'Both, advisory', 'Both, blocking on critical', 'Both, blocking with tracked exceptions'] },
+      { q: 'Secrets: detection in code and secure injection at runtime?', opts: ['Secrets in repo', 'Manual review only', 'Secret scanning advisory', 'Scanning blocks + vault', 'Scanning + vault + rotation'] },
+      { q: 'Software bill of materials (SBOM) and artifact provenance/signing?', opts: ['None', 'SBOM on request', 'SBOM per release', 'SBOM per build + signed', 'SBOM + signed + verified at deploy'] },
+    ], fix: 'Make SAST, SCA and secret detection blocking gates. Generate an SBOM as a build output, attached by hash.' },
+    { key: 'test', name: 'Test coverage', qs: [
+      { q: 'Unit test coverage on changed code, and is a floor enforced?', opts: ['Unknown', '< 40%', '40–60%, not enforced', '60–80%, enforced', '> 80%, enforced on diff'] },
+      { q: 'Integration and contract tests run automatically before production?', opts: ['None', 'Manual', 'Some, nightly', 'All, per merge', 'All, per commit with environments on demand'] },
+      { q: 'Performance, memory-leak or load testing in the pipeline?', opts: ['Never', 'Before major releases, manual', 'Scheduled', 'Automated on release branch', 'Automated per merge with thresholds'] },
+    ], fix: 'Enforce a coverage floor on the diff rather than the whole repo, and automate the tests you already run by hand.' },
+    { key: 'obs', name: 'Observability', qs: [
+      { q: 'Pipeline metrics (duration, failure rate, lead time, deployment frequency) are collected and visible?', opts: ['No', 'In the CI tool only', 'Dashboard, rarely looked at', 'Dashboard reviewed weekly', 'Dashboards with alerts and trends'] },
+      { q: 'Deployments are correlated with production telemetry (deploy markers, error rates, SLOs)?', opts: ['No', 'Manually', 'Deploy markers only', 'Automatic health check after deploy', 'Automatic verification gates the rollout'] },
+      { q: 'Can you trace a running production artifact back to commit, build and approver?', opts: ['No', 'With effort', 'Version tag only', 'Build ID in artifact', 'Full provenance by hash'] },
+    ], fix: 'Emit deploy markers, put the four DORA metrics on one dashboard, and review it in the weekly ops meeting.' },
+    { key: 'roll', name: 'Rollback & recovery', qs: [
+      { q: 'How long does a rollback of a bad production release take?', opts: ['Unknown / never done', 'Hours', '30–60 min', '5–30 min', '< 5 min, one action'] },
+      { q: 'Progressive delivery (canary, blue/green, feature flags)?', opts: ['None', 'Manual staged rollout', 'Blue/green for some services', 'Canary or flags for most', 'Automated canary analysis + flags'] },
+      { q: 'Database and config changes are versioned and reversible?', opts: ['No', 'Manual scripts', 'Versioned migrations, forward only', 'Versioned with tested down-migrations', 'Expand/contract pattern, zero-downtime'] },
+    ], fix: 'Rehearse rollback until it is one command. Then add canaries so you rarely need it.' },
+  ];
+  var KEY = 'cicd-scorecard-v1';
+  var answers = {}; try { answers = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) {}
+
+  var html = '';
+  DIMS.forEach(function (d) {
+    html += '<section class="panel fade-up"><h2>' + d.name + '</h2>';
+    d.qs.forEach(function (q, qi) {
+      var id = d.key + qi;
+      html += '<div class="q"><div class="q-text">' + escapeHtml(q.q) + '</div><div class="choices" role="radiogroup">' +
+        q.opts.map(function (o, oi) { return '<button type="button" class="choice' + (answers[id] === oi ? ' active' : '') + '" role="radio" aria-checked="' + (answers[id] === oi) + '" data-q="' + id + '" data-v="' + oi + '">' + escapeHtml(o) + '</button>'; }).join('') + '</div></div>';
+    });
+    html += '</section>';
+  });
+  document.getElementById('questions').innerHTML = html;
+  document.getElementById('questions').addEventListener('click', function (e) {
+    var b = e.target.closest('.choice'); if (!b) return;
+    answers[b.getAttribute('data-q')] = +b.getAttribute('data-v');
+    b.parentNode.querySelectorAll('.choice').forEach(function (c) { var on = c === b; c.classList.toggle('active', on); c.setAttribute('aria-checked', on); });
+    try { localStorage.setItem(KEY, JSON.stringify(answers)); } catch (err) {}
+    render();
+  });
+
+  function radar(scores) {
+    var W = 300, cx = 150, cy = 150, R = 105, n = scores.length;
+    function pt(i, r) { var a = -Math.PI / 2 + i * 2 * Math.PI / n; return [cx + r * Math.cos(a), cy + r * Math.sin(a)]; }
+    var s = '<svg viewBox="0 0 300 300" width="300" height="300" role="img" aria-label="Radar chart of six dimensions">';
+    [0.25, 0.5, 0.75, 1].forEach(function (f) {
+      s += '<polygon points="' + scores.map(function (_, i) { return pt(i, R * f).join(','); }).join(' ') + '" fill="none" stroke="var(--border)" stroke-width="1"/>';
+    });
+    scores.forEach(function (_, i) { var p = pt(i, R); s += '<line x1="' + cx + '" y1="' + cy + '" x2="' + p[0] + '" y2="' + p[1] + '" stroke="var(--border)" stroke-width="1"/>'; });
+    s += '<polygon points="' + scores.map(function (v, i) { return pt(i, R * Math.max(0.02, v.pct / 100)).join(','); }).join(' ') + '" fill="var(--accent)" fill-opacity=".22" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round"/>';
+    scores.forEach(function (v, i) { var p = pt(i, R * Math.max(0.02, v.pct / 100)); s += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="3.5" fill="var(--accent)"/>'; });
+    scores.forEach(function (v, i) {
+      var p = pt(i, R + 26); var anchor = Math.abs(p[0] - cx) < 10 ? 'middle' : p[0] > cx ? 'start' : 'end';
+      s += '<text x="' + p[0] + '" y="' + (p[1] + 4) + '" text-anchor="' + anchor + '" font-size="11" font-weight="600" fill="var(--muted)">' + escapeHtml(v.name) + '</text>';
+    });
+    return s + '</svg>';
+  }
+  var lastReport = '';
+  function render() {
+    var scores = [], answered = 0, n = 0, total = 0;
+    DIMS.forEach(function (d) {
+      var s = 0, m = d.qs.length * 4;
+      d.qs.forEach(function (_, qi) { n++; var v = answers[d.key + qi]; if (v != null) { answered++; s += v; } });
+      var p = Math.round(100 * s / m); total += p;
+      scores.push({ key: d.key, name: d.name, pct: p, fix: d.fix, done: d.qs.every(function (_, qi) { return answers[d.key + qi] != null; }) });
+    });
+    var overall = Math.round(total / DIMS.length);
+    document.getElementById('radar').innerHTML = radar(scores);
+    document.getElementById('answered').textContent = answered + ' / ' + n + ' answered';
+    var grade = overall >= 85 ? ['A', 'Elite', 'ok'] : overall >= 70 ? ['B', 'High performing', 'ok'] : overall >= 50 ? ['C', 'Medium', 'warn'] : overall >= 30 ? ['D', 'Low', 'bad'] : ['E', 'Starting out', 'bad'];
+    document.getElementById('grade').innerHTML = '<div style="font-family:var(--serif);font-size:2.2rem;font-weight:700;color:var(--accent);line-height:1">' + overall + '<span style="font-size:1rem;color:var(--muted)"> / 100</span></div><span class="badge badge-' + grade[2] + '">Grade ' + grade[0] + ' · ' + grade[1] + '</span>';
+    document.getElementById('dims').innerHTML = scores.map(function (s) {
+      var cls = s.pct >= 75 ? 'ok' : s.pct >= 50 ? 'warn' : 'bad';
+      return '<div class="score-row"><span class="lbl">' + s.name + '</span><div class="bar ' + cls + '"><span style="width:' + s.pct + '%"></span></div><span class="n">' + s.pct + '</span></div>';
+    }).join('');
+    var weak = scores.filter(function (s) { return s.done; }).sort(function (a, b) { return a.pct - b.pct; }).slice(0, 3);
+    document.getElementById('recos').innerHTML = weak.length ? weak.map(function (s, i) {
+      return '<div class="reco"><div class="pri p' + (i + 1) + '">' + (i + 1) + '</div><div><strong>' + s.name + ' · ' + s.pct + '/100</strong><span>' + escapeHtml(s.fix) + '</span></div></div>';
+    }).join('') : '<p class="hint">Complete at least one dimension to see recommendations.</p>';
+    lastReport = '# CI/CD pipeline health scorecard\n\nOverall: **' + overall + '/100** (Grade ' + grade[0] + ' · ' + grade[1] + '), ' + answered + '/' + n + ' answered\n\n' +
+      scores.map(function (s) { return '- ' + s.name + ': ' + s.pct + '/100'; }).join('\n') +
+      '\n\n## Invest next\n' + (weak.length ? weak.map(function (s, i) { return (i + 1) + '. **' + s.name + '** — ' + s.fix; }).join('\n') : '(complete a dimension)') +
+      '\n\nGenerated with https://prasannamalode.in/tools/cicd-scorecard.html\n';
+  }
+  document.getElementById('export').addEventListener('click', function () { copyText(lastReport, 'Report copied as Markdown'); });
+  document.getElementById('reset').addEventListener('click', function () {
+    if (!confirm('Clear all answers?')) return;
+    answers = {}; try { localStorage.removeItem(KEY); } catch (e) {}
+    document.querySelectorAll('.choice').forEach(function (c) { c.classList.remove('active'); c.setAttribute('aria-checked', 'false'); });
+    render();
+  });
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Same Binary Under Four Names — Prasanna Malode</title>
+<meta name="description" content="When a CVE lands in rebranded platform software, &quot;who is affected&quot; becomes archaeology. Provenance has to be captured at build time.">
+<meta name="author" content="Prasanna Malode">
+<meta name="theme-color" content="#faf8f4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14151a" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://prasannamalode.in/articles/same-binary-under-four-names.html">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="alternate" type="application/rss+xml" title="Prasanna Malode — Articles" href="https://prasannamalode.in/feed.xml">
+<meta property="og:site_name" content="Prasanna Malode">
+<meta property="og:title" content="The Same Binary Under Four Names — Prasanna Malode">
+<meta property="og:description" content="When a CVE lands in rebranded platform software, &quot;who is affected&quot; becomes archaeology. Provenance has to be captured at build time.">
+<meta property="og:url" content="https://prasannamalode.in/articles/same-binary-under-four-names.html">
+<meta property="og:image" content="https://prasannamalode.in/assets/og/same-binary-under-four-names.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Same Binary Under Four Names — Prasanna Malode">
+<meta name="twitter:description" content="When a CVE lands in rebranded platform software, &quot;who is affected&quot; becomes archaeology. Provenance has to be captured at build time.">
+<meta name="twitter:image" content="https://prasannamalode.in/assets/og/same-binary-under-four-names.png">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-07-28">
+<meta property="article:author" content="Prasanna Malode">
+<meta property="article:section" content="AI Governance">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "The Same Binary Under Four Names", "description": "When a CVE lands in rebranded platform software, \"who is affected\" becomes archaeology. Provenance has to be captured at build time.", "datePublished": "2026-07-28", "dateModified": "2026-07-28", "author": {"@type": "Person", "name": "Prasanna Malode", "url": "https://prasannamalode.in/index.html#/about", "jobTitle": "Global Head — DevSecOps · Cybersecurity · IT Operations"}, "publisher": {"@type": "Person", "name": "Prasanna Malode"}, "mainEntityOfPage": "https://prasannamalode.in/articles/same-binary-under-four-names.html", "image": "https://prasannamalode.in/assets/og/same-binary-under-four-names.png", "keywords": "AI Governance", "isPartOf": {"@type": "CreativeWorkSeries", "name": "AI Governance for Engineering Leaders"}}</script>
+<script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body data-root="..">
+<div class="progress" aria-hidden="true"></div>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">PM</span><span>Prasanna Malode</span></a>
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a id="nav-home" href="../index.html#/home">Home</a></li>
+        <li><a id="nav-articles" href="../index.html#/articles" aria-current="page">Articles</a></li>
+        <li><a id="nav-tools" href="../index.html#/tools">Tools</a></li>
+        <li><a id="nav-about" href="../index.html#/about">About</a></li>
+      </ul>
+    </nav>
+    <div class="nav-actions">
+      <a class="icon-btn" href="../feed.xml" title="RSS feed" aria-label="RSS feed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg></a>
+      <button class="icon-btn theme-toggle" type="button" title="Toggle dark mode" aria-label="Toggle dark mode"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      <button class="icon-btn menu-btn" type="button" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+  <article>
+    <header class="article-head">
+      <div class="wrap-read fade-up">
+        <a class="tag" href="../index.html#/articles?tag=AI Governance">AI Governance</a>
+        <h1>The Same Binary Under Four Names</h1>
+        <div class="meta">
+          <img class="avatar" src="../assets/photo-sm.jpg" alt="" width="26" height="26">
+          <span>Prasanna Malode</span>
+          <span aria-hidden="true">·</span>
+          <time datetime="2026-07-28">July 28, 2026</time>
+          <span aria-hidden="true">·</span>
+          <span>6 min read</span>
+        </div>
+        <p class="lede">When a CVE lands in rebranded platform software, &quot;who is affected&quot; becomes archaeology. Provenance has to be captured at build time.</p>
+      </div>
+    </header>
+    <div class="wrap" style="max-width:calc(var(--max-read) + 220px + 56px + 48px)">
+      <div class="article-layout">
+        <div>
+          <aside class="series-box" aria-label="Series navigation">
+  <div class="eyebrow">Series · Part 6 of 8</div>
+  <strong>AI Governance for Engineering Leaders</strong>
+  <ol><li class=""><a href="../articles/who-spent-this.html">Who Spent This?</a></li><li class=""><a href="../articles/invoice-as-intrusion-detection.html">The Invoice as an Intrusion Detection System</a></li><li class=""><a href="../articles/the-queue-is-still-there.html">The Queue Is Still There</a></li><li class=""><a href="../articles/prompt-injection-confused-deputy.html">Prompt Injection Is Not a New Class of Vulnerability</a></li><li class=""><a href="../articles/the-ban-that-didnt-work.html">The Ban That Didn&#x27;t Work</a></li><li class="current"><a href="../articles/same-binary-under-four-names.html">The Same Binary Under Four Names</a></li><li class=""><a href="../articles/code-review-at-machine-scale.html">When Review Breaks: Code at Machine Scale</a></li><li class=""><a href="../articles/the-demo-you-didnt-choose.html">The Demo You Didn&#x27;t Choose</a></li></ol>
+</aside>
+          <nav class="toc-inline" data-toc aria-label="Contents"><div class="eyebrow">In this article</div><div data-toc-list></div></nav>
+          <div class="prose">
+<p>A CVE lands on a Thursday afternoon in a library nobody thinks about — the kind that arrives in your dependency tree three levels down, through something you did choose, and has been sitting there for years doing its job quietly.</p>
+<p>The first question is easy: do we ship it? Yes.</p>
+<p>The second question is the one that costs you your evening: which of the things we have shipped contain it, and who has them?</p>
+<p>If you build one product and ship it under one name, that question has a short answer. If you build platform software that goes out under partner branding, with per-customer feature sets, on release trains that diverged eighteen months ago, the answer is a research project — and every hour of that research project is an hour your customers are waiting for a straight answer to a simple question.</p>
+<h2>What rebranding does to provenance</h2>
+<p>The technical situation is ordinary. The same core, built with different configuration, packaged under different names, for different partners.</p>
+<p>The record-keeping situation is where it goes wrong, because the identity of the artifact is no longer a single thing. There is what you call it internally. There is what it is called on the box. There is the version the customer sees, which may not match the version in your source control, because the partner wanted their own numbering. There is the build that went to one customer in March and the build that went to another in June, which share a base but not a patch level.</p>
+<p>Ask "is customer X affected" and you are really asking a chain of questions. Which product name did they receive? Which internal build does that correspond to? Which source revision did that build come from? Which dependency versions were resolved at that build? And did anything get patched in between for that customer specifically?</p>
+<p>Every one of those links is somewhere. That is the thing — the information almost always exists. It lives in a build system, a release ticket, a shipping record, a spreadsheet one person maintains. The links exist and they are not joined, so answering the question means a human walking the chain by hand, once per customer, under time pressure, while being asked for updates.</p>
+<h2>The record has to be made at build time</h2>
+<p>This is the lesson, and it is the same lesson as attribution in an LLM gateway, which is probably not a coincidence.</p>
+<p>You cannot reconstruct provenance afterwards. You can only capture it at the moment the artifact is created, because that is the only moment when everything is simultaneously known — the source revision, the resolved dependency versions, the build configuration, the toolchain, the flags. An hour later, some of that is inference. A year later, some of it is archaeology.</p>
+<p>So generate the bill of materials as a build output, not as a periodic exercise. Not a scan of the repository, which describes what the source declares, but a record of what the build actually produced and included. Those differ more often than people expect, particularly where transitive dependencies, vendored code, or build-time resolution are involved.</p>
+<p>Then attach it to the artifact by hash. Not by version string, which is a label someone can reuse, and definitely not by filename, which is the thing that changes under rebranding. The hash is the only identifier that survives every renaming downstream of it, which makes it the only reliable join key you have.</p>
+<h2>The join nobody owns</h2>
+<p>Here is the gap I see most often, and it is organizational rather than technical.</p>
+<p>Engineering knows which source revision produced which build. Sales, or operations, or whoever manages the partner relationship, knows which customer received which named release. These two facts live in different systems, maintained by different teams, with no shared key between them, and no single person whose job it is to be able to join them.</p>
+<p>That join is the entire answer to "who is affected." Without it, your SBOM discipline gets you to "build 7.2.1-internal contains the vulnerable library," which is true and does not tell you who to call.</p>
+<p>Fixing it does not require a platform. It requires deciding that shipment records reference build identifiers, and that build identifiers reference source and dependency state, and that somebody owns keeping that true. The technology is a foreign key. The hard part is agreeing that it matters before the Thursday when it does.</p>
+<h2>The tempting shortcut</h2>
+<p>There is a version of this where you decide that since it is all the same core, you can answer at the core level. Is the vulnerable library in the 7.2 line? Yes. Then everyone on 7.2 is affected. Notify everyone.</p>
+<p>This feels rigorous. It is over-notification, and over-notification has a cost that is easy to underestimate.</p>
+<p>Customers who receive advisories for things that do not affect them — because the vulnerable component was not compiled into their configuration, or the feature is disabled in their build — learn to filter your advisories. They allocate less attention to each one. Eventually one arrives that genuinely matters and it lands in the same mental bucket as the last six that did not.</p>
+<p>Precision is not a nicety here. It is what preserves the value of the channel for the day you need it.</p>
+<h2>What good looks like on a Thursday</h2>
+<p>The version of this I would like to live in is unremarkable. The CVE lands. Someone queries the dependency across all build records and gets the affected build hashes in minutes. Those hashes join to shipment records and produce a customer list, with which branded name each of them knows the product by. The advisory goes out with the right product names on it, to the right people, the same day.</p>
+<p>No archaeology. No spreadsheet. No engineer reconstructing a build from eighteen months ago to find out what was in it.</p>
+<p>Every part of that is infrastructure you build on a quiet week, for an event you cannot schedule. Which is exactly why it tends not to get built — it has no deadline until the deadline is already past, and then it is the most obviously necessary thing you never did.</p>
+          </div>
+          <footer class="article-foot">
+            <div class="share">
+              <span class="label">Share</span>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="linkedin">LinkedIn</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="x">X</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="email">Email</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="copy">Copy link</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="native">Share…</button>
+            </div>
+            <div class="author-card">
+              <img src="../assets/photo-sm.jpg" alt="Prasanna Malode" width="64" height="64">
+              <div>
+                <div class="name">Prasanna Malode</div>
+                <div class="role">Global Head — DevSecOps · Cybersecurity · IT Operations · Bengaluru, India</div>
+                <p>20+ years leading global IT, DevOps, cybersecurity and service operations. I write about making speed, security and reliability the same conversation. <a href="../index.html#/about">More about me</a>.</p>
+              </div>
+            </div>
+            <nav class="pager" aria-label="More articles">
+              <a class="prev" href="../articles/the-ban-that-didnt-work.html"><div class="dir">← Older</div><div class="title">The Ban That Didn&#x27;t Work</div></a>
+              <a class="next" href="../articles/code-review-at-machine-scale.html"><div class="dir">Newer →</div><div class="title">When Review Breaks: Code at Machine Scale</div></a>
+            </nav>
+          </footer>
+        </div>
+        <nav class="toc-side" data-toc aria-label="Contents"><div class="eyebrow">In this article</div><div data-toc-list></div></nav>
+      </div>
+    </div>
+  </article>
+</main>
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">PM</span><span>Prasanna Malode</span></a>
+      <div style="margin-top:8px">DevSecOps · Cybersecurity · IT Operations · Bengaluru, India</div>
+      <div style="margin-top:4px">© <span data-year>2026</span> Prasanna Malode. Opinions are my own.</div>
+    </div>
+    <div class="footer-links">
+      <a href="../index.html#/articles">Articles</a>
+      <a href="../index.html#/tools">Tools</a>
+      <a href="../index.html#/about">About</a>
+      <a href="https://linkedin.com/in/prasannamalode" target="_blank" rel="noopener me">LinkedIn</a>
+      <a href="mailto:prasanna.malode@outlook.com">Email</a>
+      <a href="../feed.xml">RSS</a>
+    </div>
+  </div>
+</footer>
+<script src="../assets/articles-data.js" defer></script>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

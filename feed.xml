@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<channel>
+  <title>Prasanna Malode — Articles</title>
+  <link>https://prasannamalode.in/</link>
+  <atom:link href="https://prasannamalode.in/feed.xml" rel="self" type="application/rss+xml"/>
+  <description>DevSecOps transformation, cybersecurity leadership, AI governance and building high-performing engineering teams.</description>
+  <language>en</language>
+  <lastBuildDate>Tue, 08 Sep 2026 00:00:00 +0000</lastBuildDate>
+  <item>
+    <title>The Demo You Didn&#x27;t Choose</title>
+    <link>https://prasannamalode.in/articles/the-demo-you-didnt-choose.html</link>
+    <guid isPermaLink="true">https://prasannamalode.in/articles/the-demo-you-didnt-choose.html</guid>
+    <pubDate>Tue, 08 Sep 2026 00:00:00 +0000</pubDate>
+    <category>AI Governance</category>
+    <description>Every AI security vendor demo answers one question: can it handle a case chosen to be handleable. Here are the questions I ask instead.</description>
+    <content:encoded><![CDATA[<p>Halfway through the third vendor demo of the month, I realized I had watched the same thirty minutes three times.</p>
+<p>Different companies, different logos, genuinely different products underneath. But the structure was identical. An alert appears. The AI reads it. The AI explains it in fluent prose. The AI recommends a response. The response is correct. Somebody says the phrase "in seconds, not hours."</p>
+<p>And every single time, the alert was one the vendor had selected.</p>
+<p>That is not dishonest. Of course they pick a good example; I would too. But it means the demo answers exactly one question — can this system handle a case chosen to be handleable — and that is not a question I need answered. I need to know what happens on the cases nobody chose.</p>
+<p>So I started asking different questions, and the quality of the conversation changed immediately.</p>
+<h2>Ask what it does when it does not know</h2>
+<p>This is the question I now ask first, and it is remarkably good at sorting vendors.</p>
+<p>Every one of these systems will encounter inputs outside what it handles well. The only thing that varies is what happens next. Does it say so? Does it hand off with the raw data intact? Or does it produce a confident, fluent, wrong answer that looks exactly like its right ones?</p>
+<p>A vendor who has thought hard about this will answer quickly and specifically, because they have had to build the behavior and probably argued about it internally. A vendor who has not will reach for the accuracy number — and the accuracy number is not the answer. A system that is right ninety-five percent of the time and indistinguishable in presentation the other five is a system your analysts must verify completely, which means it has saved them nothing.</p>
+<p>Ask to see the uncertain case. Ask what the interface looks like when confidence is low. If there is no distinct behavior, you are buying something that will be trusted exactly until it burns someone, and then trusted by nobody.</p>
+<h2>Ask what it can do, not what it can say</h2>
+<p>Any product with tool access has an authority model, whether or not anyone has articulated it.</p>
+<p>What credentials does it hold? What can it read? What can it change? Does it act with the permissions of the user who asked, or with a service account that aggregates everyone's? Is there a confirmation step before consequential actions, and who configures it?</p>
+<p>I want these answers written down, not described. The gap between a vendor's mental model of their permission architecture and its actual implementation is where a lot of unpleasant surprises live, and writing it out tends to surface it.</p>
+<p>The related question, for anything that ingests content from outside: what happens when that content contains instructions? If the answer is that the model is trained not to follow them, that is a mitigation, not a boundary. Ask what constrains the damage when the mitigation fails, because the useful answer is about capability limits, not about model behavior.</p>
+<h2>Ask where the data goes and how long it stays</h2>
+<p>Straightforward, frequently glossed over, and worth being tedious about.</p>
+<p>Where is inference performed? Which subprocessors are involved? Is customer data used for training, by them or by anyone downstream? What is retained, where, for how long? What happens to it when the contract ends?</p>
+<p>The subprocessor question is the one that catches people, because a vendor can answer "we do not train on your data" with complete sincerity while routing it to a model provider whose terms are a separate conversation you have not had. Ask about the whole chain.</p>
+<p>And ask about incidents: if their provider has a breach, what is your notification path, and what is the timeline? You want that established before it is relevant.</p>
+<h2>Ask how it fails over time</h2>
+<p>Products get demonstrated at their best moment. Systems live in a world where things drift.</p>
+<p>What happens when the underlying model is updated — do you get notice, can you pin a version, does behavior change under you? What happens when your environment changes, when you add a data source or restructure a naming convention? What is the retuning burden, who carries it, and how quickly do you find out that performance has degraded?</p>
+<p>That last one deserves emphasis. Detection systems fail silently. A rule that stops matching does not raise an alarm; it just stops producing results, and absence of alerts is indistinguishable from absence of threats until something confirms otherwise. Ask how you would know. If the answer is that you would notice, the answer is that you would not.</p>
+<h2>Ask for the boring version of the ROI claim</h2>
+<p>"Reduces triage time by eighty percent" is a statement about a measurement someone performed. It is not necessarily false. It is just meaningless until you know the shape of it.</p>
+<p>Measured against what baseline — a well-tuned process or a neglected one? Across which alert classes? At what organization size, with what data quality? Was the comparison run concurrently or before-and-after, and what else changed in between?</p>
+<p>You are not trying to catch anyone out. You are trying to work out whether the environment where that number was produced resembles yours. Often it does not, and a vendor with a real deployment behind the number will happily tell you the conditions, because the conditions are where their credibility lives.</p>
+<h2>The one that ends most conversations</h2>
+<p>Run it on my data, on my cases, in shadow mode, for long enough to matter.</p>
+<p>Not a proof of concept with a curated dataset. Live traffic, real alerts, real messiness, running alongside the existing process without authority, for a period long enough to include a bad week. Then compare what it said to what actually happened.</p>
+<p>This is the only evaluation that answers the question you actually have. It is also the request that separates vendors with a working product from vendors with a working demo, faster than any question in the list above.</p>
+<p>The good ones say yes and ask how soon you can start. They want the comparison, because they have run it before and they know how it comes out.</p>
+<p>The rest explain why their architecture makes that difficult.</p>]]></content:encoded>
+  </item>
+  <item>
+    <title>When Review Breaks: Code at Machine Scale</title>
+    <link>https://prasannamalode.in/articles/code-review-at-machine-scale.html</link>
+    <guid isPermaLink="true">https://prasannamalode.in/articles/code-review-at-machine-scale.html</guid>
+    <pubDate>Tue, 18 Aug 2026 00:00:00 +0000</pubDate>
+    <category>AI Governance</category>
+    <description>PR throughput doubled and review time per PR halved. Coding assistants uncoupled production from review capacity, and nobody sent an email.</description>
+    <content:encoded><![CDATA[<p>The metric that should have worried me was the one everybody was pleased about.</p>
+<p>Pull request throughput on one of our teams roughly doubled over a quarter. More code written, more code merged, velocity charts pointing in the direction velocity charts are supposed to point. The team was using coding assistants heavily and openly, and by every measure we tracked, it was working.</p>
+<p>What we did not track was review time per pull request. When I went back and looked, it had fallen by about the same factor the volume had risen.</p>
+<p>The reviewers had not become faster readers. They had been handed twice the work in the same number of hours, and they had adapted the way anyone adapts: by reading less carefully, approving more readily, and reserving real scrutiny for the changes that looked like they needed it.</p>
+<p>Which is precisely the failure mode, because looking like it needs scrutiny is a property we are bad at judging, and AI-generated code is unusually good at not looking like it needs it.</p>
+<h2>The assumptions underneath code review</h2>
+<p>Code review is an old practice and it rests on premises we rarely say out loud.</p>
+<p>It assumes the author understands the change. When a human writes a function, they have reasoned about it. The reviewer is checking that reasoning. When an assistant produces a function and a human accepts it, the reasoning may or may not have happened, and from the diff you cannot tell.</p>
+<p>It assumes production rate and review capacity are roughly matched. Both used to be bounded by the same resource — human hours. That coupling is what made review sustainable. Assistants uncouple them. Production scales; review does not.</p>
+<p>It assumes that surface quality correlates with underlying care. This is the heuristic that does the most quiet work in real reviews. Consistent naming, sensible structure, handled errors, comments in the right places — these tell you someone was paying attention, and reviewers calibrate their scrutiny accordingly.</p>
+<p>Generated code has excellent surface quality. It is well formatted, idiomatically named, plausibly commented, and structurally clean, regardless of whether it is correct. The correlation the heuristic depends on is simply gone, and the heuristic does not announce that it has stopped working. It just keeps producing confident, unjustified reassurance.</p>
+<h2>What actually shows up</h2>
+<p>I want to be careful here, because the discourse tends toward the dramatic and my experience has been more mundane.</p>
+<p>I have not seen assistants produce obviously dangerous code very often. Ask for a database query and you generally get a parameterized one. The blatant failures are increasingly rare, and the tooling gets better every release.</p>
+<p>What I have seen is subtler and harder to catch.</p>
+<p><strong>Context-blind correctness.</strong> Code that is right in general and wrong here — a retry that is sensible unless the operation is non-idempotent, a cache that is fine unless the data is per-tenant, an error swallowed in a way that is reasonable in a script and not in a payment path. The model does not know your system's invariants. It knows what code like this usually looks like.</p>
+<p><strong>Plausible API usage that is subtly off.</strong> A library called with almost the right arguments, or with a default the author did not consider, or in a pattern deprecated two versions back. It compiles. It passes the happy path. It reads as though someone knew what they were doing.</p>
+<p><strong>Volume dilution.</strong> A necessary two-line fix arriving inside a three-hundred-line change that also refactored, renamed, and reorganized, because that was easy to generate. The important lines are in there somewhere. Nobody will find them.</p>
+<p><strong>Silent dependency growth.</strong> New imports appearing because the generated solution used them, without anyone deciding to take on the dependency. This one bothers me most, because it bypasses every process we have for evaluating what we pull into a build — not maliciously, just quietly, one convenient import at a time.</p>
+<h2>Moving the checks to where scale is free</h2>
+<p>The response cannot be to ask reviewers to try harder. That is asking humans to absorb a machine-scale increase through willpower, and it fails in a predictable direction.</p>
+<p>What has to change is where the checking happens.</p>
+<p><strong>Automate everything mechanically checkable, and make it blocking.</strong> Static analysis, dependency scanning, secret detection, license checking, coverage floors. These scale with volume at near-zero marginal cost. Every one of them that runs before a human opens the diff is attention returned to the human for the things only humans can do.</p>
+<p><strong>Gate dependency additions explicitly.</strong> A pull request introducing a new package should require a different, deliberate decision than one that does not. This is easy to enforce and it closes the quietest gap.</p>
+<p><strong>Enforce change size.</strong> Not as a style preference but as a review-integrity control. Large diffs do not get read; they get skimmed. If the tooling makes large diffs cheap to produce, the process has to make them expensive to merge.</p>
+<p><strong>Direct human review at intent, not syntax.</strong> The questions that matter are the ones no linter can ask. Does this belong in our architecture? Is this the right place for this logic? What happens to this under concurrency, at scale, on failure? Does it honor the invariants this system actually has? Reviewers should spend their scarce attention there, which means everything below that line must be handled before they arrive.</p>
+<p><strong>Keep authorship accountable.</strong> Whoever opens the pull request owns the code, regardless of what produced it. Not as a blame mechanism — as a clarity mechanism. "I did not write that part" has to not be an available answer, because the moment it is, the accountability model that review depends on has dissolved.</p>
+<h2>The measurement I would add tomorrow</h2>
+<p>If you take one thing from this, take this: track review time per pull request alongside throughput, and watch the ratio.</p>
+<p>Throughput alone will tell you a happy story. It told us one for a quarter. The ratio is where you find out whether your review process is still doing its job or has quietly become a formality that produces approvals at the rate they are requested.</p>
+<p>The tools are good and getting better, and I am not arguing against using them — we do, deliberately and at volume. But they changed the shape of one side of an equation that had been balanced for decades, and they did it without changing anything on the other side. Nobody sends an email when that happens. You find it in a ratio you were not looking at, in a quarter everyone thought went well.</p>]]></content:encoded>
+  </item>
+  <item>
+    <title>The Same Binary Under Four Names</title>
+    <link>https://prasannamalode.in/articles/same-binary-under-four-names.html</link>
+    <guid isPermaLink="true">https://prasannamalode.in/articles/same-binary-under-four-names.html</guid>
+    <pubDate>Tue, 28 Jul 2026 00:00:00 +0000</pubDate>
+    <category>AI Governance</category>
+    <description>When a CVE lands in rebranded platform software, &quot;who is affected&quot; becomes archaeology. Provenance has to be captured at build time.</description>
+    <content:encoded><![CDATA[<p>A CVE lands on a Thursday afternoon in a library nobody thinks about — the kind that arrives in your dependency tree three levels down, through something you did choose, and has been sitting there for years doing its job quietly.</p>
+<p>The first question is easy: do we ship it? Yes.</p>
+<p>The second question is the one that costs you your evening: which of the things we have shipped contain it, and who has them?</p>
+<p>If you build one product and ship it under one name, that question has a short answer. If you build platform software that goes out under partner branding, with per-customer feature sets, on release trains that diverged eighteen months ago, the answer is a research project — and every hour of that research project is an hour your customers are waiting for a straight answer to a simple question.</p>
+<h2>What rebranding does to provenance</h2>
+<p>The technical situation is ordinary. The same core, built with different configuration, packaged under different names, for different partners.</p>
+<p>The record-keeping situation is where it goes wrong, because the identity of the artifact is no longer a single thing. There is what you call it internally. There is what it is called on the box. There is the version the customer sees, which may not match the version in your source control, because the partner wanted their own numbering. There is the build that went to one customer in March and the build that went to another in June, which share a base but not a patch level.</p>
+<p>Ask "is customer X affected" and you are really asking a chain of questions. Which product name did they receive? Which internal build does that correspond to? Which source revision did that build come from? Which dependency versions were resolved at that build? And did anything get patched in between for that customer specifically?</p>
+<p>Every one of those links is somewhere. That is the thing — the information almost always exists. It lives in a build system, a release ticket, a shipping record, a spreadsheet one person maintains. The links exist and they are not joined, so answering the question means a human walking the chain by hand, once per customer, under time pressure, while being asked for updates.</p>
+<h2>The record has to be made at build time</h2>
+<p>This is the lesson, and it is the same lesson as attribution in an LLM gateway, which is probably not a coincidence.</p>
+<p>You cannot reconstruct provenance afterwards. You can only capture it at the moment the artifact is created, because that is the only moment when everything is simultaneously known — the source revision, the resolved dependency versions, the build configuration, the toolchain, the flags. An hour later, some of that is inference. A year later, some of it is archaeology.</p>
+<p>So generate the bill of materials as a build output, not as a periodic exercise. Not a scan of the repository, which describes what the source declares, but a record of what the build actually produced and included. Those differ more often than people expect, particularly where transitive dependencies, vendored code, or build-time resolution are involved.</p>
+<p>Then attach it to the artifact by hash. Not by version string, which is a label someone can reuse, and definitely not by filename, which is the thing that changes under rebranding. The hash is the only identifier that survives every renaming downstream of it, which makes it the only reliable join key you have.</p>
+<h2>The join nobody owns</h2>
+<p>Here is the gap I see most often, and it is organizational rather than technical.</p>
+<p>Engineering knows which source revision produced which build. Sales, or operations, or whoever manages the partner relationship, knows which customer received which named release. These two facts live in different systems, maintained by different teams, with no shared key between them, and no single person whose job it is to be able to join them.</p>
+<p>That join is the entire answer to "who is affected." Without it, your SBOM discipline gets you to "build 7.2.1-internal contains the vulnerable library," which is true and does not tell you who to call.</p>
+<p>Fixing it does not require a platform. It requires deciding that shipment records reference build identifiers, and that build identifiers reference source and dependency state, and that somebody owns keeping that true. The technology is a foreign key. The hard part is agreeing that it matters before the Thursday when it does.</p>
+<h2>The tempting shortcut</h2>
+<p>There is a version of this where you decide that since it is all the same core, you can answer at the core level. Is the vulnerable library in the 7.2 line? Yes. Then everyone on 7.2 is affected. Notify everyone.</p>
+<p>This feels rigorous. It is over-notification, and over-notification has a cost that is easy to underestimate.</p>
+<p>Customers who receive advisories for things that do not affect them — because the vulnerable component was not compiled into their configuration, or the feature is disabled in their build — learn to filter your advisories. They allocate less attention to each one. Eventually one arrives that genuinely matters and it lands in the same mental bucket as the last six that did not.</p>
+<p>Precision is not a nicety here. It is what preserves the value of the channel for the day you need it.</p>
+<h2>What good looks like on a Thursday</h2>
+<p>The version of this I would like to live in is unremarkable. The CVE lands. Someone queries the dependency across all build records and gets the affected build hashes in minutes. Those hashes join to shipment records and produce a customer list, with which branded name each of them knows the product by. The advisory goes out with the right product names on it, to the right people, the same day.</p>
+<p>No archaeology. No spreadsheet. No engineer reconstructing a build from eighteen months ago to find out what was in it.</p>
+<p>Every part of that is infrastructure you build on a quiet week, for an event you cannot schedule. Which is exactly why it tends not to get built — it has no deadline until the deadline is already past, and then it is the most obviously necessary thing you never did.</p>]]></content:encoded>
+  </item>
+  <item>
+    <title>The Ban That Didn&#x27;t Work</title>
+    <link>https://prasannamalode.in/articles/the-ban-that-didnt-work.html</link>
+    <guid isPermaLink="true">https://prasannamalode.in/articles/the-ban-that-didnt-work.html</guid>
+    <pubDate>Tue, 07 Jul 2026 00:00:00 +0000</pubDate>
+    <category>AI Governance</category>
+    <description>A one-sentence AI policy, a four-month DNS log, and why making the sanctioned path the fast path beat every prohibition we tried.</description>
+    <content:encoded><![CDATA[<p>The policy was one sentence long and it was not unreasonable: no company code or configuration is to be entered into external AI tools.</p>
+<p>It was communicated well. People acknowledged it. Nobody argued with it, because nobody disagrees with the principle in the abstract.</p>
+<p>Four months later I was looking at DNS logs for an unrelated reason and found steady traffic to consumer AI domains from engineering subnets, all day, every working day. Not a spike. Not one person. A baseline.</p>
+<p>My first reaction was the wrong one. I started thinking about enforcement — blocklists, egress filtering, a stern follow-up message. It took a conversation with one of the engineers to understand what I was actually looking at.</p>
+<p>She was not being reckless. She had a debugging problem at four in the afternoon, a stack trace she did not recognize, and a tool that could help. The sanctioned alternative required a ticket to request access. The ticket queue was measured in days. Her problem was measured in minutes.</p>
+<p>She had not decided to violate policy. She had decided to do her job, and the policy had not offered her a way to do both.</p>
+<h2>Prohibition has a prerequisite</h2>
+<p>Bans work when the prohibited thing is not very useful, or when the sanctioned substitute is at least as convenient. AI tools fail both conditions badly.</p>
+<p>They are extremely useful for exactly the tasks engineers spend their days on — reading unfamiliar code, drafting boilerplate, explaining an error, writing the regex nobody wants to write, turning a vague requirement into a starting draft. And they are effortless to reach. No install, no procurement, no approval. A browser tab.</p>
+<p>So a ban does not remove the behavior. It removes your visibility of the behavior. The usage moves from corporate laptops to personal phones, from the network you monitor to the one you don't, and from something you could have shaped into something you will now only learn about from the outside.</p>
+<p>I have come to think of it as a rule: when a control makes a behavior invisible rather than absent, you have made your position worse than when you started. You have traded a governable risk for an ungovernable one and given yourself a compliance artifact that says otherwise.</p>
+<h2>Make the sanctioned path the fast path</h2>
+<p>The thing that actually reduced our external traffic was not a stronger prohibition. It was reducing time-to-access from days to zero.</p>
+<p>Concretely: every engineer got access by default, on joining, through our internal gateway. No request, no approval, no ticket. The credential existed before they needed it.</p>
+<p>That single change did more than every message I had sent. Not because the engineers suddenly cared more about data governance, but because the friction that had pushed them outward disappeared. Given two tools of similar quality, people use the one that is already there.</p>
+<p>A few things made it work, and they are worth being specific about.</p>
+<p><strong>The internal option has to be good.</strong> If the sanctioned tool is a lesser model behind a slow interface with a restrictive filter, people will use it for things that do not matter and go elsewhere for things that do — which inverts your intent perfectly. Budget for the good model. It is cheaper than the incident.</p>
+<p><strong>Onboarding by default, not by request.</strong> Any approval step reintroduces the delay you are trying to remove. If a class of user needs gating, gate that class; do not gate everyone to manage the exception.</p>
+<p><strong>Say what is logged, in plain language.</strong> People assume the worst about monitoring they have not had explained. A short, honest note about what is captured and retained produces far less avoidance than silence does. Vagueness reads as surveillance.</p>
+<p><strong>Keep the guardrails about consequences, not vocabulary.</strong> Blocking on keyword lists frustrates legitimate work constantly and stops determined misuse approximately never. Scope what the credential can reach, log what was done, and put your effort into the tail risks that would genuinely hurt.</p>
+<h2>What the gateway gives you that the ban never could</h2>
+<p>Once the traffic is yours, the security work becomes ordinary work.</p>
+<p>You have per-team attribution, so an exposed key is a scoped incident rather than a company-wide one. You have usage telemetry, which turns out to be a decent anomaly signal in its own right. You have a single place to change models, apply policy, and respond to a provider incident without touching forty applications.</p>
+<p>And you have something less tangible that I did not anticipate: you find out what people are actually doing. Our usage patterns told me which teams had adopted these tools deeply and which had not touched them, which informed training, tooling decisions, and a couple of conversations about processes that were clearly painful enough that people were reaching for help.</p>
+<p>None of that is available from a blocklist. A blocklist tells you a request was denied. It tells you nothing about the need that produced it, and the need does not go away when the request does.</p>
+<h2>The part that is uncomfortable to say out loud</h2>
+<p>Shadow AI is a symptom, and the diagnosis is usually about us.</p>
+<p>People go around controls when the controls cost more than the rule is worth to them. That is not a character flaw; it is a rational response to a badly priced obstacle. When I find a widely violated policy, the most useful question is not who is violating it. It is what it costs to comply, and whether we ever measured that before we wrote the rule.</p>
+<p>We had written a sentence that was easy to write and expensive to follow, and then treated the resulting gap as a discipline problem.</p>
+<p>The fix was not a better sentence. It was making compliance the path of least resistance, so that doing the right thing stopped requiring anyone to be heroic about it at four in the afternoon with a stack trace they did not recognize.</p>]]></content:encoded>
+  </item>
+  <item>
+    <title>Prompt Injection Is Not a New Class of Vulnerability</title>
+    <link>https://prasannamalode.in/articles/prompt-injection-confused-deputy.html</link>
+    <guid isPermaLink="true">https://prasannamalode.in/articles/prompt-injection-confused-deputy.html</guid>
+    <pubDate>Tue, 16 Jun 2026 00:00:00 +0000</pubDate>
+    <category>AI Governance</category>
+    <description>Prompt injection is a confused deputy problem we have known about since 1988. Threat model the tools, not the prompt.</description>
+    <content:encoded><![CDATA[<p>Someone built a helpful thing. That is how these always start.</p>
+<p>It was an internal assistant that answered questions about our documentation. Ask it how a process worked, and it would search the wiki, read the relevant pages, and answer. Useful, popular, built quickly by a good engineer in the spirit of making everyone's life easier.</p>
+<p>Then, to make it more useful, it was given the ability to read from a ticketing system too. Also sensible. Most of the questions people asked involved work in flight.</p>
+<p>The demonstration that ended the conversation took about a minute. A ticket was created containing, in its description field, a paragraph of ordinary-looking text that concluded with an instruction addressed to the assistant. When the next person asked a question that caused the assistant to search tickets, it read that paragraph, and it did what the paragraph said.</p>
+<p>Nobody had exploited a model. Someone had typed text into a field that the system treated as instructions.</p>
+<h2>Where the security industry went briefly strange</h2>
+<p>For a while the discussion around prompt injection had an air of novelty about it, as though we had encountered a genuinely new phenomenon requiring genuinely new theory. Papers, taxonomies, a small industry of detection products.</p>
+<p>I want to argue for a more boring framing, because I think the boring framing is the one that actually leads to fixes.</p>
+<p>Prompt injection is a confused deputy problem. It has a name because we have known about it since 1988. A program with legitimate authority is induced by a less-privileged party to exercise that authority on their behalf. SQL injection is this. Cross-site request forgery is this. Server-side request forgery is this. The LLM variant is this.</p>
+<p>What makes it feel new is that the boundary between instruction and data, which in SQL we could at least in principle draw with parameterized queries, cannot be drawn cleanly here. The model consumes one stream of tokens. There is no prepared statement. There is no escaping function that reliably works, and I would be cautious about anyone selling you one.</p>
+<p>But "we cannot fix it at the parser" does not mean "we cannot fix it." It means we fix it where we have always fixed problems we could not fix at the parser: at the boundary of what the deputy is permitted to do.</p>
+<h2>The question that actually matters</h2>
+<p>Stop asking whether the model can be tricked. Assume it can. Every serious attempt to prevent that through instruction-hardening has been defeated, usually quickly, usually by someone doing it for fun.</p>
+<p>Ask instead: when it is tricked, what can happen?</p>
+<p>If the answer is "it writes a wrong answer to a user's screen," you have a quality problem. Annoying, not urgent.</p>
+<p>If the answer is "it calls an API that modifies a record," you have a vulnerability, and the severity is defined entirely by what that API can reach.</p>
+<p>If the answer is "it reads from a privileged source and then writes to somewhere the attacker can observe," you have data exfiltration, and the model is not the interesting part of the chain. The interesting part is that you connected a read capability and a write capability through a component that will follow instructions from anywhere.</p>
+<p>That last one is the pattern to watch for, and it is why the retrieval-plus-tools architecture is where most of the real damage lives. Retrieval brings untrusted content into the context. Tools give the context consequences. Either alone is mostly fine. The combination is where you need to be deliberate.</p>
+<h2>Controls that are already in your toolkit</h2>
+<p>None of what follows will be unfamiliar. That is the point.</p>
+<p><strong>Least privilege, applied to the tool layer.</strong> The credentials the assistant uses should be its own, scoped to exactly the actions it needs. If it only answers questions, it gets read access and nothing else. I have seen assistants running with a service account inherited from an existing integration, carrying permissions that made sense for a nightly batch job and no sense at all for a component that reads user input.</p>
+<p><strong>User-context propagation.</strong> If the assistant acts for a person, it should act with that person's authority, not with a superset of everyone's. Otherwise it becomes an access-control bypass with a chat interface, and the first person to notice will not report it.</p>
+<p><strong>Human confirmation on state change.</strong> Reads are recoverable. Writes, sends, deletes, and payments are not. A confirmation step on consequential actions is unglamorous and defeats the entire exfiltration-by-tool-call category, because the loop passes through a person who did not ask for that.</p>
+<p><strong>Egress control on the output path.</strong> If the assistant can render images from arbitrary URLs, or follow links, or call a webhook with data it has assembled, it has a channel out. Treat that with the same suspicion you would treat any outbound connection from a component processing untrusted input.</p>
+<p><strong>Provenance in the context.</strong> You cannot reliably teach a model to disregard instructions in retrieved content. You can mark which parts of the context came from trusted configuration and which came from a wiki page anyone can edit, and you can make policy decisions about what actions are permitted when untrusted content is in play. This is defense in depth, not a boundary. It reduces the severity distribution; it does not eliminate the tail.</p>
+<h2>The part I would put on a slide</h2>
+<p>Threat model the tools, not the prompt.</p>
+<p>Write down every capability the system has. For each one, ask what an attacker would do with it if they controlled the model's output completely, because in the worst case they do. Whatever survives that exercise is your real security posture. Whatever you were planning to achieve with careful system prompt wording is not a control; it is a preference, and it will be honored until someone decides otherwise.</p>
+<p>The engineer who built our assistant was not careless. He had built a document search tool that happened to be conversational, and the day it gained a second data source it silently became a different kind of system — one where content written by one user could steer behavior on behalf of another. That transition happened in a pull request that looked like a feature addition, because it was one.</p>
+<p>The failure was not in the model. It was that we had no review step that noticed the architecture had changed. That is a process gap, and process gaps are something our field already knows how to close. We just have to recognize the problem as ours.</p>]]></content:encoded>
+  </item>
+  <item>
+    <title>The Queue Is Still There</title>
+    <link>https://prasannamalode.in/articles/the-queue-is-still-there.html</link>
+    <guid isPermaLink="true">https://prasannamalode.in/articles/the-queue-is-still-there.html</guid>
+    <pubDate>Tue, 26 May 2026 00:00:00 +0000</pubDate>
+    <category>AI Governance</category>
+    <description>We put a model in front of the alert queue and it wrote beautiful summaries. The queue did not get shorter. Here is what did move the number.</description>
+    <content:encoded><![CDATA[<p>We put a language model in front of our alert queue, and for about two weeks everyone was pleased.</p>
+<p>Every alert now arrived with a paragraph at the top explaining what it was. Plain English, decent quality, genuinely well written. The analysts said it was nicer to read. Leadership liked the demo. I liked that we had shipped something.</p>
+<p>Then I sat with one of the analysts for a shift and watched what actually happened.</p>
+<p>She read the summary. Then she opened the raw alert anyway. Then she pivoted into the SIEM to check the source host. Then she looked up whether that host had fired the same thing before. Then she closed it as a false positive, the same way she would have without the summary, having spent an extra six seconds reading a paragraph that told her nothing she could act on.</p>
+<p>We had not reduced her workload. We had added a pleasant preamble to it.</p>
+<h2>The number that does not move</h2>
+<p>Here is the uncomfortable arithmetic of alert triage. If a hundred alerts arrive and ninety-four of them are noise, the work is not understanding the hundred. The work is getting to the six.</p>
+<p>Summarization does not touch that. It makes each of the hundred marginally more pleasant to process, and a hundred slightly-nicer units of work is still a hundred units of work. The queue depth is identical. The time-to-the-six is roughly identical. You have improved the experience of doing the wrong amount of work.</p>
+<p>This is the trap, and it is seductive precisely because summarization is the thing language models are unmistakably good at. It demos beautifully. It never looks broken. Nobody complains. It is the local maximum you can reach in a sprint, and reaching it feels like progress in a way that makes it hard to ask whether it was the right direction.</p>
+<h2>What moved the number</h2>
+<p>When we rebuilt the thing, we changed the question. Not "how do we explain this alert" but "what does the analyst do next, and can we have already done it?"</p>
+<p>That reframing produced a different system.</p>
+<p><strong>Enrichment before summary.</strong> Every one of those manual pivots — is this host in scope, has this signature fired before, who owns this asset, what changed on it recently, is the source address one of ours — is a lookup with a deterministic answer. Do them all, automatically, in parallel, before a human ever sees the alert. Most of the analyst's clock was not comprehension. It was fetching context that a script could fetch.</p>
+<p><strong>Correlation before presentation.</strong> Forty alerts from one misconfigured host are one piece of information presented forty times. Grouping them is not glamorous and it is not AI, but it did more for queue depth than anything else we built. Do this first. If your queue is full of duplicates, no amount of model cleverness matters, because you are summarizing the same thing forty times.</p>
+<p><strong>A recommendation with its reasoning attached.</strong> This is where the model earned its place. Not "here is what this alert says," which the analyst can read, but "this looks like the false positive class you closed eleven times last month, for these reasons, and here is the evidence." That is a claim she can accept or reject in two seconds. A summary gives her something to read. A recommendation gives her something to decide.</p>
+<p><strong>A confidence signal that is allowed to say nothing.</strong> The single most valuable behavior we built was the system declining to guess. When enrichment came back thin or contradictory, it said so and handed over cleanly, with the raw data and no narrative. A tool that is confidently wrong twice will not be trusted the third time it is right, and trust is the whole asset. Once analysts stop reading the recommendation, you own an expensive queue decoration.</p>
+<h2>Automation earned, not assumed</h2>
+<p>The obvious next question is whether the model should just close the low-risk ones itself.</p>
+<p>Eventually, for narrow classes, yes. But not on day one, and not on the basis of a vendor's accuracy claim.</p>
+<p>What worked for us was shadow mode. The system made its recommendation. The analyst made the real decision. We compared them, by alert class, for long enough to have meaningful numbers. Where agreement was very high and the disagreements were consistently the model being appropriately more cautious, we promoted that specific class to auto-closure — with sampling, so a percentage still got human eyes, and with a monthly review of what the sampling found.</p>
+<p>Everything else stayed advisory. Some of it still is.</p>
+<p>This is slower than the deployment everyone wants. It is also the only version I have seen survive contact with a real incident review, because when someone eventually asks "why did nobody look at this," the answer needs to be a documented decision with evidence behind it, not a procurement decision with a confidence score behind it.</p>
+<h2>What I would ask before building this</h2>
+<p>If you are about to point a model at your alert queue, I would ask three questions first, in this order.</p>
+<p>What fraction of your queue is duplicate or correlated? If it is large, fix that before anything else. It is cheaper, it is deterministic, and it will deliver more than the model will.</p>
+<p>Which lookups do your analysts perform on nearly every alert? Automate those. They are the actual minutes. You do not need a model for most of them.</p>
+<p>And then, only then: where is the genuine judgment call, and can a model make it well enough that a human can verify the answer faster than they could produce it?</p>
+<p>That last clause is the whole test. A tool that makes a judgment I must independently redo has cost me time. A tool that makes a judgment I can check at a glance has saved me most of it.</p>
+<h2>The honest summary</h2>
+<p>The summaries were good. They were well written, accurate, and useless, and the reason they were useless had nothing to do with model quality. We had automated the part of the job that was not the job.</p>
+<p>The queue is not hard because the alerts are hard to read. It is hard because there are too many of them and the important ones are indistinguishable from the rest until you do the work. Anything that does not reduce the count, or does not do the work, is decoration — however well it writes.</p>]]></content:encoded>
+  </item>
+  <item>
+    <title>The Invoice as an Intrusion Detection System</title>
+    <link>https://prasannamalode.in/articles/invoice-as-intrusion-detection.html</link>
+    <guid isPermaLink="true">https://prasannamalode.in/articles/invoice-as-intrusion-detection.html</guid>
+    <pubDate>Tue, 05 May 2026 00:00:00 +0000</pubDate>
+    <category>AI Governance</category>
+    <description>Token spend is unforgeable, baselined for free, and denominated in a unit finance already tracks. Read it as a detection signal.</description>
+    <content:encoded><![CDATA[<p>The first sign was not an alert. It was a graph with a step in it.</p>
+<p>Saturday, some time after two in the morning, token consumption on one of our internal keys went from a flat weekend baseline to roughly forty times that, and stayed there. No error spike. No failed authentications. No unusual source geography that anyone had configured us to care about. Just a service that normally spent almost nothing overnight, suddenly working very hard at something.</p>
+<p>Nobody was awake to see it. We found it on Monday, in a cost dashboard, because someone was doing budget planning.</p>
+<p>It turned out to be a runaway retry loop — a misbehaving job that failed, retried, failed, retried, with no backoff and no ceiling. Expensive, embarrassing, not malicious. But the thing that stayed with me was not the root cause. It was that the same graph, with the same shape, is what a stolen API key looks like.</p>
+<h2>Spend is behavior, rendered in a unit finance already tracks</h2>
+<p>We spend a lot of effort building telemetry for security. We ship logs, we normalize them, we write detections, we tune them. Meanwhile, sitting in a completely different part of the organization, there is a continuously updated, high-fidelity record of exactly how much work every credential has caused something to do.</p>
+<p>Token consumption is a behavioral signal. It has properties that most of our detections would love to have.</p>
+<p>It is unforgeable by the client. The consuming application does not get to report its own usage; the gateway counts it. Someone abusing a key cannot make the counter say something friendlier.</p>
+<p>It is baselined almost for free. Most workloads are boringly regular. A summarization service handles roughly the number of documents that arrive. A coding assistant tracks the working hours of the people using it. Variance exists, but the shape of a week is stable enough that departures are visible without sophisticated modeling.</p>
+<p>And it is denominated in a unit that non-security people already care about. This matters more than it sounds. You will never have to justify why you are monitoring cost.</p>
+<h2>The shapes worth naming</h2>
+<p>Not every anomaly is interesting. These are the ones I have learned to look at.</p>
+<p><strong>The step function.</strong> Flat, then high, then flat at the new level. Automation, either yours misbehaving or someone else's. The overnight version is the one to care about, because legitimate step changes usually accompany a deploy, and deploys usually happen when people are awake. Correlate against your release calendar before you page anyone.</p>
+<p><strong>The slow ramp.</strong> Consumption climbing a few percent a day for weeks. Almost never an attack. Almost always a product decision nobody costed — a feature quietly expanded to more users, or a prompt that grew a few hundred tokens of context each time someone improved it. Worth catching anyway, because this is how a budget dies without a single alarming day.</p>
+<p><strong>The pattern break.</strong> Total volume unchanged, but the mix is different. A key that has only ever called a small fast model starts calling the largest one. A service that has always sent short requests starts sending very long ones. This one is the most interesting from a security standpoint, because it is the least likely to be accidental. Software does not spontaneously develop new preferences. Something changed the caller, or something else is using the credential.</p>
+<p><strong>The weekend floor that lifts.</strong> Every environment has a natural quiet period. When the floor of that quiet period rises and stays risen, something now runs continuously that did not before.</p>
+<h2>Why this catches things your other controls miss</h2>
+<p>A leaked LLM gateway key is an awkward artifact. It is not a database credential, so your data-access monitoring does not see it. It usually does not touch your network perimeter in an interesting way, because the traffic is ordinary HTTPS to an endpoint you have deliberately allowed. It rarely triggers authentication alerting, because the authentication succeeds — that is the entire point of a stolen credential.</p>
+<p>What it cannot hide is that it costs money to use. Whoever has it is using it for something, and using it is the only thing that makes it worth having.</p>
+<p>That is an unusually good property for a detection to rest on. You are not watching for a signature that can be changed or an anomaly that can be smoothed out. You are watching the one behavior that is inseparable from the motive.</p>
+<h2>Making it actually work</h2>
+<p>Three practical notes, because the idea is easy and the implementation is where it goes quiet.</p>
+<p>First, this requires the attribution I have written about elsewhere. A single shared key gives you one aggregate line, and aggregates hide everything. Forty times normal on one team's key is obvious. The same absolute increase spread across company-wide totals is a rounding error you will never notice.</p>
+<p>Second, alert on rate of change, not on absolute thresholds. Absolute limits are a budget control, and they should exist, but they fire when you have already spent the money. A derivative-based alert — this key is consuming at N times its trailing baseline — fires while it is happening. Set the baseline per key, not globally, because a key serving a batch pipeline and a key serving an internal chat tool have nothing in common.</p>
+<p>Third, route it somewhere a human reads at odd hours, or accept that you will find these on Monday. I am not going to pretend every organization should page for this. But decide consciously. Our Saturday event ran for roughly thirty hours because the answer to "who sees this" was nobody, and nobody had ever been asked.</p>
+<h2>The wider point</h2>
+<p>There is a habit in security of assuming that a good signal must come from a security tool. It leads to us instrumenting elaborately for detections that a billing system was already providing for free.</p>
+<p>Your gateway is producing cost telemetry whether you look at it or not. Someone in finance is already looking at it, once a month, for entirely different reasons. The distance between their dashboard and a working detection is smaller than the distance between where you are and most of the detections on your roadmap.</p>
+<p>Go and read that graph. You may find, as we did, that the interesting event happened weeks ago and has been sitting there patiently, correctly recorded, waiting for someone to ask what it was.</p>]]></content:encoded>
+  </item>
+  <item>
+    <title>Who Spent This?</title>
+    <link>https://prasannamalode.in/articles/who-spent-this.html</link>
+    <guid isPermaLink="true">https://prasannamalode.in/articles/who-spent-this.html</guid>
+    <pubDate>Tue, 14 Apr 2026 00:00:00 +0000</pubDate>
+    <category>AI Governance</category>
+    <description>Attribution in an LLM gateway is not a reporting problem. It is a key-issuance decision, and it has to be made before the first request.</description>
+    <content:encoded><![CDATA[<p>There is a particular kind of silence that follows a simple question in a meeting.</p>
+<p>Ours came in month three of running an internal LLM gateway. Someone from finance had the usage report open and asked what should have been a trivial question: which teams were driving the spend? Engineering wanted to know before they asked for more budget. Finance wanted to know before they approved it.</p>
+<p>The report had one number. A big one, technically accurate, and completely useless. Every request had gone through the same API key.</p>
+<p>We had done the hard part well. We had stood up a proxy, centralized model access, kept raw provider keys out of application code, and given ourselves a single place to enforce rate limits. On any architecture diagram it looked correct. The one thing we had not done was decide, before the first request, who each request belonged to.</p>
+<h2>Attribution is a design decision</h2>
+<p>This is the part I got wrong, and I think a lot of teams get wrong in the same way: attribution feels like a reporting problem. It presents as a dashboard gap. It seems like the sort of thing you fix later by adding a column.</p>
+<p>It is not a reporting problem. It is a key issuance problem, and key issuance happens at the beginning.</p>
+<p>Whatever your gateway is — a commercial product, an open-source proxy, something you wrote yourself — it will let you mint virtual keys that sit in front of the real provider credentials. The question is what those keys map to. One key for the whole company. One per application. One per team. One per user.</p>
+<p>Every answer downstream of that choice is fixed by it. Your usage data can only ever be as granular as your keys. If one key serves forty engineers, no amount of clever querying recovers which engineer did what. The information was never captured. You are not missing a report; you are missing a fact.</p>
+<p>And the retrofit is genuinely painful, because it is not a schema change. It is a credential rotation across every integration you have built, coordinated with every team that depends on them, while the old key stays alive long enough that nobody's pipeline breaks. I have watched that project consume weeks that a fifteen-minute decision at the start would have saved entirely.</p>
+<h2>Why security ends up caring more than finance</h2>
+<p>The budget conversation is what forces the issue. It is not the reason the issue matters.</p>
+<p>Consider what happens when a key leaks. Someone commits it, or pastes it into a support ticket, or it ends up baked into a container image that gets pushed somewhere public. You find out — maybe from a spend anomaly, maybe from a scanner, maybe from someone outside the company being kind enough to tell you.</p>
+<p>Now you are in incident response. The first questions are always the same. What could this credential reach? How long was it exposed? What was done with it? Who else is affected if we kill it right now?</p>
+<p>With one shared key, every one of those questions returns the worst possible answer. It could reach everything. It was exposed since whenever it was created. What was done with it is indistinguishable from normal traffic, because normal traffic looks exactly the same. And revoking it takes the entire company offline, which means you will feel pressure to wait, investigate more, be careful — while the credential stays live.</p>
+<p>With per-team or per-user keys, the same incident is a different event. Blast radius is scoped by construction. The traffic on that one key is a narrow, readable slice. Revocation affects one team, who you can notify in a Slack message. You go from an organizational emergency to a Tuesday.</p>
+<p>That difference was not created during the incident. It was created months earlier, by someone deciding how to issue keys.</p>
+<h2>The uncomfortable part about per-user</h2>
+<p>Per-user attribution is the most useful and the most contentious, so it deserves an honest paragraph rather than a recommendation.</p>
+<p>Per-user keys give you the cleanest audit trail available. They also mean you are now holding a per-person record of interactions with a language model, and people use these tools to think out loud. Some of what they type is half-formed, or personal, or about problems they have not told anyone about yet. Depending on where your employees sit, that record may carry obligations you have not thought about.</p>
+<p>I do not think there is a universal right answer. What I think is wrong is arriving at an answer by accident. Decide it deliberately, write down what you retain and for how long, tell people plainly what is logged, and be able to explain why. A team that knows the shape of the logging will work with it. A team that discovers it later will route around it, and then you have shadow AI on top of everything else.</p>
+<p>If per-user is too heavy for your context, per-team is a defensible middle. It is coarse enough to avoid individual surveillance and fine enough that incident scoping and cost allocation both work. What is not defensible is one key for everyone, which is the option that feels like no decision at all.</p>
+<h2>What I would tell myself at the start</h2>
+<p>Before the first request goes through the gateway, answer three things.</p>
+<p>What is the smallest unit you need to attribute to? Pick it based on the incident you would least like to handle, not the report you would most like to see.</p>
+<p>Who issues keys, and how does someone get one? If the answer involves a ticket that takes four days, you have just designed your shadow AI problem. Make the sanctioned path the fast path.</p>
+<p>What happens when a key has to die? Write the runbook while nothing is on fire. It should be short. If it is long, your key structure is wrong.</p>
+<p>None of this is sophisticated. It is the same least-privilege reasoning we have applied to service accounts for twenty years, pointed at a new kind of credential. The only reason it gets skipped is that the gateway works fine without it, right up until the moment it doesn't.</p>
+<p>The number in that report was correct. That was the problem. It was one correct number where we needed forty, and the only moment we could have had forty was before we started.</p>]]></content:encoded>
+  </item>
+  <item>
+    <title>How I increased release frequency by 80% without sacrificing security</title>
+    <link>https://prasannamalode.in/articles/cicd-80-percent.html</link>
+    <guid isPermaLink="true">https://prasannamalode.in/articles/cicd-80-percent.html</guid>
+    <pubDate>Tue, 10 Mar 2026 00:00:00 +0000</pubDate>
+    <category>DevSecOps</category>
+    <description>The CI/CD transformation framework, quality gates, and governance model that delivered measurable results at IP Infusion.</description>
+    <content:encoded><![CDATA[<p>When I joined IP Infusion, releases were slow, unpredictable, and stressful. Engineers dreaded deployment days. Six years later we'd increased release frequency by 80% and cut deployment failures by 60%. Here's the honest story of how we got there.</p>
+<h2>The starting point</h2>
+<p>The first thing I did was measure. Not guess. Measure. We tracked lead time for change, deployment frequency, failure rate, and time to restore. The numbers were uncomfortable. That was the point.</p>
+<blockquote><p>You can't improve what you don't measure. But more importantly, you can't get buy-in without showing the business what slow really costs.</p></blockquote>
+<h2>Pre-QAT quality gates</h2>
+<p>The biggest unlock was introducing Pre-QAT quality gates: automated checks before code even reached the test environment. This shifted quality left and eliminated entire categories of late-stage failures.</p>
+<ul><li>Static code analysis via Coverity at commit time</li><li>FOSS compliance scanning on every build</li><li>Automated security checks (NMAP, OpenVAS) in staging</li><li>Memory leak detection integrated into the CI pipeline</li></ul>
+<h2>The release governance layer</h2>
+<p>Speed without control creates chaos. We built a release governance framework that gave every stakeholder visibility without creating bottlenecks. Executive dashboards showing MTTR, SLA compliance, and incident trends meant I never had to prep a slide deck for a C-suite review. The data spoke for itself.</p>
+<h2>Tools that drove the change</h2>
+<p>The stack that made it possible: Jenkins, Python, shell scripting, Coverity for static analysis, Artifactory and Nexus for artifact management, Docker and Kubernetes for containerised deployments, all running on Linux. None of these tools were exotic. The discipline around how we used them was what mattered.</p>
+<h2>What actually moved the needle</h2>
+<p>Honestly? Culture. The tools were 30% of the improvement. The other 70% was getting the team to own quality rather than throw it over the wall to QA. That took time, consistent reinforcement, and being willing to slow down briefly to accelerate long-term.</p>
+<p>The principle I kept coming back to: make the right thing the easy thing. When quality gates caught issues automatically, engineers stopped seeing them as obstacles and started seeing them as safety nets.</p>]]></content:encoded>
+  </item>
+  <item>
+    <title>Building a cybersecurity function from scratch: lessons from zero to ISO 27001</title>
+    <link>https://prasannamalode.in/articles/iso-27001-from-scratch.html</link>
+    <guid isPermaLink="true">https://prasannamalode.in/articles/iso-27001-from-scratch.html</guid>
+    <pubDate>Tue, 10 Feb 2026 00:00:00 +0000</pubDate>
+    <category>Cybersecurity</category>
+    <description>From no InfoSec function to zero major audit findings. The people, process, and tools decisions that got us there.</description>
+    <content:encoded><![CDATA[<p>When I took on cybersecurity at IP Infusion, there was no InfoSec function. No DLP. No formal controls. Just a growing risk surface and a team that knew something needed to change.</p>
+<h2>First 90 days: visibility before action</h2>
+<p>I didn't start by buying tools. I started by understanding what we had: all assets, all access points, all data flows. You can't protect what you can't see. We ran Nessus scans, mapped our external attack surface with NMAP, and built an asset inventory from scratch.</p>
+<blockquote><p>Every security investment should be traceable to a specific risk. If you can't name the risk, don't buy the tool.</p></blockquote>
+<h2>DLP and enterprise controls</h2>
+<p>Data Loss Prevention was the first major implementation. We mapped our sensitive data classifications, identified egress points, and implemented controls across email, endpoint, and cloud. The key was getting HR and Legal involved early so controls were enforceable, not just technical.</p>
+<h2>The ISO 27001 journey</h2>
+<p>We achieved ISO 27001 certification with zero major audit findings. The secret wasn't documentation. It was making the controls real. Auditors can tell immediately when a control exists on paper but not in practice.</p>
+<ul><li>Incident response procedures were rehearsed, not just written</li><li>Access reviews happened quarterly, not annually</li><li>Security awareness was embedded in onboarding and weekly team meetings, not a once-a-year checkbox</li></ul>
+<h2>The number that mattered</h2>
+<p>Security incidents dropped by 50%. More importantly, when incidents did occur, we detected and contained them faster. The MTTI (Mean Time to Identify) improvement was as significant as the incident reduction itself. Detection speed is often undervalued in security programs. It shouldn't be.</p>]]></content:encoded>
+  </item>
+  <item>
+    <title>What managing a 16-person global team taught me about follow-the-sun ops</title>
+    <link>https://prasannamalode.in/articles/follow-the-sun-ops.html</link>
+    <guid isPermaLink="true">https://prasannamalode.in/articles/follow-the-sun-ops.html</guid>
+    <pubDate>Tue, 13 Jan 2026 00:00:00 +0000</pubDate>
+    <category>Leadership</category>
+    <description>Handovers, shift scheduling, and the one ritual that keeps 24x7 teams sane and aligned.</description>
+    <content:encoded><![CDATA[<p>Running a follow-the-sun operation sounds simple on paper: coverage across timezones, seamless handovers, 24x7 continuity. The reality is messier, and more human, than any playbook suggests.</p>
+<h2>The handover problem</h2>
+<p>The single biggest failure mode in follow-the-sun is the handover. Information gets lost. Context doesn't transfer. The incoming shift restarts investigations the outgoing shift already half-solved. We fixed this with a structured handover template. Not long, not bureaucratic, but specific about what's in flight, what's blocked, and what the next two hours need.</p>
+<blockquote><p>A 5-minute handover done well saves 2 hours of re-investigation. Most teams skip it because they're busy. That busyness is exactly why they need it.</p></blockquote>
+<h2>Performance monitoring across shifts</h2>
+<p>You can't manage what you can't see across eight timezones. We built real-time dashboards giving visibility into SLA compliance, incident queue depth, and team velocity, regardless of shift. This wasn't about surveillance. It was about being able to unblock people quickly and spot patterns that no single shift could see alone.</p>
+<h2>The one ritual that keeps teams aligned</h2>
+<p>Weekly all-hands across shifts. Twenty minutes, same agenda every time: metrics review, one learning from the week, one shoutout. Simple. Consistent. It built the shared identity that makes distributed teams function like a team rather than isolated shifts doing disconnected work.</p>
+<h2>Mentoring across distance</h2>
+<p>Leading two managers and two DevOps architects remotely forced me to be more intentional about development than I ever was in person. Written feedback became more important. Regular 1:1s became non-negotiable. Career conversations happened on a cadence, not when someone was already considering leaving.</p>
+<p>The single biggest thing I learned: presence is not about timezone overlap. It's about reliability. If your team knows you'll respond, unblock, and follow through, they feel supported regardless of where you are.</p>]]></content:encoded>
+  </item>
+  <item>
+    <title>How ITIL-aligned incident management cut our recurring incidents by 50%</title>
+    <link>https://prasannamalode.in/articles/itil-incident-management.html</link>
+    <guid isPermaLink="true">https://prasannamalode.in/articles/itil-incident-management.html</guid>
+    <pubDate>Tue, 09 Dec 2025 00:00:00 +0000</pubDate>
+    <category>ITIL / Ops</category>
+    <description>The exact process changes, tooling decisions, and cultural shifts that drove the improvement.</description>
+    <content:encoded><![CDATA[<p>ITIL gets a bad reputation: heavy process, slow bureaucracy, documentation nobody reads. Done right, it's the opposite. Here's what ITIL-aligned incident management actually looked like in practice at IP Infusion.</p>
+<h2>The recurring incident trap</h2>
+<p>Before the transformation, we were great at closing incidents. We were terrible at preventing them from coming back. The same infrastructure issues, the same application failures, the same network anomalies, cycling through the queue month after month.</p>
+<blockquote><p>Closing incidents fast is a metric. Preventing them from recurring is an outcome. Most teams optimise for the metric.</p></blockquote>
+<h2>Separating incident from problem management</h2>
+<p>The structural change was treating Incident Management (restore service fast) and Problem Management (find root cause) as separate disciplines with separate owners. Incident managers focused on MTTR. Problem managers focused on permanent fixes. The handoff between them became a defined process, not an afterthought.</p>
+<h2>The ServiceNow implementation</h2>
+<p>ServiceNow gave us the data we needed: incident trends by category, MTTR by team, SLA breach patterns. But the data was only useful because we reviewed it weekly and acted on it. Tooling without review cadence is just expensive storage.</p>
+<h2>Results that mattered to the business</h2>
+<p>Recurring incidents down 50%. SLA performance up 40%. But the result I'm most proud of: the team stopped dreading the queue. When you're not firefighting the same fires repeatedly, morale follows. That's the real return on an ITIL investment. Not the certification, not the process documentation, but a team that's energised rather than exhausted.</p>]]></content:encoded>
+  </item>
+  <item>
+    <title>How we integrated Gen AI into CI/CD pipelines, and what surprised us</title>
+    <link>https://prasannamalode.in/articles/genai-cicd-pipelines.html</link>
+    <guid isPermaLink="true">https://prasannamalode.in/articles/genai-cicd-pipelines.html</guid>
+    <pubDate>Tue, 11 Nov 2025 00:00:00 +0000</pubDate>
+    <category>Gen AI</category>
+    <description>Real-world implementation of AI-assisted code reviews, decision gates, and memory leak detection in production CI/CD.</description>
+    <content:encoded><![CDATA[<p>Everyone's talking about AI in software development. Most of it is theoretical. Here's what we actually implemented, what worked, and what we'd do differently.</p>
+<h2>Where we started</h2>
+<p>We started with the lowest-risk, highest-value use case: AI-assisted developer guides. Instead of static documentation that went stale, we built context-aware guides that pulled from live pipeline state. Engineers got relevant, current information at the moment they needed it, not a wiki page last updated 18 months ago.</p>
+<h2>AI in CI/CD decision gates</h2>
+<p>The bigger bet was integrating Gen AI into CI/CD decision gates, using models to assess code quality risks before builds proceeded. The model was trained on our historical incident data, so it understood which patterns of change correlated with deployment failures in our specific codebase.</p>
+<blockquote><p>Generic AI gives generic advice. The value came when the model understood our patterns, our history, our failure modes.</p></blockquote>
+<h2>Automated code reviews</h2>
+<p>AI-assisted code reviews flagged memory leaks, FOSS snippet matches (critical for our IP compliance requirements), and code quality issues in real time, before human reviewers saw the PR. Human reviewers then focused on logic, architecture, and context rather than mechanical checks. Review quality went up. Review time went down.</p>
+<h2>What surprised us</h2>
+<p>The biggest surprise was adoption speed. Engineers embraced it faster than any other tooling change we'd made, because it made their jobs easier rather than adding overhead. The second surprise: the AI caught a category of FOSS compliance issues we hadn't anticipated it would find. That became one of its most valuable ongoing functions.</p>
+<p>What didn't work: using AI for release go/no-go decisions without human review. The model was right 90% of the time, which sounds good until it's wrong on a major release. Human judgment stays in the loop for consequential decisions.</p>]]></content:encoded>
+  </item>
+</channel>
+</rss>
