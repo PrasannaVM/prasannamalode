@@ -111,21 +111,30 @@ def md_to_html(md):
             flush_para()
             ordered = bool(re.match(r"^\d+[.)]\s+", s))
             tag = "ol" if ordered else "ul"
-            items = []
+            items = []  # each item: [text, [nested items]]
             while i < n:
-                t = lines[i].strip()
+                raw = lines[i]
+                t = raw.strip()
                 if not t:
                     # allow a blank line inside a list only if the next line is another item
                     if i + 1 < n and (re.match(r"^[-*+]\s+", lines[i + 1].strip()) or re.match(r"^\d+[.)]\s+", lines[i + 1].strip())):
                         i += 1; continue
                     break
+                indented = raw.startswith(("  ", "\t"))
                 mm = re.match(r"^(?:[-*+]|\d+[.)])\s+(.*)$", t)
                 if not mm:
-                    if items and lines[i].startswith(("  ", "\t")):
-                        items[-1] += " " + t; i += 1; continue
+                    if items and indented:
+                        items[-1][0] += " " + t; i += 1; continue
                     break
-                items.append(mm.group(1)); i += 1
-            out.append(f"<{tag}>" + "".join(f"<li>{inline(it)}</li>" for it in items) + f"</{tag}>")
+                if indented and items:
+                    items[-1][1].append(mm.group(1))
+                else:
+                    items.append([mm.group(1), []])
+                i += 1
+            def li(it):
+                sub = f"<ul>{''.join(f'<li>{inline(x)}</li>' for x in it[1])}</ul>" if it[1] else ""
+                return f"<li>{inline(it[0])}{sub}</li>"
+            out.append(f"<{tag}>" + "".join(li(it) for it in items) + f"</{tag}>")
             continue
         para.append(line); i += 1
     flush_para()

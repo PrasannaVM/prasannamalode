@@ -14,6 +14,19 @@ window.ARTICLES = [
   "part": 8
  },
  {
+  "id": "supply-chain-security-strategic-risk",
+  "kind": "essay",
+  "title": "Software Supply Chain Security in 2026: Beyond Compliance to Strategic Risk",
+  "tag": "Cybersecurity",
+  "date": "2026-08-25",
+  "display_date": "Aug 2026",
+  "read": "6 min read",
+  "summary": "From vendor questionnaires to transparency mandates. Three attack vectors, why SBOMs are required but still imperfect, and whether you could isolate a compromised vendor within four hours.",
+  "file": "articles/supply-chain-security-strategic-risk.html",
+  "series": "Cybersecurity Trends 2026",
+  "part": 5
+ },
+ {
   "id": "code-review-at-machine-scale",
   "kind": "essay",
   "title": "When Review Breaks: Code at Machine Scale",
@@ -51,6 +64,19 @@ window.ARTICLES = [
   "file": "articles/the-ban-that-didnt-work.html",
   "series": "AI Governance for Engineering Leaders",
   "part": 5
+ },
+ {
+  "id": "ai-driven-threat-landscape",
+  "kind": "essay",
+  "title": "The AI-Driven Threat Landscape: How Machine Learning is Weaponizing Attacks in 2026",
+  "tag": "Cybersecurity",
+  "date": "2026-06-30",
+  "display_date": "Jun 2026",
+  "read": "4 min read",
+  "summary": "AI has moved from defensive tool to offensive weapon: polymorphic malware, adaptive phishing, zero-day discovery at scale. Why behavioural detection and containment now beat signatures.",
+  "file": "articles/ai-driven-threat-landscape.html",
+  "series": "Cybersecurity Trends 2026",
+  "part": 4
  },
  {
   "id": "prompt-injection-confused-deputy",
@@ -105,6 +131,19 @@ window.ARTICLES = [
   "part": 1
  },
  {
+  "id": "ransomware-beyond-encryption",
+  "kind": "essay",
+  "title": "Ransomware in 2026: Evolution Beyond Encryption to Business Disruption",
+  "tag": "Cybersecurity",
+  "date": "2026-03-24",
+  "display_date": "Mar 2026",
+  "read": "8 min read",
+  "summary": "Ransomware is now a professionalised extortion business with double extortion in 84% of cases. The four attack phases, the four defensive tiers, and the nine readiness questions.",
+  "file": "articles/ransomware-beyond-encryption.html",
+  "series": "Cybersecurity Trends 2026",
+  "part": 3
+ },
+ {
   "id": "cicd-80-percent",
   "kind": "essay",
   "title": "How I increased release frequency by 80% without sacrificing security",
@@ -126,6 +165,19 @@ window.ARTICLES = [
   "read": "5 min read",
   "summary": "From no InfoSec function to zero major audit findings. The people, process, and tools decisions that got us there.",
   "file": "articles/iso-27001-from-scratch.html"
+ },
+ {
+  "id": "multi-cloud-security-fragmentation",
+  "kind": "essay",
+  "title": "Cloud Security in 2026: The Multi-Cloud Fragmentation Problem",
+  "tag": "Cybersecurity",
+  "date": "2026-01-27",
+  "display_date": "Jan 2026",
+  "read": "6 min read",
+  "summary": "The same control means three different implementations across AWS, Azure and GCP. Why policy drift is the top audit finding, and what outcome-based governance looks like.",
+  "file": "articles/multi-cloud-security-fragmentation.html",
+  "series": "Cybersecurity Trends 2026",
+  "part": 2
  },
  {
   "id": "follow-the-sun-ops",
@@ -160,6 +212,19 @@ window.ARTICLES = [
   "read": "6 min read",
   "summary": "Real-world implementation of AI-assisted code reviews, decision gates, and memory leak detection in production CI/CD.",
   "file": "articles/genai-cicd-pipelines.html"
+ },
+ {
+  "id": "zero-trust-reality-check",
+  "kind": "essay",
+  "title": "Zero Trust in 2026: Implementation Reality vs. Industry Hype",
+  "tag": "Cybersecurity",
+  "date": "2025-10-21",
+  "display_date": "Oct 2025",
+  "read": "5 min read",
+  "summary": "Zero Trust is a 3 to 5 year architectural commitment, not a product. Where enterprises actually are, the hidden costs vendors skip, and a realistic roadmap.",
+  "file": "articles/zero-trust-reality-check.html",
+  "series": "Cybersecurity Trends 2026",
+  "part": 1
  },
  {
   "id": "cicd-jenkins-azure-docker",
