@@ -7,7 +7,7 @@ read: 5 min read
 summary: The exact process changes, tooling decisions, and cultural shifts that drove the improvement.
 ---
 
-ITIL gets a bad reputation: heavy process, slow bureaucracy, documentation nobody reads. Done right, it's the opposite. Here's what ITIL-aligned incident management actually looked like in practice at IP Infusion.
+ITIL gets a bad reputation: heavy process, slow bureaucracy, documentation nobody reads. Done right, it's the opposite. Here's what ITIL-aligned incident management actually looked like in practice for a global IT operations team.
 
 ## The recurring incident trap
 

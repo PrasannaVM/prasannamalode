@@ -7,7 +7,7 @@ read: 5 min read
 summary: From no InfoSec function to zero major audit findings. The people, process, and tools decisions that got us there.
 ---
 
-When I took on cybersecurity at IP Infusion, there was no InfoSec function. No DLP. No formal controls. Just a growing risk surface and a team that knew something needed to change.
+When I took on cybersecurity, there was no InfoSec function. No DLP. No formal controls. Just a growing risk surface and a team that knew something needed to change.
 
 ## First 90 days: visibility before action
 

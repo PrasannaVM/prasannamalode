@@ -222,7 +222,7 @@ def footer_html(root):
       <a href="{root}/index.html#/tools">Tools</a>
       <a href="{root}/index.html#/about">About</a>
       <a href="https://linkedin.com/in/prasannamalode" target="_blank" rel="noopener me">LinkedIn</a>
-      <a href="mailto:prasanna.malode@outlook.com">Email</a>
+      <a href="mailto:malode.prasanna@gmail.com">Email</a>
       <a href="{root}/feed.xml">RSS</a>
     </div>
   </div>
@@ -350,7 +350,7 @@ def article_page(a, all_essays, series_map):
               <div>
                 <div class="name">{AUTHOR}</div>
                 <div class="role">{ROLE} · Bengaluru, India</div>
-                <p>20+ years leading global IT, DevOps, cybersecurity and service operations. I write about making speed, security and reliability the same conversation. <a href="{root}/index.html#/about">More about me</a>.</p>
+                <p>Two decades in release engineering, IT operations and security, now leading a 20-person global DevSecOps, cybersecurity and IT operations organisation. I write about making speed, security and reliability the same conversation. <a href="{root}/index.html#/about">More about me</a>.</p>
               </div>
             </div>
             <nav class="pager" aria-label="More articles">
@@ -427,7 +427,8 @@ def make_og(a, out_path):
 
     d.line([x, H - 130, W - 80, H - 130], fill=(232, 226, 217), width=2)
     d.text((x, H - 105), AUTHOR, font=name_f, fill=(26, 24, 20))
-    d.text((x, H - 62), "prasannamalode.in  ·  " + (a.get("display_date") or nice_date(a["date"])), font=small_f, fill=(111, 105, 94))
+    date_txt = a["display_date"] if "display_date" in a else nice_date(a["date"])
+    d.text((x, H - 62), "prasannamalode.in" + ("  ·  " + date_txt if date_txt else ""), font=small_f, fill=(111, 105, 94))
     # photo circle
     try:
         photo = Image.open(os.path.join(ASSETS, "photo.jpg")).convert("RGB")

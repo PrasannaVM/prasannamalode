@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://prasannamalode.in/</loc><lastmod>2026-09-12</lastmod><priority>1.0</priority></url>
+  <url><loc>https://prasannamalode.in/</loc><lastmod>2026-09-13</lastmod><priority>1.0</priority></url>
   <url><loc>https://prasannamalode.in/articles/the-demo-you-didnt-choose.html</loc><lastmod>2026-09-08</lastmod><priority>0.8</priority></url>
   <url><loc>https://prasannamalode.in/articles/code-review-at-machine-scale.html</loc><lastmod>2026-08-18</lastmod><priority>0.8</priority></url>
   <url><loc>https://prasannamalode.in/articles/same-binary-under-four-names.html</loc><lastmod>2026-07-28</lastmod><priority>0.8</priority></url>
@@ -17,10 +17,10 @@
   <url><loc>https://prasannamalode.in/articles/cicd-jenkins-azure-docker.html</loc><lastmod>2021-01-01</lastmod><priority>0.6</priority></url>
   <url><loc>https://prasannamalode.in/articles/Git_HandsOn_Guide.html</loc><lastmod>2010-01-01</lastmod><priority>0.6</priority></url>
   <url><loc>https://prasannamalode.in/articles/Git_CheatSheet.html</loc><lastmod>2010-01-01</lastmod><priority>0.6</priority></url>
-  <url><loc>https://prasannamalode.in/tools/cicd-scorecard.html</loc><lastmod>2026-09-12</lastmod><priority>0.7</priority></url>
-  <url><loc>https://prasannamalode.in/tools/devsecops-maturity.html</loc><lastmod>2026-09-12</lastmod><priority>0.7</priority></url>
-  <url><loc>https://prasannamalode.in/tools/iso27001-readiness.html</loc><lastmod>2026-09-12</lastmod><priority>0.7</priority></url>
-  <url><loc>https://prasannamalode.in/tools/mttr-calculator.html</loc><lastmod>2026-09-12</lastmod><priority>0.7</priority></url>
-  <url><loc>https://prasannamalode.in/tools/postmortem-template.html</loc><lastmod>2026-09-12</lastmod><priority>0.7</priority></url>
-  <url><loc>https://prasannamalode.in/tools/shift-planner.html</loc><lastmod>2026-09-12</lastmod><priority>0.7</priority></url>
+  <url><loc>https://prasannamalode.in/tools/cicd-scorecard.html</loc><lastmod>2026-09-13</lastmod><priority>0.7</priority></url>
+  <url><loc>https://prasannamalode.in/tools/devsecops-maturity.html</loc><lastmod>2026-09-13</lastmod><priority>0.7</priority></url>
+  <url><loc>https://prasannamalode.in/tools/iso27001-readiness.html</loc><lastmod>2026-09-13</lastmod><priority>0.7</priority></url>
+  <url><loc>https://prasannamalode.in/tools/mttr-calculator.html</loc><lastmod>2026-09-13</lastmod><priority>0.7</priority></url>
+  <url><loc>https://prasannamalode.in/tools/postmortem-template.html</loc><lastmod>2026-09-13</lastmod><priority>0.7</priority></url>
+  <url><loc>https://prasannamalode.in/tools/shift-planner.html</loc><lastmod>2026-09-13</lastmod><priority>0.7</priority></url>
 </urlset>

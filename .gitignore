@@ -4,3 +4,8 @@ articles/files.zip
 .DS_Store
 Thumbs.db
 __pycache__/
+
+# resume sources: used for the About page, not published
+assets/*.docx
+assets/*.pdf
+assets/PrasannaMalode.png

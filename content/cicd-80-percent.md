@@ -4,10 +4,10 @@ title: How I increased release frequency by 80% without sacrificing security
 tag: DevSecOps
 date: 2026-03-10
 read: 6 min read
-summary: The CI/CD transformation framework, quality gates, and governance model that delivered measurable results at IP Infusion.
+summary: The CI/CD transformation framework, quality gates, and governance model that delivered measurable results for a global engineering organisation.
 ---
 
-When I joined IP Infusion, releases were slow, unpredictable, and stressful. Engineers dreaded deployment days. Six years later we'd increased release frequency by 80% and cut deployment failures by 60%. Here's the honest story of how we got there.
+When I took over the release pipeline, releases were slow, unpredictable, and stressful. Engineers dreaded deployment days. Six years later we'd increased release frequency by 80% and cut deployment failures by 60%. Here's the honest story of how we got there.
 
 ## The starting point
 
