@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bug Classes, Not Bug Instances — Prasanna Malode</title>
+<meta name="description" content="Every vulnerability you fix by hand is one you will fix again. The four-rung ladder for eliminating whole categories: findable, loud, then impossible to write.">
+<meta name="author" content="Prasanna Malode">
+<meta name="theme-color" content="#faf8f4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14151a" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://prasannamalode.in/articles/bug-classes-not-bug-instances.html">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="alternate" type="application/rss+xml" title="Prasanna Malode — Articles" href="https://prasannamalode.in/feed.xml">
+<meta property="og:site_name" content="Prasanna Malode">
+<meta property="og:title" content="Bug Classes, Not Bug Instances — Prasanna Malode">
+<meta property="og:description" content="Every vulnerability you fix by hand is one you will fix again. The four-rung ladder for eliminating whole categories: findable, loud, then impossible to write.">
+<meta property="og:url" content="https://prasannamalode.in/articles/bug-classes-not-bug-instances.html">
+<meta property="og:image" content="https://prasannamalode.in/assets/og/bug-classes-not-bug-instances.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bug Classes, Not Bug Instances — Prasanna Malode">
+<meta name="twitter:description" content="Every vulnerability you fix by hand is one you will fix again. The four-rung ladder for eliminating whole categories: findable, loud, then impossible to write.">
+<meta name="twitter:image" content="https://prasannamalode.in/assets/og/bug-classes-not-bug-instances.png">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-12-23">
+<meta property="article:author" content="Prasanna Malode">
+<meta property="article:section" content="DevSecOps">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Bug Classes, Not Bug Instances", "description": "Every vulnerability you fix by hand is one you will fix again. The four-rung ladder for eliminating whole categories: findable, loud, then impossible to write.", "datePublished": "2025-12-23", "dateModified": "2025-12-23", "author": {"@type": "Person", "name": "Prasanna Malode", "url": "https://prasannamalode.in/index.html#/about", "jobTitle": "Global Head — DevSecOps · Cybersecurity · IT Operations"}, "publisher": {"@type": "Person", "name": "Prasanna Malode"}, "mainEntityOfPage": "https://prasannamalode.in/articles/bug-classes-not-bug-instances.html", "image": "https://prasannamalode.in/assets/og/bug-classes-not-bug-instances.png", "keywords": "DevSecOps", "isPartOf": {"@type": "CreativeWorkSeries", "name": "Shifting Left Without Shifting the Blame"}}</script>
+<script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css?v=7">
+</head>
+<body data-root="..">
+<div class="progress" aria-hidden="true"></div>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">PM</span><span>Prasanna Malode</span></a>
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a id="nav-home" href="../index.html#/home">Home</a></li>
+        <li><a id="nav-articles" href="../index.html#/articles" aria-current="page">Articles</a></li>
+        <li><a id="nav-tools" href="../index.html#/tools">Tools</a></li>
+        <li><a id="nav-about" href="../index.html#/about">About</a></li>
+      </ul>
+    </nav>
+    <div class="nav-actions">
+      <a class="icon-btn" href="../feed.xml" title="RSS feed" aria-label="RSS feed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg></a>
+      <button class="icon-btn theme-toggle" type="button" title="Toggle dark mode" aria-label="Toggle dark mode"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      <button class="icon-btn menu-btn" type="button" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+  <article>
+    <header class="article-head">
+      <div class="wrap-read fade-up">
+        <a class="tag" href="../index.html#/articles?tag=DevSecOps">DevSecOps</a>
+        <h1>Bug Classes, Not Bug Instances</h1>
+        <div class="meta">
+          <img class="avatar" src="../assets/photo-sm.jpg" alt="" width="26" height="26">
+          <span>Prasanna Malode</span>
+          <span aria-hidden="true">·</span>
+          <time datetime="2025-12-23">December 23, 2025</time>
+          <span aria-hidden="true">·</span>
+          <span>7 min read</span>
+        </div>
+        <p class="lede">Every vulnerability you fix by hand is one you will fix again. The four-rung ladder for eliminating whole categories: findable, loud, then impossible to write.</p>
+      </div>
+    </header>
+    <div class="wrap" style="max-width:calc(var(--max-read) + 220px + 56px + 48px)">
+      <div class="article-layout">
+        <div>
+          <aside class="series-box" aria-label="Series navigation">
+  <div class="eyebrow">Series · Part 2 of 4</div>
+  <strong>Shifting Left Without Shifting the Blame</strong>
+  <ol><li class=""><a href="../articles/your-pr-has-400-security-findings.html">Your PR Has 400 Security Findings. Nobody Is Going to Fix Them.</a></li><li class="current"><a href="../articles/bug-classes-not-bug-instances.html">Bug Classes, Not Bug Instances</a></li><li class=""><a href="../articles/risk-acceptance-with-an-expiry-date.html">The Vulnerability I Accepted, and the Expiry Date I Put on It</a></li><li class=""><a href="../articles/shift-left-has-a-ceiling.html">Shift Left Has a Ceiling</a></li></ol>
+</aside>
+          <nav class="toc-inline" data-toc aria-label="Contents"><div class="eyebrow">In this article</div><div data-toc-list></div></nav>
+          <div class="prose">
+<p>Look at your security backlog and count how many tickets are the same ticket.</p>
+<p>Not literally identical — different files, different services, different authors. But the same shape. Four path traversal findings. Nine missing authorisation checks on new endpoints. Six places where a secret went into a log line. Every one of them gets its own ticket, its own fix, its own review, its own regression test.</p>
+<p>And then next quarter you get another four, another nine, another six. Because nothing you did changed the conditions that produce them.</p>
+<p>This is the treadmill, and most security engineering runs on it.</p>
+<h2>The distinction</h2>
+<p>An <strong>instance</strong> is one occurrence of a defect in one place in one codebase. Fixing it removes exactly one defect.</p>
+<p>A <strong>class</strong> is the set of conditions under which that defect can exist at all. Eliminating it removes every current instance and every future instance, including the ones that would have been written by an engineer who joins in two years and has never read your wiki.</p>
+<p>Nearly all security tooling operates at the instance level. Scanners find instances. Tickets track instances. Metrics count instances. And because the tooling is instance-shaped, the work becomes instance-shaped, and you end up with a function that consumes headcount in proportion to how fast the rest of the company writes code.</p>
+<p>That is not a security programme. That is a tax.</p>
+<h2>The ladder</h2>
+<p>For any bug class, there are four rungs you can be standing on.</p>
+<p>Most teams live on rung one and have convinced themselves that buying a rung-two tool is transformation. It helps — rung two is genuinely better than rung one — but the leverage is above it, and the leverage is where the engineering is.</p>
+<p>Let me make each rung concrete.</p>
+<h3>Rung 1 → 2: make the machine find it</h3>
+<p>The move here is from human vigilance to mechanical certainty. The signal that you are on rung one is a wiki page, an onboarding slide, or a code review checklist item. Any control that depends on somebody remembering is a rung-one control.</p>
+<p><strong>Property-based testing</strong> is the most underused tool in this category. Instead of asserting specific outputs for specific inputs, you assert an invariant and let the framework attack it:</p>
+<pre><code class="language-python">from hypothesis import given, strategies as st
+
+@given(st.text())
+def test_sanitiser_never_emits_angle_brackets(raw):
+    out = sanitise_for_html(raw)
+    assert &quot;&lt;&quot; not in out and &quot;&gt;&quot; not in out
+
+@given(st.binary())
+def test_parser_never_raises_unexpected(data):
+    # The only acceptable failure is our own typed error
+    try:
+        parse_message(data)
+    except ProtocolError:
+        pass</code></pre>
+<p>That second test is a fuzzer in four lines. It will find the unicode edge case, the zero-length input, the surrogate pair, and the thing you did not think of — which is the entire point, because the things you did not think of are where the vulnerabilities are.</p>
+<p><strong>Continuous fuzzing</strong> is the same idea with a much bigger budget. If you parse anything untrusted — a file format, a wire protocol, a token, a config — and you are not fuzzing the parser, that parser is an unexplored attack surface. OSS-Fuzz is free for open source. For internal code, a nightly <code>cargo fuzz</code> or <code>libFuzzer</code> target on your parsing boundary costs a day to set up.</p>
+<p><strong>Custom static analysis rules</strong> belong here too, but with the warning from part one: a rule earns its place by precision. A rule with 40% precision is rung one wearing a costume, because a human still has to adjudicate every hit.</p>
+<h3>Rung 2 → 3: make it fail loudly</h3>
+<p>Here the bug is still writable, but it stops being <em>silent</em>. Silence is what turns a bug into a vulnerability — the request that should have been denied but was served, the validation that was skipped without complaint.</p>
+<pre><code class="language-python"># Rung 1: authorisation is a thing you must remember to call
+@app.get(&quot;/orders/{order_id}&quot;)
+def get_order(order_id):
+    return db.fetch_order(order_id)   # forgot the check, nothing complains
+
+# Rung 3: absence of a decision is an error
+@app.get(&quot;/orders/{order_id}&quot;)
+@requires_authz                       # framework raises at request time if no policy is declared
+def get_order(order_id, actor):
+    authorize(actor, &quot;order:read&quot;, order_id)
+    return db.fetch_order(order_id)</code></pre>
+<p>The mechanism is that the framework refuses to serve a route with no declared policy. Forgetting is now a 500 in staging rather than a data leak in production. You have not made the mistake impossible, but you have made it <em>immediately visible</em>, which collapses the time-to-detection from months to minutes.</p>
+<p>Infrastructure has the same move. Default-deny egress on a namespace turns "this service can reach anything" into a loud, specific failure the first time something tries. It is annoying for a week and then it is a permanent boundary.</p>
+<h3>Rung 3 → 4: make it impossible</h3>
+<p>The top rung is where the defect cannot be expressed in the language you have given yourself.</p>
+<p>The canonical case is SQL injection. You do not solve it by training people to be careful with string concatenation. You solve it by making the unsafe path unreachable:</p>
+<pre><code class="language-go">// internal/db/db.go — the raw path is unexported
+func rawQuery(q string) (*Rows, error) { ... }
+
+// The only exported query function takes args separately.
+func Query(tmpl Template, args ...any) (*Rows, error) { ... }</code></pre>
+<p>Now injection is not a thing to be careful about. It is a compile error in every package outside <code>internal/db</code>, and a reviewer who has never heard of SQL injection cannot let it through.</p>
+<p>The same pattern generalises through the type system:</p>
+<pre><code class="language-rust">// Untrusted input cannot be confused with validated input,
+// because they are not the same type.
+struct RawInput(String);
+struct SafePath(PathBuf);
+
+fn validate(raw: RawInput, root: &amp;Path) -&gt; Result&lt;SafePath, ValidationError&gt; {
+    let candidate = root.join(&amp;raw.0).canonicalize()?;
+    if !candidate.starts_with(root) {
+        return Err(ValidationError::Escape);
+    }
+    Ok(SafePath(candidate))
+}
+
+// Every file operation demands SafePath. There is no way to pass
+// RawInput here. Path traversal is now a type error.
+fn read_user_file(p: SafePath) -&gt; io::Result&lt;Vec&lt;u8&gt;&gt; { ... }</code></pre>
+<p>Path traversal used to be a class that produced findings every quarter. Now it produces compiler diagnostics, for free, forever, in code written by people who have never thought about it.</p>
+<p>And then there is the biggest single instance of this move available to the industry: <strong>memory safety</strong>. Somewhere around two thirds to three quarters of severe vulnerabilities in large C and C++ codebases are memory-safety issues. That is not a class you can train away or scan away. It is a class you can move to rung four by changing language at the boundary — which is exactly what Android, Windows, and the Linux kernel have been doing, with published results showing new memory-safe code producing a fraction of the vulnerability density of the code it replaced.</p>
+<h2>The rewrite objection</h2>
+<p>The immediate response to rung four is that it means rewrites, and rewrites do not get funded.</p>
+<p>Mostly true, and mostly beside the point, because you do not need a rewrite. You need a <strong>boundary</strong>.</p>
+<p>The rule that makes this tractable: <em>new code goes on the high rung; old code stays where it is and gets a clear edge drawn around it.</em></p>
+<ul><li>New services use the safe query API. Old ones get a scanner and a backlog.</li><li>New parsers get written in a memory-safe language. The old parser gets fuzzed and sandboxed.</li><li>New endpoints require a declared policy. Old ones get an allowlist that only shrinks.</li></ul>
+<p>This works because code has a half-life. A meaningful fraction of your codebase will be rewritten anyway in the normal course of shipping. If the default for new code is on rung four, your vulnerability density decays without anyone ever running a rewrite project.</p>
+<p>The failure mode to watch is the allowlist that grows. Whatever form the boundary takes — an exception list, a legacy annotation, a grandfathered directory — it needs a ratchet. It can shrink, it cannot grow, and adding to it requires the same approval as any other risk acceptance. Which is the subject of the next post.</p>
+<h2>Running this as practice</h2>
+<p>Two habits are enough to make this real.</p>
+<p><strong>First: after every incident, ask the class question.</strong> Not "how do we fix this bug" but "what rung is this class on, and what would it take to move it up one?" Put that in the postmortem template as a required field. It will be answered badly at first and then it will start being answered well.</p>
+<p><strong>Second: cluster your backlog quarterly.</strong> Take every security ticket from the last three months and group by shape, not by service. Any cluster with five or more members is not five tickets — it is one class with five symptoms. Close all five and open one ticket to climb a rung.</p>
+<p>The cluster exercise is worth doing once just for the shock value. The first time I did it, about 60% of a quarter's security backlog collapsed into four classes. We had been paying to fix the same four things over and over, and the ticket system had been carefully hiding that from us by giving each symptom its own ID.</p>
+<h2>The summary</h2>
+<p>Every vulnerability you fix by hand is a vulnerability you will fix again, because the conditions that produced it are still there and the code is still growing.</p>
+<p>The only security work that compounds is the work that makes a category of defect harder to write than the correct alternative. Everything else is maintenance — necessary, but it does not accumulate, and it scales with your engineering headcount rather than against it.</p>
+<p>Ask the class question. Draw the boundary. Let the ratchet do the rest.</p>
+          </div>
+          <footer class="article-foot">
+            <div class="share">
+              <span class="label">Share</span>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="linkedin">LinkedIn</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="x">X</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="email">Email</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="copy">Copy link</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="native">Share…</button>
+            </div>
+            <div class="author-card">
+              <img src="../assets/photo-sm.jpg" alt="Prasanna Malode" width="64" height="64">
+              <div>
+                <div class="name">Prasanna Malode</div>
+                <div class="role">Global Head — DevSecOps · Cybersecurity · IT Operations · Bengaluru, India</div>
+                <p>Two decades in release engineering, IT operations and security, now leading a 20-person global DevSecOps, cybersecurity and IT operations organisation. I write about making speed, security and reliability the same conversation. <a href="../index.html#/about">More about me</a>.</p>
+              </div>
+            </div>
+            <nav class="pager" aria-label="More articles">
+              <a class="prev" href="../articles/itil-incident-management.html"><div class="dir">← Older</div><div class="title">How ITIL-aligned incident management cut our recurring incidents by 50%</div></a>
+              <a class="next" href="../articles/follow-the-sun-ops.html"><div class="dir">Newer →</div><div class="title">What managing a 16-person global team taught me about follow-the-sun ops</div></a>
+            </nav>
+          </footer>
+        </div>
+        <nav class="toc-side" data-toc aria-label="Contents"><div class="eyebrow">In this article</div><div data-toc-list></div></nav>
+      </div>
+    </div>
+  </article>
+</main>
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">PM</span><span>Prasanna Malode</span></a>
+      <div style="margin-top:8px">DevSecOps · Cybersecurity · IT Operations · Bengaluru, India</div>
+      <div style="margin-top:4px">© <span data-year>2026</span> Prasanna Malode. Opinions are my own.</div>
+    </div>
+    <div class="footer-links">
+      <a href="../index.html#/articles">Articles</a>
+      <a href="../index.html#/tools">Tools</a>
+      <a href="../index.html#/about">About</a>
+      <a href="https://linkedin.com/in/prasannamalode" target="_blank" rel="noopener me">LinkedIn</a>
+      <a href="mailto:malode.prasanna@gmail.com">Email</a>
+      <a href="../feed.xml">RSS</a>
+    </div>
+  </div>
+</footer>
+<script src="../assets/articles-data.js?v=7" defer></script>
+<script src="../assets/site.js?v=7" defer></script>
+</body>
+</html>

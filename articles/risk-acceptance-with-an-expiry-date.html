@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Vulnerability I Accepted, and the Expiry Date I Put on It — Prasanna Malode</title>
+<meta name="description" content="A 1,900-line suppression file is four years of defensible calls adding up to something indefensible. Risk acceptance as a record with an owner, an expiry, and a CI job that enforces both.">
+<meta name="author" content="Prasanna Malode">
+<meta name="theme-color" content="#faf8f4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14151a" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://prasannamalode.in/articles/risk-acceptance-with-an-expiry-date.html">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="alternate" type="application/rss+xml" title="Prasanna Malode — Articles" href="https://prasannamalode.in/feed.xml">
+<meta property="og:site_name" content="Prasanna Malode">
+<meta property="og:title" content="The Vulnerability I Accepted, and the Expiry Date I Put on It — Prasanna Malode">
+<meta property="og:description" content="A 1,900-line suppression file is four years of defensible calls adding up to something indefensible. Risk acceptance as a record with an owner, an expiry, and a CI job that enforces both.">
+<meta property="og:url" content="https://prasannamalode.in/articles/risk-acceptance-with-an-expiry-date.html">
+<meta property="og:image" content="https://prasannamalode.in/assets/og/risk-acceptance-with-an-expiry-date.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Vulnerability I Accepted, and the Expiry Date I Put on It — Prasanna Malode">
+<meta name="twitter:description" content="A 1,900-line suppression file is four years of defensible calls adding up to something indefensible. Risk acceptance as a record with an owner, an expiry, and a CI job that enforces both.">
+<meta name="twitter:image" content="https://prasannamalode.in/assets/og/risk-acceptance-with-an-expiry-date.png">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-02-24">
+<meta property="article:author" content="Prasanna Malode">
+<meta property="article:section" content="DevSecOps">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "The Vulnerability I Accepted, and the Expiry Date I Put on It", "description": "A 1,900-line suppression file is four years of defensible calls adding up to something indefensible. Risk acceptance as a record with an owner, an expiry, and a CI job that enforces both.", "datePublished": "2026-02-24", "dateModified": "2026-02-24", "author": {"@type": "Person", "name": "Prasanna Malode", "url": "https://prasannamalode.in/index.html#/about", "jobTitle": "Global Head — DevSecOps · Cybersecurity · IT Operations"}, "publisher": {"@type": "Person", "name": "Prasanna Malode"}, "mainEntityOfPage": "https://prasannamalode.in/articles/risk-acceptance-with-an-expiry-date.html", "image": "https://prasannamalode.in/assets/og/risk-acceptance-with-an-expiry-date.png", "keywords": "DevSecOps", "isPartOf": {"@type": "CreativeWorkSeries", "name": "Shifting Left Without Shifting the Blame"}}</script>
+<script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css?v=7">
+</head>
+<body data-root="..">
+<div class="progress" aria-hidden="true"></div>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">PM</span><span>Prasanna Malode</span></a>
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a id="nav-home" href="../index.html#/home">Home</a></li>
+        <li><a id="nav-articles" href="../index.html#/articles" aria-current="page">Articles</a></li>
+        <li><a id="nav-tools" href="../index.html#/tools">Tools</a></li>
+        <li><a id="nav-about" href="../index.html#/about">About</a></li>
+      </ul>
+    </nav>
+    <div class="nav-actions">
+      <a class="icon-btn" href="../feed.xml" title="RSS feed" aria-label="RSS feed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg></a>
+      <button class="icon-btn theme-toggle" type="button" title="Toggle dark mode" aria-label="Toggle dark mode"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      <button class="icon-btn menu-btn" type="button" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+  <article>
+    <header class="article-head">
+      <div class="wrap-read fade-up">
+        <a class="tag" href="../index.html#/articles?tag=DevSecOps">DevSecOps</a>
+        <h1>The Vulnerability I Accepted, and the Expiry Date I Put on It</h1>
+        <div class="meta">
+          <img class="avatar" src="../assets/photo-sm.jpg" alt="" width="26" height="26">
+          <span>Prasanna Malode</span>
+          <span aria-hidden="true">·</span>
+          <time datetime="2026-02-24">February 24, 2026</time>
+          <span aria-hidden="true">·</span>
+          <span>7 min read</span>
+        </div>
+        <p class="lede">A 1,900-line suppression file is four years of defensible calls adding up to something indefensible. Risk acceptance as a record with an owner, an expiry, and a CI job that enforces both.</p>
+      </div>
+    </header>
+    <div class="wrap" style="max-width:calc(var(--max-read) + 220px + 56px + 48px)">
+      <div class="article-layout">
+        <div>
+          <aside class="series-box" aria-label="Series navigation">
+  <div class="eyebrow">Series · Part 3 of 4</div>
+  <strong>Shifting Left Without Shifting the Blame</strong>
+  <ol><li class=""><a href="../articles/your-pr-has-400-security-findings.html">Your PR Has 400 Security Findings. Nobody Is Going to Fix Them.</a></li><li class=""><a href="../articles/bug-classes-not-bug-instances.html">Bug Classes, Not Bug Instances</a></li><li class="current"><a href="../articles/risk-acceptance-with-an-expiry-date.html">The Vulnerability I Accepted, and the Expiry Date I Put on It</a></li><li class=""><a href="../articles/shift-left-has-a-ceiling.html">Shift Left Has a Ceiling</a></li></ol>
+</aside>
+          <nav class="toc-inline" data-toc aria-label="Contents"><div class="eyebrow">In this article</div><div data-toc-list></div></nav>
+          <div class="prose">
+<p>I once opened a suppression file that was 1,900 lines long.</p>
+<p>It had been started four years earlier. It had eleven distinct comment styles in it, which is roughly one per engineer who had ever touched it. Some entries had a ticket number; most of those tickets were closed, and a few referenced a tracker the company no longer used. One entry said <code># temporary - remove after migration</code>. The migration it referred to had completed two years before.</p>
+<p>Nobody had done anything wrong. Every single line had been added by a reasonable person under deadline pressure making a defensible call. The file was the sum of four years of defensible calls, and the sum was indefensible.</p>
+<p>That is the real problem with risk acceptance. Not that individual decisions are bad. That they never end.</p>
+<h2>Suppression is not a decision, it is the absence of one</h2>
+<p>Watch what happens when a finding is suppressed in a typical setup.</p>
+<p>Somebody adds a line. Maybe a comment. The scanner goes quiet. The PR goes green. And then — this is the important part — <em>nothing else ever happens</em>. No record of who decided, no record of why, no date, no review, no signal if the surrounding conditions change.</p>
+<p>A decision that produces no artefact and triggers no future event is not a decision. It is deferral wearing a decision's clothes. And deferral accumulates silently, which means the cost lands on somebody who was not in the room, often years later, usually during an incident.</p>
+<p>The fix is not to forbid acceptance. Acceptance is legitimate and necessary — plenty of findings genuinely are not worth fixing this quarter, and a security function that cannot say "fine, not now" is a security function that gets routed around.</p>
+<p>The fix is to make acceptance <strong>structured, owned, and temporary</strong>.</p>
+<h2>What an acceptance record has to contain</h2>
+<p>Five fields. If any one is missing, it is not an acceptance, it is a suppression.</p>
+<ol><li><strong>Owner</strong> — a named person, not a team. Teams do not get paged, do not leave the company, and do not feel accountable.</li><li><strong>Expiry</strong> — a date. Not "when we migrate". Not "next quarter". A date that a computer can compare against <code>now()</code>.</li><li><strong>Rationale</strong> — why this is tolerable <em>now</em>. Written for a stranger, because in eighteen months the reader will be one.</li><li><strong>Compensating control</strong> — what reduces the impact in the meantime. WAF rule, network boundary, feature flag, monitoring alert. If the answer is honestly "nothing", write "nothing" — that is valuable information.</li><li><strong>Trigger conditions</strong> — what would make this unacceptable before the expiry date. "If this service starts handling payment data." "If a public exploit lands." This is the field everyone skips and it is the one that catches the real disasters.</li></ol>
+<p>Here is what that looks like as a file that lives in the repo:</p>
+<pre><code class="language-yaml"># security/acceptances.yaml
+- id: ACC-2026-007
+  finding: CVE-2025-XXXXX
+  component: github.com/example/imageproc
+  severity: high
+
+  owner: priya.raman           # a person
+  accepted_on: 2026-01-12
+  expires_on: 2026-04-12       # 90 days for high
+
+  rationale: &gt;
+    Vulnerable code path is the TIFF decoder. We only accept PNG and
+    JPEG at the API boundary, enforced by content-type allowlist in
+    gateway/filters.go:88. Upstream fix requires a major version bump
+    that breaks our colour-profile handling.
+
+  compensating_controls:
+    - Content-type allowlist at the gateway (PNG, JPEG only)
+    - Decoder runs in a seccomp-restricted sandbox
+    - Alert on any non-allowlisted content-type reaching the decoder
+
+  invalidating_conditions:
+    - The gateway allowlist is widened to any additional format
+    - A public exploit is observed in the wild
+    - imageproc is called from any new service
+
+  renewals: 0</code></pre>
+<p>Two properties matter here. It is in version control, so it is reviewable and blameable like code. And it is machine-readable, so the expiry can be enforced rather than hoped for.</p>
+<h2>Enforcement is what makes it real</h2>
+<p>Every part of this is theatre without a job that fails the build when the date passes.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Fail CI when any risk acceptance has expired or is incomplete.&quot;&quot;&quot;
+import sys, datetime, yaml
+
+REQUIRED = [&quot;owner&quot;, &quot;expires_on&quot;, &quot;rationale&quot;,
+            &quot;compensating_controls&quot;, &quot;invalidating_conditions&quot;]
+MAX_TERM = {&quot;critical&quot;: 30, &quot;high&quot;: 90, &quot;medium&quot;: 180, &quot;low&quot;: 365}
+MAX_RENEWALS = 2
+
+def main(path=&quot;security/acceptances.yaml&quot;):
+    today = datetime.date.today()
+    records = yaml.safe_load(open(path)) or []
+    errors, warnings = [], []
+
+    for r in records:
+        rid = r.get(&quot;id&quot;, &quot;&lt;no id&gt;&quot;)
+
+        missing = [f for f in REQUIRED if not r.get(f)]
+        if missing:
+            errors.append(f&quot;{rid}: missing required fields: {&#x27;, &#x27;.join(missing)}&quot;)
+            continue
+
+        expires = r[&quot;expires_on&quot;]
+        accepted = r[&quot;accepted_on&quot;]
+        term = (expires - accepted).days
+        cap = MAX_TERM.get(r.get(&quot;severity&quot;, &quot;low&quot;), 365)
+        if term &gt; cap:
+            errors.append(f&quot;{rid}: term of {term}d exceeds {cap}d cap for {r[&#x27;severity&#x27;]}&quot;)
+
+        if r.get(&quot;renewals&quot;, 0) &gt; MAX_RENEWALS:
+            errors.append(f&quot;{rid}: renewed {r[&#x27;renewals&#x27;]} times — escalate, don&#x27;t renew&quot;)
+
+        days_left = (expires - today).days
+        if days_left &lt; 0:
+            errors.append(f&quot;{rid}: EXPIRED {abs(days_left)}d ago — owner {r[&#x27;owner&#x27;]}&quot;)
+        elif days_left &lt;= 14:
+            warnings.append(f&quot;{rid}: expires in {days_left}d — owner {r[&#x27;owner&#x27;]}&quot;)
+
+    for w in warnings:
+        print(f&quot;::warning::{w}&quot;)
+    for e in errors:
+        print(f&quot;::error::{e}&quot;)
+
+    return 1 if errors else 0
+
+if __name__ == &quot;__main__&quot;:
+    sys.exit(main())</code></pre>
+<p>Wire it into CI so it runs on every push and on a schedule:</p>
+<pre><code class="language-yaml"># .github/workflows/acceptance-audit.yml
+name: Risk acceptance audit
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: &quot;0 9 * * 1&quot;   # Monday morning, so expiries surface before they bite
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: &quot;3.12&quot;
+      - run: pip install pyyaml
+      - run: python security/check_acceptances.py</code></pre>
+<p>The scheduled run is the part that does the work. It means an expiry arrives as a Monday-morning notification with fourteen days of warning, rather than as a red build on an unrelated PR from someone who has no idea what the record is about.</p>
+<h2>Renewal is allowed. Silence is not.</h2>
+<p>People push back here, and the pushback is always the same: "so we just renew everything and nothing changes."</p>
+<p>Two answers.</p>
+<p>First, even pure renewal is an improvement, because renewal is <em>an event</em>. A human reads the rationale and decides again. Sometimes the rationale no longer holds — the compensating control was removed in a refactor, the service now handles data it did not before, an exploit was published. Without the expiry, none of those changes would ever be noticed. The whole value of the mechanism is that it forces a re-read.</p>
+<p>Second, cap the renewals. Two is a reasonable limit. After that the item does not get renewed; it gets escalated to someone with budget authority, who either funds the fix or accepts it at a level where the accountability is real. That is not a punishment — it is the correct routing. An issue that has survived three review cycles without being fixed is not a triage problem, it is a resourcing problem, and it belongs with whoever controls resourcing.</p>
+<p>Suggested terms, which you should tune to your own tolerance:</p>
+<div class="table-wrap"><table><thead><tr><th>Severity</th><th>Max term</th><th>Renewals before escalation</th></tr></thead><tbody><tr><td>Critical</td><td>30 days</td><td>1</td></tr><tr><td>High</td><td>90 days</td><td>2</td></tr><tr><td>Medium</td><td>180 days</td><td>2</td></tr><tr><td>Low</td><td>365 days</td><td>2</td></tr></tbody></table></div>
+<h2>Migrating a file you inherited</h2>
+<p>If you already have the 1,900-line file, do not try to adjudicate all of it. You will not finish, and the attempt will burn whatever goodwill you were going to spend on the actual fix.</p>
+<p>What works:</p>
+<ol><li><strong>Freeze it.</strong> Rename it <code>legacy-suppressions</code>. Make CI reject any new entries. From today, every new acceptance uses the structured format. This alone stops the bleeding, and it is a one-day change.</li><li><strong>Sample it.</strong> Take 25 random entries and adjudicate them properly. You now have an estimate of what fraction of the file is stale, which is the number you take to leadership. In my experience the answer is well over half.</li><li><strong>Expire it in tranches.</strong> Assign expiry dates to the legacy entries spread over the next twelve months, weighted by severity. Do not dump them all on one date.</li><li><strong>Let deletion be the default.</strong> For legacy entries where no owner can be found, the default action at expiry is to remove the suppression and see what breaks. Half the time the finding is gone because the code is gone.</li></ol>
+<p>Step four sounds reckless and is not. An unowned suppression is an unowned risk. Surfacing it is strictly better than continuing to pretend somebody is watching it.</p>
+<h2>The part that is actually about culture</h2>
+<p>The reason suppression files grow is that suppressing is frictionless and fixing is not. The mechanism above does not add friction to suppression — it takes about the same time to write the YAML as to add the comment. What it adds is <strong>a future obligation</strong>, and it makes that obligation visible at the moment of the decision.</p>
+<p>That changes behaviour, in my experience, more than any approval workflow. When you write <code>expires_on: 2026-04-12</code> and your own name next to it, you are making a small promise to a specific future version of yourself. Most engineers, given that framing, will fix the easy ones immediately rather than schedule a conversation with themselves in ninety days.</p>
+<p>The 1,900-line file was not a discipline failure. It was a design failure: a system where the cheapest path produced no record and no future event. Change the design, and most of the discipline problem evaporates.</p>
+          </div>
+          <footer class="article-foot">
+            <div class="share">
+              <span class="label">Share</span>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="linkedin">LinkedIn</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="x">X</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="email">Email</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="copy">Copy link</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="native">Share…</button>
+            </div>
+            <div class="author-card">
+              <img src="../assets/photo-sm.jpg" alt="Prasanna Malode" width="64" height="64">
+              <div>
+                <div class="name">Prasanna Malode</div>
+                <div class="role">Global Head — DevSecOps · Cybersecurity · IT Operations · Bengaluru, India</div>
+                <p>Two decades in release engineering, IT operations and security, now leading a 20-person global DevSecOps, cybersecurity and IT operations organisation. I write about making speed, security and reliability the same conversation. <a href="../index.html#/about">More about me</a>.</p>
+              </div>
+            </div>
+            <nav class="pager" aria-label="More articles">
+              <a class="prev" href="../articles/iso-27001-from-scratch.html"><div class="dir">← Older</div><div class="title">Building a cybersecurity function from scratch: lessons from zero to ISO 27001</div></a>
+              <a class="next" href="../articles/cicd-80-percent.html"><div class="dir">Newer →</div><div class="title">How I increased release frequency by 80% without sacrificing security</div></a>
+            </nav>
+          </footer>
+        </div>
+        <nav class="toc-side" data-toc aria-label="Contents"><div class="eyebrow">In this article</div><div data-toc-list></div></nav>
+      </div>
+    </div>
+  </article>
+</main>
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">PM</span><span>Prasanna Malode</span></a>
+      <div style="margin-top:8px">DevSecOps · Cybersecurity · IT Operations · Bengaluru, India</div>
+      <div style="margin-top:4px">© <span data-year>2026</span> Prasanna Malode. Opinions are my own.</div>
+    </div>
+    <div class="footer-links">
+      <a href="../index.html#/articles">Articles</a>
+      <a href="../index.html#/tools">Tools</a>
+      <a href="../index.html#/about">About</a>
+      <a href="https://linkedin.com/in/prasannamalode" target="_blank" rel="noopener me">LinkedIn</a>
+      <a href="mailto:malode.prasanna@gmail.com">Email</a>
+      <a href="../feed.xml">RSS</a>
+    </div>
+  </div>
+</footer>
+<script src="../assets/articles-data.js?v=7" defer></script>
+<script src="../assets/site.js?v=7" defer></script>
+</body>
+</html>

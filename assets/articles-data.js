@@ -118,6 +118,19 @@ window.ARTICLES = [
   "part": 2
  },
  {
+  "id": "shift-left-has-a-ceiling",
+  "kind": "essay",
+  "title": "Shift Left Has a Ceiling",
+  "tag": "DevSecOps",
+  "date": "2026-04-28",
+  "display_date": "Apr 2026",
+  "read": "6 min read",
+  "summary": "Some defects do not exist until production exists. The classes above the ceiling, the shift-right toolkit, and escape rate, the metric that connects both halves of the pipeline.",
+  "file": "articles/shift-left-has-a-ceiling.html",
+  "series": "Shifting Left Without Shifting the Blame",
+  "part": 4
+ },
+ {
   "id": "who-spent-this",
   "kind": "essay",
   "title": "Who Spent This?",
@@ -156,6 +169,19 @@ window.ARTICLES = [
   "featured": true
  },
  {
+  "id": "risk-acceptance-with-an-expiry-date",
+  "kind": "essay",
+  "title": "The Vulnerability I Accepted, and the Expiry Date I Put on It",
+  "tag": "DevSecOps",
+  "date": "2026-02-24",
+  "display_date": "Feb 2026",
+  "read": "7 min read",
+  "summary": "A 1,900-line suppression file is four years of defensible calls adding up to something indefensible. Risk acceptance as a record with an owner, an expiry, and a CI job that enforces both.",
+  "file": "articles/risk-acceptance-with-an-expiry-date.html",
+  "series": "Shifting Left Without Shifting the Blame",
+  "part": 3
+ },
+ {
   "id": "iso-27001-from-scratch",
   "kind": "essay",
   "title": "Building a cybersecurity function from scratch: lessons from zero to ISO 27001",
@@ -192,6 +218,19 @@ window.ARTICLES = [
   "featured": true
  },
  {
+  "id": "bug-classes-not-bug-instances",
+  "kind": "essay",
+  "title": "Bug Classes, Not Bug Instances",
+  "tag": "DevSecOps",
+  "date": "2025-12-23",
+  "display_date": "Dec 2025",
+  "read": "7 min read",
+  "summary": "Every vulnerability you fix by hand is one you will fix again. The four-rung ladder for eliminating whole categories: findable, loud, then impossible to write.",
+  "file": "articles/bug-classes-not-bug-instances.html",
+  "series": "Shifting Left Without Shifting the Blame",
+  "part": 2
+ },
+ {
   "id": "itil-incident-management",
   "kind": "essay",
   "title": "How ITIL-aligned incident management cut our recurring incidents by 50%",
@@ -201,6 +240,19 @@ window.ARTICLES = [
   "read": "5 min read",
   "summary": "The exact process changes, tooling decisions, and cultural shifts that drove the improvement.",
   "file": "articles/itil-incident-management.html"
+ },
+ {
+  "id": "your-pr-has-400-security-findings",
+  "kind": "essay",
+  "title": "Your PR Has 400 Security Findings. Nobody Is Going to Fix Them.",
+  "tag": "DevSecOps",
+  "date": "2025-11-25",
+  "display_date": "Nov 2025",
+  "read": "6 min read",
+  "summary": "Coverage is a vanity metric. Track fix rate per tool, give every pipeline stage a latency budget, and prefer secure defaults over blocking gates.",
+  "file": "articles/your-pr-has-400-security-findings.html",
+  "series": "Shifting Left Without Shifting the Blame",
+  "part": 1
  },
  {
   "id": "genai-cicd-pipelines",

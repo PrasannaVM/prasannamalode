@@ -21,7 +21,7 @@ SITE = "https://prasannamalode.in"
 AUTHOR = "Prasanna Malode"
 ROLE = "Global Head — DevSecOps · Cybersecurity · IT Operations"
 HERE = os.path.dirname(os.path.abspath(__file__))
-ASSET_V = "20260913e"  # bump to force browsers to refetch CSS/JS
+ASSET_V = "7"  # bump to force browsers to refetch CSS/JS
 CONTENT = os.path.join(HERE, "content")
 ARTICLES_DIR = os.path.join(HERE, "articles")
 ASSETS = os.path.join(HERE, "assets")
@@ -91,6 +91,21 @@ def md_to_html(md):
             i += 1
             cls = f' class="language-{html.escape(lang)}"' if lang else ""
             out.append(f"<pre><code{cls}>" + html.escape("\n".join(buf)) + "</code></pre>")
+            continue
+        if s.startswith("|") and i + 1 < n and re.match(r"^\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)*\|?\s*$", lines[i + 1].strip()):
+            flush_para()
+            def cells(row):
+                row = row.strip()
+                if row.startswith("|"): row = row[1:]
+                if row.endswith("|"): row = row[:-1]
+                return [c.strip() for c in row.split("|")]
+            head = cells(s); i += 2
+            rows = []
+            while i < n and lines[i].strip().startswith("|"):
+                rows.append(cells(lines[i])); i += 1
+            th = "".join(f"<th>{inline(c)}</th>" for c in head)
+            tb = "".join("<tr>" + "".join(f"<td>{inline(c)}</td>" for c in r) + "</tr>" for r in rows)
+            out.append(f'<div class="table-wrap"><table><thead><tr>{th}</tr></thead><tbody>{tb}</tbody></table></div>')
             continue
         m = re.match(r"^(#{1,6})\s+(.*)$", s)
         if m:
@@ -529,15 +544,15 @@ def main():
     open(os.path.join(HERE, "feed.xml"), "w", encoding="utf-8").write(rss)
 
     # Sitemap
-    today = dt.date.today().isoformat()
-    urls = [(f"{SITE}/", today, "1.0")]
+    latest = essays[0]["date"] if essays else dt.date.today().isoformat()
+    urls = [(f"{SITE}/", latest, "1.0")]
     urls += [(f"{SITE}/{a['file']}", a["date"], "0.8") for a in essays]
     urls += [(f"{SITE}/{g['file']}", g["date"], "0.6") for g in GUIDES]
     tools_dir = os.path.join(HERE, "tools")
     if os.path.isdir(tools_dir):
         for fn in sorted(os.listdir(tools_dir)):
             if fn.endswith(".html"):
-                urls.append((f"{SITE}/tools/{fn}", today, "0.7"))
+                urls.append((f"{SITE}/tools/{fn}", latest, "0.7"))
     sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     for loc, mod, pri in urls:
         sm += f"  <url><loc>{loc}</loc><lastmod>{mod}</lastmod><priority>{pri}</priority></url>\n"

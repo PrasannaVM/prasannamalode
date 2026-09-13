@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shift Left Has a Ceiling — Prasanna Malode</title>
+<meta name="description" content="Some defects do not exist until production exists. The classes above the ceiling, the shift-right toolkit, and escape rate, the metric that connects both halves of the pipeline.">
+<meta name="author" content="Prasanna Malode">
+<meta name="theme-color" content="#faf8f4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14151a" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://prasannamalode.in/articles/shift-left-has-a-ceiling.html">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="alternate" type="application/rss+xml" title="Prasanna Malode — Articles" href="https://prasannamalode.in/feed.xml">
+<meta property="og:site_name" content="Prasanna Malode">
+<meta property="og:title" content="Shift Left Has a Ceiling — Prasanna Malode">
+<meta property="og:description" content="Some defects do not exist until production exists. The classes above the ceiling, the shift-right toolkit, and escape rate, the metric that connects both halves of the pipeline.">
+<meta property="og:url" content="https://prasannamalode.in/articles/shift-left-has-a-ceiling.html">
+<meta property="og:image" content="https://prasannamalode.in/assets/og/shift-left-has-a-ceiling.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Shift Left Has a Ceiling — Prasanna Malode">
+<meta name="twitter:description" content="Some defects do not exist until production exists. The classes above the ceiling, the shift-right toolkit, and escape rate, the metric that connects both halves of the pipeline.">
+<meta name="twitter:image" content="https://prasannamalode.in/assets/og/shift-left-has-a-ceiling.png">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-04-28">
+<meta property="article:author" content="Prasanna Malode">
+<meta property="article:section" content="DevSecOps">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Shift Left Has a Ceiling", "description": "Some defects do not exist until production exists. The classes above the ceiling, the shift-right toolkit, and escape rate, the metric that connects both halves of the pipeline.", "datePublished": "2026-04-28", "dateModified": "2026-04-28", "author": {"@type": "Person", "name": "Prasanna Malode", "url": "https://prasannamalode.in/index.html#/about", "jobTitle": "Global Head — DevSecOps · Cybersecurity · IT Operations"}, "publisher": {"@type": "Person", "name": "Prasanna Malode"}, "mainEntityOfPage": "https://prasannamalode.in/articles/shift-left-has-a-ceiling.html", "image": "https://prasannamalode.in/assets/og/shift-left-has-a-ceiling.png", "keywords": "DevSecOps", "isPartOf": {"@type": "CreativeWorkSeries", "name": "Shifting Left Without Shifting the Blame"}}</script>
+<script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css?v=7">
+</head>
+<body data-root="..">
+<div class="progress" aria-hidden="true"></div>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">PM</span><span>Prasanna Malode</span></a>
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a id="nav-home" href="../index.html#/home">Home</a></li>
+        <li><a id="nav-articles" href="../index.html#/articles" aria-current="page">Articles</a></li>
+        <li><a id="nav-tools" href="../index.html#/tools">Tools</a></li>
+        <li><a id="nav-about" href="../index.html#/about">About</a></li>
+      </ul>
+    </nav>
+    <div class="nav-actions">
+      <a class="icon-btn" href="../feed.xml" title="RSS feed" aria-label="RSS feed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg></a>
+      <button class="icon-btn theme-toggle" type="button" title="Toggle dark mode" aria-label="Toggle dark mode"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      <button class="icon-btn menu-btn" type="button" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+  <article>
+    <header class="article-head">
+      <div class="wrap-read fade-up">
+        <a class="tag" href="../index.html#/articles?tag=DevSecOps">DevSecOps</a>
+        <h1>Shift Left Has a Ceiling</h1>
+        <div class="meta">
+          <img class="avatar" src="../assets/photo-sm.jpg" alt="" width="26" height="26">
+          <span>Prasanna Malode</span>
+          <span aria-hidden="true">·</span>
+          <time datetime="2026-04-28">April 28, 2026</time>
+          <span aria-hidden="true">·</span>
+          <span>6 min read</span>
+        </div>
+        <p class="lede">Some defects do not exist until production exists. The classes above the ceiling, the shift-right toolkit, and escape rate, the metric that connects both halves of the pipeline.</p>
+      </div>
+    </header>
+    <div class="wrap" style="max-width:calc(var(--max-read) + 220px + 56px + 48px)">
+      <div class="article-layout">
+        <div>
+          <aside class="series-box" aria-label="Series navigation">
+  <div class="eyebrow">Series · Part 4 of 4</div>
+  <strong>Shifting Left Without Shifting the Blame</strong>
+  <ol><li class=""><a href="../articles/your-pr-has-400-security-findings.html">Your PR Has 400 Security Findings. Nobody Is Going to Fix Them.</a></li><li class=""><a href="../articles/bug-classes-not-bug-instances.html">Bug Classes, Not Bug Instances</a></li><li class=""><a href="../articles/risk-acceptance-with-an-expiry-date.html">The Vulnerability I Accepted, and the Expiry Date I Put on It</a></li><li class="current"><a href="../articles/shift-left-has-a-ceiling.html">Shift Left Has a Ceiling</a></li></ol>
+</aside>
+          <nav class="toc-inline" data-toc aria-label="Contents"><div class="eyebrow">In this article</div><div data-toc-list></div></nav>
+          <div class="prose">
+<p>Three posts arguing for moving controls earlier, and now the correction: there is a floor of defects that no amount of pre-deployment work will ever reach, and pretending otherwise is how organisations end up with an immaculate pipeline and a breach.</p>
+<p>Some bugs do not exist until production exists. Not "are hard to find before production" — <em>do not exist</em>. They are properties of a running system under real load with real data and real concurrent users, and a static analyser examining source code is looking at the wrong object entirely.</p>
+<h2>The classes that live above the ceiling</h2>
+<p>Four families, roughly.</p>
+<p><strong>Load-dependent defects.</strong> The race condition that needs two requests to arrive within the same few milliseconds. The connection pool that only deadlocks at a concurrency level your staging environment never reaches. The rate limiter that is correct per-instance and useless across twelve instances behind a load balancer. Your test suite runs these paths serially. Production does not.</p>
+<p><strong>Data-dependent defects.</strong> The authorisation check that is correct for every tenant in your seed data and wrong for the one enterprise customer with a nested org structure. The regex that is fine on ASCII and catastrophically backtracks on the input a real user pasted. You cannot fixture your way to this, because the defining property of the triggering data is that nobody imagined it.</p>
+<p><strong>Configuration drift.</strong> Your Terraform says the bucket is private. The bucket is not private, because someone fixed an incident at 2am eight months ago through the console and never came back. Static analysis reads what you <em>declared</em>. Only the running environment knows what is <em>true</em>, and the gap between those two grows continuously.</p>
+<p><strong>Emergent cross-service behaviour.</strong> Service A trusts requests from service B because they are both inside the perimeter. Service B was, in the meantime, given a new public endpoint. Neither repository contains the vulnerability. It exists only in the composition, and no analysis scoped to a single repo can see it.</p>
+<p>That last one is worth sitting with. In an architecture with a few dozen services, a growing share of your real risk lives in the <em>relationships</em>, and relationships have no source file.</p>
+<h2>Where risk actually gets created</h2>
+<p>There is a second reason the ceiling exists, and it is about what changes.</p>
+<p>A large fraction of production incidents are triggered by change — and a large fraction of those changes are configuration, not code. Feature flag flips, scaling parameters, IAM policy edits, DNS records, rate limit adjustments. These are changes that alter system behaviour in production and frequently never pass through the pipeline you spent three years hardening.</p>
+<p>If your entire control surface is the pull request, you are not covering the surface where a large share of your risk is introduced.</p>
+<h2>The shift-right toolkit</h2>
+<p>The answer is not to abandon prevention. It is to stop treating deployment as the end of the security process.</p>
+<p><strong>Progressive delivery.</strong> If a change reaches 1% of traffic before 100%, then a defect that only appears under real traffic appears with a 99% smaller blast radius, and it appears while someone is still watching. Canaries and feature flags are security controls, even though they are almost never budgeted as such.</p>
+<p><strong>Runtime authorisation telemetry.</strong> Log every authorisation decision — subject, action, resource, verdict. Then alert on the shapes that should never occur: one principal accessing an anomalous number of distinct objects, a service account making a call it has never made before, a deny rate spiking on one endpoint. This is the only control that reliably catches IDOR-class flaws, because the signature of IDOR is not in the code, it is in the access pattern.</p>
+<p><strong>Drift detection.</strong> Run the plan continuously, not just at apply time:</p>
+<pre><code class="language-yaml"># .github/workflows/drift.yml
+name: Infrastructure drift detection
+
+on:
+  schedule:
+    - cron: &quot;0 */6 * * *&quot;
+  workflow_dispatch:
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write        # OIDC — no long-lived credentials
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::111122223333:role/drift-detector
+          aws-region: eu-west-1
+      - uses: hashicorp/setup-terraform@v3
+      - run: terraform init -input=false
+      - id: plan
+        run: terraform plan -detailed-exitcode -lock=false -no-color
+        continue-on-error: true
+      - name: Raise drift issue
+        if: steps.plan.outputs.exitcode == 2
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Infrastructure drift detected — ${new Date().toISOString().slice(0,10)}`,
+              labels: [&#x27;drift&#x27;, &#x27;security&#x27;],
+              body: &#x27;Live infrastructure no longer matches committed state. See run logs.&#x27;
+            })</code></pre>
+<p>Note the <code>id-token: write</code> and the absence of any stored AWS key. That is the pattern from part one — remove the secret rather than scan for it.</p>
+<p><strong>Adversarial testing against the real thing.</strong> Bug bounty and pentest are not compliance line items; they are the only controls that test the composed system the way an attacker would. The finding that comes back from a good bounty programme is almost always one that no scanner could have produced, because it depends on chaining three things across two services.</p>
+<h2>Escape rate: the metric that connects both halves</h2>
+<p>Here is the number that makes this whole series cohere.</p>
+<blockquote><p><strong>Vulnerability escape rate</strong> = defects first discovered in production ÷ total defects discovered</p></blockquote>
+<p>Read it as a diagnostic, not a score:</p>
+<ul><li><strong>Escape rate falling, total findings steady</strong> — prevention is working. This is the good state.</li><li><strong>Escape rate rising, total findings falling</strong> — the alarming state. It usually means your left-side tooling has been tuned into silence, and you are discovering things in production instead. Part one's fix rate metric will confirm it.</li><li><strong>Escape rate near zero</strong> — do not celebrate. It almost always means you are not looking in production, not that nothing is there. Zero escapes is a detection failure, not a prevention triumph.</li></ul>
+<p>The operational discipline this creates: <strong>every production finding becomes a specification for a left-side control.</strong> For each escape, ask what would have caught it, and where it should have lived. Sometimes the answer is a new SAST rule. Sometimes it is a type-level guarantee from part two. Sometimes the honest answer is "nothing could have caught this before deploy", and that answer is valuable too, because it tells you to invest in detection rather than in another scanner.</p>
+<p>Pair escape rate with <strong>security MTTR</strong> — time from discovery to deployed fix. Escape rate tells you how much gets through. MTTR tells you whether that matters. A team with a moderate escape rate and a four-hour MTTR is in far better shape than one with a low escape rate and a six-week deploy cycle, because the second team cannot respond to the zero-day that arrives on a Tuesday.</p>
+<p>That framing lands well with engineering leadership, incidentally, because it is the same argument as DORA. Deployment frequency and lead time are security metrics. The ability to ship a fix in an hour is a security capability. This is the point where security stops asking for a slower pipeline and starts arguing for a faster one.</p>
+<h2>What the whole series was arguing</h2>
+<p>Four posts, one thesis:</p>
+<ol><li><strong>Moving unfiltered machine output earlier is not shifting left.</strong> It is interrupting people sooner. Measure fix rate, give every stage a latency budget, and prefer secure defaults over blocking gates.</li><li><strong>Only class-level work compounds.</strong> Every instance you fix by hand returns. Climb the ladder: findable by machine, then loud on failure, then impossible to express.</li><li><strong>Acceptance is fine; silence is not.</strong> Give every accepted risk an owner, an expiry, and a CI job that enforces both. Renewal is a legitimate outcome. Forgetting is not.</li><li><strong>And there is a ceiling.</strong> Some defects exist only in the running system. Detect them deliberately, measure the escape rate, and feed every escape back into the left side as a new control.</li></ol>
+<p>The version of this that fails is the one where "shift left" means buying tools and pushing the resulting work onto developers while calling it empowerment. The version that works treats prevention and detection as one loop with a measured leak rate, where the security team owns the noise it generates and the loop teaches itself.</p>
+<p>Start with the fix rate. It is one number, you can compute it this week, and it will tell you immediately whether the rest of this applies to you.</p>
+          </div>
+          <footer class="article-foot">
+            <div class="share">
+              <span class="label">Share</span>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="linkedin">LinkedIn</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="x">X</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="email">Email</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="copy">Copy link</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="native">Share…</button>
+            </div>
+            <div class="author-card">
+              <img src="../assets/photo-sm.jpg" alt="Prasanna Malode" width="64" height="64">
+              <div>
+                <div class="name">Prasanna Malode</div>
+                <div class="role">Global Head — DevSecOps · Cybersecurity · IT Operations · Bengaluru, India</div>
+                <p>Two decades in release engineering, IT operations and security, now leading a 20-person global DevSecOps, cybersecurity and IT operations organisation. I write about making speed, security and reliability the same conversation. <a href="../index.html#/about">More about me</a>.</p>
+              </div>
+            </div>
+            <nav class="pager" aria-label="More articles">
+              <a class="prev" href="../articles/who-spent-this.html"><div class="dir">← Older</div><div class="title">Who Spent This?</div></a>
+              <a class="next" href="../articles/invoice-as-intrusion-detection.html"><div class="dir">Newer →</div><div class="title">The Invoice as an Intrusion Detection System</div></a>
+            </nav>
+          </footer>
+        </div>
+        <nav class="toc-side" data-toc aria-label="Contents"><div class="eyebrow">In this article</div><div data-toc-list></div></nav>
+      </div>
+    </div>
+  </article>
+</main>
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">PM</span><span>Prasanna Malode</span></a>
+      <div style="margin-top:8px">DevSecOps · Cybersecurity · IT Operations · Bengaluru, India</div>
+      <div style="margin-top:4px">© <span data-year>2026</span> Prasanna Malode. Opinions are my own.</div>
+    </div>
+    <div class="footer-links">
+      <a href="../index.html#/articles">Articles</a>
+      <a href="../index.html#/tools">Tools</a>
+      <a href="../index.html#/about">About</a>
+      <a href="https://linkedin.com/in/prasannamalode" target="_blank" rel="noopener me">LinkedIn</a>
+      <a href="mailto:malode.prasanna@gmail.com">Email</a>
+      <a href="../feed.xml">RSS</a>
+    </div>
+  </div>
+</footer>
+<script src="../assets/articles-data.js?v=7" defer></script>
+<script src="../assets/site.js?v=7" defer></script>
+</body>
+</html>

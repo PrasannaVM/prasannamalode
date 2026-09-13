@@ -398,6 +398,85 @@ Alert if risk threshold exceeded → Track patch timelines</code></pre>
 <p>Go and read that graph. You may find, as we did, that the interesting event happened weeks ago and has been sitting there patiently, correctly recorded, waiting for someone to ask what it was.</p>]]></content:encoded>
   </item>
   <item>
+    <title>Shift Left Has a Ceiling</title>
+    <link>https://prasannamalode.in/articles/shift-left-has-a-ceiling.html</link>
+    <guid isPermaLink="true">https://prasannamalode.in/articles/shift-left-has-a-ceiling.html</guid>
+    <pubDate>Tue, 28 Apr 2026 00:00:00 +0000</pubDate>
+    <category>DevSecOps</category>
+    <description>Some defects do not exist until production exists. The classes above the ceiling, the shift-right toolkit, and escape rate, the metric that connects both halves of the pipeline.</description>
+    <content:encoded><![CDATA[<p>Three posts arguing for moving controls earlier, and now the correction: there is a floor of defects that no amount of pre-deployment work will ever reach, and pretending otherwise is how organisations end up with an immaculate pipeline and a breach.</p>
+<p>Some bugs do not exist until production exists. Not "are hard to find before production" — <em>do not exist</em>. They are properties of a running system under real load with real data and real concurrent users, and a static analyser examining source code is looking at the wrong object entirely.</p>
+<h2>The classes that live above the ceiling</h2>
+<p>Four families, roughly.</p>
+<p><strong>Load-dependent defects.</strong> The race condition that needs two requests to arrive within the same few milliseconds. The connection pool that only deadlocks at a concurrency level your staging environment never reaches. The rate limiter that is correct per-instance and useless across twelve instances behind a load balancer. Your test suite runs these paths serially. Production does not.</p>
+<p><strong>Data-dependent defects.</strong> The authorisation check that is correct for every tenant in your seed data and wrong for the one enterprise customer with a nested org structure. The regex that is fine on ASCII and catastrophically backtracks on the input a real user pasted. You cannot fixture your way to this, because the defining property of the triggering data is that nobody imagined it.</p>
+<p><strong>Configuration drift.</strong> Your Terraform says the bucket is private. The bucket is not private, because someone fixed an incident at 2am eight months ago through the console and never came back. Static analysis reads what you <em>declared</em>. Only the running environment knows what is <em>true</em>, and the gap between those two grows continuously.</p>
+<p><strong>Emergent cross-service behaviour.</strong> Service A trusts requests from service B because they are both inside the perimeter. Service B was, in the meantime, given a new public endpoint. Neither repository contains the vulnerability. It exists only in the composition, and no analysis scoped to a single repo can see it.</p>
+<p>That last one is worth sitting with. In an architecture with a few dozen services, a growing share of your real risk lives in the <em>relationships</em>, and relationships have no source file.</p>
+<h2>Where risk actually gets created</h2>
+<p>There is a second reason the ceiling exists, and it is about what changes.</p>
+<p>A large fraction of production incidents are triggered by change — and a large fraction of those changes are configuration, not code. Feature flag flips, scaling parameters, IAM policy edits, DNS records, rate limit adjustments. These are changes that alter system behaviour in production and frequently never pass through the pipeline you spent three years hardening.</p>
+<p>If your entire control surface is the pull request, you are not covering the surface where a large share of your risk is introduced.</p>
+<h2>The shift-right toolkit</h2>
+<p>The answer is not to abandon prevention. It is to stop treating deployment as the end of the security process.</p>
+<p><strong>Progressive delivery.</strong> If a change reaches 1% of traffic before 100%, then a defect that only appears under real traffic appears with a 99% smaller blast radius, and it appears while someone is still watching. Canaries and feature flags are security controls, even though they are almost never budgeted as such.</p>
+<p><strong>Runtime authorisation telemetry.</strong> Log every authorisation decision — subject, action, resource, verdict. Then alert on the shapes that should never occur: one principal accessing an anomalous number of distinct objects, a service account making a call it has never made before, a deny rate spiking on one endpoint. This is the only control that reliably catches IDOR-class flaws, because the signature of IDOR is not in the code, it is in the access pattern.</p>
+<p><strong>Drift detection.</strong> Run the plan continuously, not just at apply time:</p>
+<pre><code class="language-yaml"># .github/workflows/drift.yml
+name: Infrastructure drift detection
+
+on:
+  schedule:
+    - cron: &quot;0 */6 * * *&quot;
+  workflow_dispatch:
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write        # OIDC — no long-lived credentials
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::111122223333:role/drift-detector
+          aws-region: eu-west-1
+      - uses: hashicorp/setup-terraform@v3
+      - run: terraform init -input=false
+      - id: plan
+        run: terraform plan -detailed-exitcode -lock=false -no-color
+        continue-on-error: true
+      - name: Raise drift issue
+        if: steps.plan.outputs.exitcode == 2
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Infrastructure drift detected — ${new Date().toISOString().slice(0,10)}`,
+              labels: [&#x27;drift&#x27;, &#x27;security&#x27;],
+              body: &#x27;Live infrastructure no longer matches committed state. See run logs.&#x27;
+            })</code></pre>
+<p>Note the <code>id-token: write</code> and the absence of any stored AWS key. That is the pattern from part one — remove the secret rather than scan for it.</p>
+<p><strong>Adversarial testing against the real thing.</strong> Bug bounty and pentest are not compliance line items; they are the only controls that test the composed system the way an attacker would. The finding that comes back from a good bounty programme is almost always one that no scanner could have produced, because it depends on chaining three things across two services.</p>
+<h2>Escape rate: the metric that connects both halves</h2>
+<p>Here is the number that makes this whole series cohere.</p>
+<blockquote><p><strong>Vulnerability escape rate</strong> = defects first discovered in production ÷ total defects discovered</p></blockquote>
+<p>Read it as a diagnostic, not a score:</p>
+<ul><li><strong>Escape rate falling, total findings steady</strong> — prevention is working. This is the good state.</li><li><strong>Escape rate rising, total findings falling</strong> — the alarming state. It usually means your left-side tooling has been tuned into silence, and you are discovering things in production instead. Part one's fix rate metric will confirm it.</li><li><strong>Escape rate near zero</strong> — do not celebrate. It almost always means you are not looking in production, not that nothing is there. Zero escapes is a detection failure, not a prevention triumph.</li></ul>
+<p>The operational discipline this creates: <strong>every production finding becomes a specification for a left-side control.</strong> For each escape, ask what would have caught it, and where it should have lived. Sometimes the answer is a new SAST rule. Sometimes it is a type-level guarantee from part two. Sometimes the honest answer is "nothing could have caught this before deploy", and that answer is valuable too, because it tells you to invest in detection rather than in another scanner.</p>
+<p>Pair escape rate with <strong>security MTTR</strong> — time from discovery to deployed fix. Escape rate tells you how much gets through. MTTR tells you whether that matters. A team with a moderate escape rate and a four-hour MTTR is in far better shape than one with a low escape rate and a six-week deploy cycle, because the second team cannot respond to the zero-day that arrives on a Tuesday.</p>
+<p>That framing lands well with engineering leadership, incidentally, because it is the same argument as DORA. Deployment frequency and lead time are security metrics. The ability to ship a fix in an hour is a security capability. This is the point where security stops asking for a slower pipeline and starts arguing for a faster one.</p>
+<h2>What the whole series was arguing</h2>
+<p>Four posts, one thesis:</p>
+<ol><li><strong>Moving unfiltered machine output earlier is not shifting left.</strong> It is interrupting people sooner. Measure fix rate, give every stage a latency budget, and prefer secure defaults over blocking gates.</li><li><strong>Only class-level work compounds.</strong> Every instance you fix by hand returns. Climb the ladder: findable by machine, then loud on failure, then impossible to express.</li><li><strong>Acceptance is fine; silence is not.</strong> Give every accepted risk an owner, an expiry, and a CI job that enforces both. Renewal is a legitimate outcome. Forgetting is not.</li><li><strong>And there is a ceiling.</strong> Some defects exist only in the running system. Detect them deliberately, measure the escape rate, and feed every escape back into the left side as a new control.</li></ol>
+<p>The version of this that fails is the one where "shift left" means buying tools and pushing the resulting work onto developers while calling it empowerment. The version that works treats prevention and detection as one loop with a measured leak rate, where the security team owns the noise it generates and the loop teaches itself.</p>
+<p>Start with the fix rate. It is one number, you can compute it this week, and it will tell you immediately whether the rest of this applies to you.</p>]]></content:encoded>
+  </item>
+  <item>
     <title>Who Spent This?</title>
     <link>https://prasannamalode.in/articles/who-spent-this.html</link>
     <guid isPermaLink="true">https://prasannamalode.in/articles/who-spent-this.html</guid>
@@ -563,6 +642,143 @@ Alert if risk threshold exceeded → Track patch timelines</code></pre>
 <p>The principle I kept coming back to: make the right thing the easy thing. When quality gates caught issues automatically, engineers stopped seeing them as obstacles and started seeing them as safety nets.</p>]]></content:encoded>
   </item>
   <item>
+    <title>The Vulnerability I Accepted, and the Expiry Date I Put on It</title>
+    <link>https://prasannamalode.in/articles/risk-acceptance-with-an-expiry-date.html</link>
+    <guid isPermaLink="true">https://prasannamalode.in/articles/risk-acceptance-with-an-expiry-date.html</guid>
+    <pubDate>Tue, 24 Feb 2026 00:00:00 +0000</pubDate>
+    <category>DevSecOps</category>
+    <description>A 1,900-line suppression file is four years of defensible calls adding up to something indefensible. Risk acceptance as a record with an owner, an expiry, and a CI job that enforces both.</description>
+    <content:encoded><![CDATA[<p>I once opened a suppression file that was 1,900 lines long.</p>
+<p>It had been started four years earlier. It had eleven distinct comment styles in it, which is roughly one per engineer who had ever touched it. Some entries had a ticket number; most of those tickets were closed, and a few referenced a tracker the company no longer used. One entry said <code># temporary - remove after migration</code>. The migration it referred to had completed two years before.</p>
+<p>Nobody had done anything wrong. Every single line had been added by a reasonable person under deadline pressure making a defensible call. The file was the sum of four years of defensible calls, and the sum was indefensible.</p>
+<p>That is the real problem with risk acceptance. Not that individual decisions are bad. That they never end.</p>
+<h2>Suppression is not a decision, it is the absence of one</h2>
+<p>Watch what happens when a finding is suppressed in a typical setup.</p>
+<p>Somebody adds a line. Maybe a comment. The scanner goes quiet. The PR goes green. And then — this is the important part — <em>nothing else ever happens</em>. No record of who decided, no record of why, no date, no review, no signal if the surrounding conditions change.</p>
+<p>A decision that produces no artefact and triggers no future event is not a decision. It is deferral wearing a decision's clothes. And deferral accumulates silently, which means the cost lands on somebody who was not in the room, often years later, usually during an incident.</p>
+<p>The fix is not to forbid acceptance. Acceptance is legitimate and necessary — plenty of findings genuinely are not worth fixing this quarter, and a security function that cannot say "fine, not now" is a security function that gets routed around.</p>
+<p>The fix is to make acceptance <strong>structured, owned, and temporary</strong>.</p>
+<h2>What an acceptance record has to contain</h2>
+<p>Five fields. If any one is missing, it is not an acceptance, it is a suppression.</p>
+<ol><li><strong>Owner</strong> — a named person, not a team. Teams do not get paged, do not leave the company, and do not feel accountable.</li><li><strong>Expiry</strong> — a date. Not "when we migrate". Not "next quarter". A date that a computer can compare against <code>now()</code>.</li><li><strong>Rationale</strong> — why this is tolerable <em>now</em>. Written for a stranger, because in eighteen months the reader will be one.</li><li><strong>Compensating control</strong> — what reduces the impact in the meantime. WAF rule, network boundary, feature flag, monitoring alert. If the answer is honestly "nothing", write "nothing" — that is valuable information.</li><li><strong>Trigger conditions</strong> — what would make this unacceptable before the expiry date. "If this service starts handling payment data." "If a public exploit lands." This is the field everyone skips and it is the one that catches the real disasters.</li></ol>
+<p>Here is what that looks like as a file that lives in the repo:</p>
+<pre><code class="language-yaml"># security/acceptances.yaml
+- id: ACC-2026-007
+  finding: CVE-2025-XXXXX
+  component: github.com/example/imageproc
+  severity: high
+
+  owner: priya.raman           # a person
+  accepted_on: 2026-01-12
+  expires_on: 2026-04-12       # 90 days for high
+
+  rationale: &gt;
+    Vulnerable code path is the TIFF decoder. We only accept PNG and
+    JPEG at the API boundary, enforced by content-type allowlist in
+    gateway/filters.go:88. Upstream fix requires a major version bump
+    that breaks our colour-profile handling.
+
+  compensating_controls:
+    - Content-type allowlist at the gateway (PNG, JPEG only)
+    - Decoder runs in a seccomp-restricted sandbox
+    - Alert on any non-allowlisted content-type reaching the decoder
+
+  invalidating_conditions:
+    - The gateway allowlist is widened to any additional format
+    - A public exploit is observed in the wild
+    - imageproc is called from any new service
+
+  renewals: 0</code></pre>
+<p>Two properties matter here. It is in version control, so it is reviewable and blameable like code. And it is machine-readable, so the expiry can be enforced rather than hoped for.</p>
+<h2>Enforcement is what makes it real</h2>
+<p>Every part of this is theatre without a job that fails the build when the date passes.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Fail CI when any risk acceptance has expired or is incomplete.&quot;&quot;&quot;
+import sys, datetime, yaml
+
+REQUIRED = [&quot;owner&quot;, &quot;expires_on&quot;, &quot;rationale&quot;,
+            &quot;compensating_controls&quot;, &quot;invalidating_conditions&quot;]
+MAX_TERM = {&quot;critical&quot;: 30, &quot;high&quot;: 90, &quot;medium&quot;: 180, &quot;low&quot;: 365}
+MAX_RENEWALS = 2
+
+def main(path=&quot;security/acceptances.yaml&quot;):
+    today = datetime.date.today()
+    records = yaml.safe_load(open(path)) or []
+    errors, warnings = [], []
+
+    for r in records:
+        rid = r.get(&quot;id&quot;, &quot;&lt;no id&gt;&quot;)
+
+        missing = [f for f in REQUIRED if not r.get(f)]
+        if missing:
+            errors.append(f&quot;{rid}: missing required fields: {&#x27;, &#x27;.join(missing)}&quot;)
+            continue
+
+        expires = r[&quot;expires_on&quot;]
+        accepted = r[&quot;accepted_on&quot;]
+        term = (expires - accepted).days
+        cap = MAX_TERM.get(r.get(&quot;severity&quot;, &quot;low&quot;), 365)
+        if term &gt; cap:
+            errors.append(f&quot;{rid}: term of {term}d exceeds {cap}d cap for {r[&#x27;severity&#x27;]}&quot;)
+
+        if r.get(&quot;renewals&quot;, 0) &gt; MAX_RENEWALS:
+            errors.append(f&quot;{rid}: renewed {r[&#x27;renewals&#x27;]} times — escalate, don&#x27;t renew&quot;)
+
+        days_left = (expires - today).days
+        if days_left &lt; 0:
+            errors.append(f&quot;{rid}: EXPIRED {abs(days_left)}d ago — owner {r[&#x27;owner&#x27;]}&quot;)
+        elif days_left &lt;= 14:
+            warnings.append(f&quot;{rid}: expires in {days_left}d — owner {r[&#x27;owner&#x27;]}&quot;)
+
+    for w in warnings:
+        print(f&quot;::warning::{w}&quot;)
+    for e in errors:
+        print(f&quot;::error::{e}&quot;)
+
+    return 1 if errors else 0
+
+if __name__ == &quot;__main__&quot;:
+    sys.exit(main())</code></pre>
+<p>Wire it into CI so it runs on every push and on a schedule:</p>
+<pre><code class="language-yaml"># .github/workflows/acceptance-audit.yml
+name: Risk acceptance audit
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: &quot;0 9 * * 1&quot;   # Monday morning, so expiries surface before they bite
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: &quot;3.12&quot;
+      - run: pip install pyyaml
+      - run: python security/check_acceptances.py</code></pre>
+<p>The scheduled run is the part that does the work. It means an expiry arrives as a Monday-morning notification with fourteen days of warning, rather than as a red build on an unrelated PR from someone who has no idea what the record is about.</p>
+<h2>Renewal is allowed. Silence is not.</h2>
+<p>People push back here, and the pushback is always the same: "so we just renew everything and nothing changes."</p>
+<p>Two answers.</p>
+<p>First, even pure renewal is an improvement, because renewal is <em>an event</em>. A human reads the rationale and decides again. Sometimes the rationale no longer holds — the compensating control was removed in a refactor, the service now handles data it did not before, an exploit was published. Without the expiry, none of those changes would ever be noticed. The whole value of the mechanism is that it forces a re-read.</p>
+<p>Second, cap the renewals. Two is a reasonable limit. After that the item does not get renewed; it gets escalated to someone with budget authority, who either funds the fix or accepts it at a level where the accountability is real. That is not a punishment — it is the correct routing. An issue that has survived three review cycles without being fixed is not a triage problem, it is a resourcing problem, and it belongs with whoever controls resourcing.</p>
+<p>Suggested terms, which you should tune to your own tolerance:</p>
+<div class="table-wrap"><table><thead><tr><th>Severity</th><th>Max term</th><th>Renewals before escalation</th></tr></thead><tbody><tr><td>Critical</td><td>30 days</td><td>1</td></tr><tr><td>High</td><td>90 days</td><td>2</td></tr><tr><td>Medium</td><td>180 days</td><td>2</td></tr><tr><td>Low</td><td>365 days</td><td>2</td></tr></tbody></table></div>
+<h2>Migrating a file you inherited</h2>
+<p>If you already have the 1,900-line file, do not try to adjudicate all of it. You will not finish, and the attempt will burn whatever goodwill you were going to spend on the actual fix.</p>
+<p>What works:</p>
+<ol><li><strong>Freeze it.</strong> Rename it <code>legacy-suppressions</code>. Make CI reject any new entries. From today, every new acceptance uses the structured format. This alone stops the bleeding, and it is a one-day change.</li><li><strong>Sample it.</strong> Take 25 random entries and adjudicate them properly. You now have an estimate of what fraction of the file is stale, which is the number you take to leadership. In my experience the answer is well over half.</li><li><strong>Expire it in tranches.</strong> Assign expiry dates to the legacy entries spread over the next twelve months, weighted by severity. Do not dump them all on one date.</li><li><strong>Let deletion be the default.</strong> For legacy entries where no owner can be found, the default action at expiry is to remove the suppression and see what breaks. Half the time the finding is gone because the code is gone.</li></ol>
+<p>Step four sounds reckless and is not. An unowned suppression is an unowned risk. Surfacing it is strictly better than continuing to pretend somebody is watching it.</p>
+<h2>The part that is actually about culture</h2>
+<p>The reason suppression files grow is that suppressing is frictionless and fixing is not. The mechanism above does not add friction to suppression — it takes about the same time to write the YAML as to add the comment. What it adds is <strong>a future obligation</strong>, and it makes that obligation visible at the moment of the decision.</p>
+<p>That changes behaviour, in my experience, more than any approval workflow. When you write <code>expires_on: 2026-04-12</code> and your own name next to it, you are making a small promise to a specific future version of yourself. Most engineers, given that framing, will fix the easy ones immediately rather than schedule a conversation with themselves in ninety days.</p>
+<p>The 1,900-line file was not a discipline failure. It was a design failure: a system where the cheapest path produced no record and no future event. Change the design, and most of the discipline problem evaporates.</p>]]></content:encoded>
+  </item>
+  <item>
     <title>Building a cybersecurity function from scratch: lessons from zero to ISO 27001</title>
     <link>https://prasannamalode.in/articles/iso-27001-from-scratch.html</link>
     <guid isPermaLink="true">https://prasannamalode.in/articles/iso-27001-from-scratch.html</guid>
@@ -679,6 +895,106 @@ Alert if risk threshold exceeded → Track patch timelines</code></pre>
 <p>The single biggest thing I learned: presence is not about timezone overlap. It's about reliability. If your team knows you'll respond, unblock, and follow through, they feel supported regardless of where you are.</p>]]></content:encoded>
   </item>
   <item>
+    <title>Bug Classes, Not Bug Instances</title>
+    <link>https://prasannamalode.in/articles/bug-classes-not-bug-instances.html</link>
+    <guid isPermaLink="true">https://prasannamalode.in/articles/bug-classes-not-bug-instances.html</guid>
+    <pubDate>Tue, 23 Dec 2025 00:00:00 +0000</pubDate>
+    <category>DevSecOps</category>
+    <description>Every vulnerability you fix by hand is one you will fix again. The four-rung ladder for eliminating whole categories: findable, loud, then impossible to write.</description>
+    <content:encoded><![CDATA[<p>Look at your security backlog and count how many tickets are the same ticket.</p>
+<p>Not literally identical — different files, different services, different authors. But the same shape. Four path traversal findings. Nine missing authorisation checks on new endpoints. Six places where a secret went into a log line. Every one of them gets its own ticket, its own fix, its own review, its own regression test.</p>
+<p>And then next quarter you get another four, another nine, another six. Because nothing you did changed the conditions that produce them.</p>
+<p>This is the treadmill, and most security engineering runs on it.</p>
+<h2>The distinction</h2>
+<p>An <strong>instance</strong> is one occurrence of a defect in one place in one codebase. Fixing it removes exactly one defect.</p>
+<p>A <strong>class</strong> is the set of conditions under which that defect can exist at all. Eliminating it removes every current instance and every future instance, including the ones that would have been written by an engineer who joins in two years and has never read your wiki.</p>
+<p>Nearly all security tooling operates at the instance level. Scanners find instances. Tickets track instances. Metrics count instances. And because the tooling is instance-shaped, the work becomes instance-shaped, and you end up with a function that consumes headcount in proportion to how fast the rest of the company writes code.</p>
+<p>That is not a security programme. That is a tax.</p>
+<h2>The ladder</h2>
+<p>For any bug class, there are four rungs you can be standing on.</p>
+<p>Most teams live on rung one and have convinced themselves that buying a rung-two tool is transformation. It helps — rung two is genuinely better than rung one — but the leverage is above it, and the leverage is where the engineering is.</p>
+<p>Let me make each rung concrete.</p>
+<h3>Rung 1 → 2: make the machine find it</h3>
+<p>The move here is from human vigilance to mechanical certainty. The signal that you are on rung one is a wiki page, an onboarding slide, or a code review checklist item. Any control that depends on somebody remembering is a rung-one control.</p>
+<p><strong>Property-based testing</strong> is the most underused tool in this category. Instead of asserting specific outputs for specific inputs, you assert an invariant and let the framework attack it:</p>
+<pre><code class="language-python">from hypothesis import given, strategies as st
+
+@given(st.text())
+def test_sanitiser_never_emits_angle_brackets(raw):
+    out = sanitise_for_html(raw)
+    assert &quot;&lt;&quot; not in out and &quot;&gt;&quot; not in out
+
+@given(st.binary())
+def test_parser_never_raises_unexpected(data):
+    # The only acceptable failure is our own typed error
+    try:
+        parse_message(data)
+    except ProtocolError:
+        pass</code></pre>
+<p>That second test is a fuzzer in four lines. It will find the unicode edge case, the zero-length input, the surrogate pair, and the thing you did not think of — which is the entire point, because the things you did not think of are where the vulnerabilities are.</p>
+<p><strong>Continuous fuzzing</strong> is the same idea with a much bigger budget. If you parse anything untrusted — a file format, a wire protocol, a token, a config — and you are not fuzzing the parser, that parser is an unexplored attack surface. OSS-Fuzz is free for open source. For internal code, a nightly <code>cargo fuzz</code> or <code>libFuzzer</code> target on your parsing boundary costs a day to set up.</p>
+<p><strong>Custom static analysis rules</strong> belong here too, but with the warning from part one: a rule earns its place by precision. A rule with 40% precision is rung one wearing a costume, because a human still has to adjudicate every hit.</p>
+<h3>Rung 2 → 3: make it fail loudly</h3>
+<p>Here the bug is still writable, but it stops being <em>silent</em>. Silence is what turns a bug into a vulnerability — the request that should have been denied but was served, the validation that was skipped without complaint.</p>
+<pre><code class="language-python"># Rung 1: authorisation is a thing you must remember to call
+@app.get(&quot;/orders/{order_id}&quot;)
+def get_order(order_id):
+    return db.fetch_order(order_id)   # forgot the check, nothing complains
+
+# Rung 3: absence of a decision is an error
+@app.get(&quot;/orders/{order_id}&quot;)
+@requires_authz                       # framework raises at request time if no policy is declared
+def get_order(order_id, actor):
+    authorize(actor, &quot;order:read&quot;, order_id)
+    return db.fetch_order(order_id)</code></pre>
+<p>The mechanism is that the framework refuses to serve a route with no declared policy. Forgetting is now a 500 in staging rather than a data leak in production. You have not made the mistake impossible, but you have made it <em>immediately visible</em>, which collapses the time-to-detection from months to minutes.</p>
+<p>Infrastructure has the same move. Default-deny egress on a namespace turns "this service can reach anything" into a loud, specific failure the first time something tries. It is annoying for a week and then it is a permanent boundary.</p>
+<h3>Rung 3 → 4: make it impossible</h3>
+<p>The top rung is where the defect cannot be expressed in the language you have given yourself.</p>
+<p>The canonical case is SQL injection. You do not solve it by training people to be careful with string concatenation. You solve it by making the unsafe path unreachable:</p>
+<pre><code class="language-go">// internal/db/db.go — the raw path is unexported
+func rawQuery(q string) (*Rows, error) { ... }
+
+// The only exported query function takes args separately.
+func Query(tmpl Template, args ...any) (*Rows, error) { ... }</code></pre>
+<p>Now injection is not a thing to be careful about. It is a compile error in every package outside <code>internal/db</code>, and a reviewer who has never heard of SQL injection cannot let it through.</p>
+<p>The same pattern generalises through the type system:</p>
+<pre><code class="language-rust">// Untrusted input cannot be confused with validated input,
+// because they are not the same type.
+struct RawInput(String);
+struct SafePath(PathBuf);
+
+fn validate(raw: RawInput, root: &amp;Path) -&gt; Result&lt;SafePath, ValidationError&gt; {
+    let candidate = root.join(&amp;raw.0).canonicalize()?;
+    if !candidate.starts_with(root) {
+        return Err(ValidationError::Escape);
+    }
+    Ok(SafePath(candidate))
+}
+
+// Every file operation demands SafePath. There is no way to pass
+// RawInput here. Path traversal is now a type error.
+fn read_user_file(p: SafePath) -&gt; io::Result&lt;Vec&lt;u8&gt;&gt; { ... }</code></pre>
+<p>Path traversal used to be a class that produced findings every quarter. Now it produces compiler diagnostics, for free, forever, in code written by people who have never thought about it.</p>
+<p>And then there is the biggest single instance of this move available to the industry: <strong>memory safety</strong>. Somewhere around two thirds to three quarters of severe vulnerabilities in large C and C++ codebases are memory-safety issues. That is not a class you can train away or scan away. It is a class you can move to rung four by changing language at the boundary — which is exactly what Android, Windows, and the Linux kernel have been doing, with published results showing new memory-safe code producing a fraction of the vulnerability density of the code it replaced.</p>
+<h2>The rewrite objection</h2>
+<p>The immediate response to rung four is that it means rewrites, and rewrites do not get funded.</p>
+<p>Mostly true, and mostly beside the point, because you do not need a rewrite. You need a <strong>boundary</strong>.</p>
+<p>The rule that makes this tractable: <em>new code goes on the high rung; old code stays where it is and gets a clear edge drawn around it.</em></p>
+<ul><li>New services use the safe query API. Old ones get a scanner and a backlog.</li><li>New parsers get written in a memory-safe language. The old parser gets fuzzed and sandboxed.</li><li>New endpoints require a declared policy. Old ones get an allowlist that only shrinks.</li></ul>
+<p>This works because code has a half-life. A meaningful fraction of your codebase will be rewritten anyway in the normal course of shipping. If the default for new code is on rung four, your vulnerability density decays without anyone ever running a rewrite project.</p>
+<p>The failure mode to watch is the allowlist that grows. Whatever form the boundary takes — an exception list, a legacy annotation, a grandfathered directory — it needs a ratchet. It can shrink, it cannot grow, and adding to it requires the same approval as any other risk acceptance. Which is the subject of the next post.</p>
+<h2>Running this as practice</h2>
+<p>Two habits are enough to make this real.</p>
+<p><strong>First: after every incident, ask the class question.</strong> Not "how do we fix this bug" but "what rung is this class on, and what would it take to move it up one?" Put that in the postmortem template as a required field. It will be answered badly at first and then it will start being answered well.</p>
+<p><strong>Second: cluster your backlog quarterly.</strong> Take every security ticket from the last three months and group by shape, not by service. Any cluster with five or more members is not five tickets — it is one class with five symptoms. Close all five and open one ticket to climb a rung.</p>
+<p>The cluster exercise is worth doing once just for the shock value. The first time I did it, about 60% of a quarter's security backlog collapsed into four classes. We had been paying to fix the same four things over and over, and the ticket system had been carefully hiding that from us by giving each symptom its own ID.</p>
+<h2>The summary</h2>
+<p>Every vulnerability you fix by hand is a vulnerability you will fix again, because the conditions that produced it are still there and the code is still growing.</p>
+<p>The only security work that compounds is the work that makes a category of defect harder to write than the correct alternative. Everything else is maintenance — necessary, but it does not accumulate, and it scales with your engineering headcount rather than against it.</p>
+<p>Ask the class question. Draw the boundary. Let the ratchet do the rest.</p>]]></content:encoded>
+  </item>
+  <item>
     <title>How ITIL-aligned incident management cut our recurring incidents by 50%</title>
     <link>https://prasannamalode.in/articles/itil-incident-management.html</link>
     <guid isPermaLink="true">https://prasannamalode.in/articles/itil-incident-management.html</guid>
@@ -695,6 +1011,53 @@ Alert if risk threshold exceeded → Track patch timelines</code></pre>
 <p>ServiceNow gave us the data we needed: incident trends by category, MTTR by team, SLA breach patterns. But the data was only useful because we reviewed it weekly and acted on it. Tooling without review cadence is just expensive storage.</p>
 <h2>Results that mattered to the business</h2>
 <p>Recurring incidents down 50%. SLA performance up 40%. But the result I'm most proud of: the team stopped dreading the queue. When you're not firefighting the same fires repeatedly, morale follows. That's the real return on an ITIL investment. Not the certification, not the process documentation, but a team that's energised rather than exhausted.</p>]]></content:encoded>
+  </item>
+  <item>
+    <title>Your PR Has 400 Security Findings. Nobody Is Going to Fix Them.</title>
+    <link>https://prasannamalode.in/articles/your-pr-has-400-security-findings.html</link>
+    <guid isPermaLink="true">https://prasannamalode.in/articles/your-pr-has-400-security-findings.html</guid>
+    <pubDate>Tue, 25 Nov 2025 00:00:00 +0000</pubDate>
+    <category>DevSecOps</category>
+    <description>Coverage is a vanity metric. Track fix rate per tool, give every pipeline stage a latency budget, and prefer secure defaults over blocking gates.</description>
+    <content:encoded><![CDATA[<p>There is a specific moment I want to describe, because I think most engineers have lived it and nobody writes it down.</p>
+<p>You open a pull request. It changes eleven lines in a config file. The checks run. Fourteen minutes later you come back to a wall of red: 400-odd findings from six different tools, most of them in files you have never opened, several of them duplicates of each other described in different vocabularies, one of them possibly real.</p>
+<p>You scroll. You do not read. You look for the button that makes it go away.</p>
+<p>That reflex — the scroll, the scan for the override — is the actual output of most shift-left programmes. Not fixes. A reflex.</p>
+<h2>Coverage is a vanity metric</h2>
+<p>Here is the story security programmes tell themselves. We added SAST. We added SCA. We added secret scanning, IaC policy, container scanning, license compliance. Coverage went from 20% of repositories to 95% of repositories. The quarterly slide is green.</p>
+<p>Here is the story the codebase tells. Findings went up. Fixes did not. The delta went into a suppression file.</p>
+<p>Coverage measures how many tools you bought and wired up. It measures procurement. It says nothing about whether a single vulnerability left the codebase.</p>
+<p>The number that matters is the fix rate:</p>
+<blockquote><p>Of the findings surfaced in a given period, what fraction were remediated in code — not suppressed, not marked won't-fix, not aged out?</p></blockquote>
+<p>Track that monthly. Track it per tool. The first time you look at it per tool, you will find at least one scanner with a fix rate near zero, which means it has been generating pure noise and consuming review attention for however long you have had it.</p>
+<p>That tool is not a partial win. It is negative. It is making your other tools worse.</p>
+<h2>Why adding a scanner makes your other scanners worse</h2>
+<p>Developer attention on a pull request is fixed. Call it a few minutes. That budget does not expand because you added a seventh tool; it just gets divided more thinly.</p>
+<p>So each new scanner does two things at once. It adds some true positives, which is the reason you bought it. And it dilutes the average quality of the findings list, which lowers the probability that any individual finding — including the ones from your good tools — gets read.</p>
+<p>Below some threshold of precision, the second effect dominates. You cross a line where the list stops being a list of problems and starts being an obstacle. Once developers learn that the security check is usually wrong, they stop evaluating findings individually. They evaluate the <em>category</em>: "that's the security check, it's always noisy." And at that point your genuinely critical finding is indistinguishable from a style nit about a test fixture.</p>
+<p>You cannot fix this by adding a tenth tool that ranks the other nine. You fix it by turning tools off.</p>
+<p><strong>The uncomfortable exercise:</strong> pick your noisiest scanner. Turn it off in the PR entirely. Move it to nightly with a named owner. Watch the fix rate on your remaining tools. In my experience it goes up, because the remaining findings are now read.</p>
+<h2>The feedback latency budget</h2>
+<p>The second structural mistake is putting checks in the wrong place. Not the wrong tool — the wrong <em>stage</em>.</p>
+<p>The principle is that a check earns its stage by how fast it can answer, not by how important somebody thinks it is. Importance determines whether you run it at all. Runtime determines where.</p>
+<div class="table-wrap"><table><thead><tr><th>Stage</th><th>Budget</th><th>What belongs here</th><th>What kills it</th></tr></thead><tbody><tr><td>Editor</td><td>&lt; 1s</td><td>Type checks, linters, secret patterns, known-bad API usage</td><td>Anything needing a build</td></tr><tr><td>Pre-commit</td><td>&lt; 10s</td><td>Fast SAST on the diff, entropy scan on staged files</td><td>Whole-repo analysis</td></tr><tr><td>Pull request</td><td>&lt; 10 min</td><td>SCA on changed dependencies, IaC policy, unit and contract tests</td><td>Full DAST, deep taint analysis</td></tr><tr><td>Nightly</td><td>hours</td><td>Full-repo SAST, DAST, fuzzing, image and base-layer scanning</td><td>Nothing — this is the dumping ground, and that is fine</td></tr><tr><td>Backlog</td><td>days+</td><td>—</td><td>Everything. This is where findings go to die.</td></tr></tbody></table></div>
+<p>The common failure is to take a check that genuinely takes 40 minutes and put it in the PR anyway, because it is important. Importance does not make it faster. What it produces is a 40-minute PR cycle, which produces batching, which produces bigger PRs, which produces worse review — so your important check has now degraded the quality of human review across the whole repository.</p>
+<p>If a check cannot meet its stage's budget, you have two honest options. Narrow its scope so it only analyses the diff. Or move it right and give it an owner who triages the output on a schedule.</p>
+<p>The dishonest third option is to keep it in the PR and let people learn to ignore it.</p>
+<h2>Guardrails beat gates</h2>
+<p>The deepest version of this problem is that blocking checks are a weak instrument. A gate stops the build. It does not teach anything, it does not fix anything, and it creates pressure to find the bypass. Every organisation that leans hard on gates develops a culture of bypass — an <code>--no-verify</code> habit, a <code>security-exception</code> label that nobody audits, a shared admin account that can force-merge.</p>
+<p>Secure defaults work differently. They are invisible. Nobody notices them, nobody argues with them, and they have a 100% adoption rate on new code.</p>
+<p>Some concrete substitutions:</p>
+<ul><li><strong>Instead of</strong> a scanner that flags plaintext HTTP in Terraform, <strong>ship</strong> a module where the listener block is not exposed and TLS is the only path.</li><li><strong>Instead of</strong> a check that fails on missing resource limits in Kubernetes manifests, <strong>set</strong> a LimitRange on the namespace so the default is correct.</li><li><strong>Instead of</strong> a secret scanner in the PR, <strong>remove</strong> long-lived secrets from CI entirely with OIDC federation, so there is nothing to leak.</li><li><strong>Instead of</strong> a SAST rule for SQL string concatenation, <strong>make</strong> the raw-query function private and export only the parameterised one.</li></ul>
+<p>The pattern: move the control from <em>detection at review time</em> to <em>impossibility at authoring time</em>. That is the real meaning of shifting left, and it has nothing to do with scanners.</p>
+<h2>What a healthy programme looks like</h2>
+<p>A short checklist you can hold your own setup against:</p>
+<ol><li><strong>Fix rate is reported per tool, monthly.</strong> Any tool below a threshold you set gets moved out of the PR or removed.</li><li><strong>False positive rate is measured</strong>, by sampling — take 30 random findings a month and have an engineer adjudicate them. You cannot manage what you have not sampled.</li><li><strong>Every stage has a latency budget</strong> and a check that exceeds it gets moved, not excused.</li><li><strong>Suppressions expire.</strong> (This is the subject of part three.)</li><li><strong>Every recurring finding class has a ticket to eliminate the class</strong>, not a ticket to fix the instances. (Part two.)</li><li><strong>The security team owns the noise.</strong> If a tool is noisy, that is a security-team defect, not a developer-discipline problem.</li></ol>
+<p>Point six is the cultural one and the hardest. The default posture in a lot of organisations is that findings are the developer's problem and triage is the developer's job. That posture guarantees noise, because nobody who generates the noise pays for it. Put the cost where the decision is made: the team that turns on the scanner owns its precision.</p>
+<h2>The honest summary</h2>
+<p>Shift-left, as commonly practised, is the act of moving unfiltered machine output earlier in the process and calling the relocation an improvement. It is not. Moving a bad signal earlier just means you interrupt people sooner.</p>
+<p>The thing worth moving left is not <em>detection</em>. It is <em>decision</em>: the design choice, the default, the library boundary, the credential architecture. Those are the things that, moved left, stop bugs from existing.</p>
+<p>Detection is what you do about the ones that get through anyway. Keep it, tune it hard, measure it honestly, and stop pretending the size of the findings list is a measure of anything but the size of the findings list.</p>]]></content:encoded>
   </item>
   <item>
     <title>How we integrated Gen AI into CI/CD pipelines, and what surprised us</title>

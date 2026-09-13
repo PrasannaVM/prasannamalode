@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your PR Has 400 Security Findings. Nobody Is Going to Fix Them. — Prasanna Malode</title>
+<meta name="description" content="Coverage is a vanity metric. Track fix rate per tool, give every pipeline stage a latency budget, and prefer secure defaults over blocking gates.">
+<meta name="author" content="Prasanna Malode">
+<meta name="theme-color" content="#faf8f4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14151a" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://prasannamalode.in/articles/your-pr-has-400-security-findings.html">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="alternate" type="application/rss+xml" title="Prasanna Malode — Articles" href="https://prasannamalode.in/feed.xml">
+<meta property="og:site_name" content="Prasanna Malode">
+<meta property="og:title" content="Your PR Has 400 Security Findings. Nobody Is Going to Fix Them. — Prasanna Malode">
+<meta property="og:description" content="Coverage is a vanity metric. Track fix rate per tool, give every pipeline stage a latency budget, and prefer secure defaults over blocking gates.">
+<meta property="og:url" content="https://prasannamalode.in/articles/your-pr-has-400-security-findings.html">
+<meta property="og:image" content="https://prasannamalode.in/assets/og/your-pr-has-400-security-findings.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Your PR Has 400 Security Findings. Nobody Is Going to Fix Them. — Prasanna Malode">
+<meta name="twitter:description" content="Coverage is a vanity metric. Track fix rate per tool, give every pipeline stage a latency budget, and prefer secure defaults over blocking gates.">
+<meta name="twitter:image" content="https://prasannamalode.in/assets/og/your-pr-has-400-security-findings.png">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-11-25">
+<meta property="article:author" content="Prasanna Malode">
+<meta property="article:section" content="DevSecOps">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Your PR Has 400 Security Findings. Nobody Is Going to Fix Them.", "description": "Coverage is a vanity metric. Track fix rate per tool, give every pipeline stage a latency budget, and prefer secure defaults over blocking gates.", "datePublished": "2025-11-25", "dateModified": "2025-11-25", "author": {"@type": "Person", "name": "Prasanna Malode", "url": "https://prasannamalode.in/index.html#/about", "jobTitle": "Global Head — DevSecOps · Cybersecurity · IT Operations"}, "publisher": {"@type": "Person", "name": "Prasanna Malode"}, "mainEntityOfPage": "https://prasannamalode.in/articles/your-pr-has-400-security-findings.html", "image": "https://prasannamalode.in/assets/og/your-pr-has-400-security-findings.png", "keywords": "DevSecOps", "isPartOf": {"@type": "CreativeWorkSeries", "name": "Shifting Left Without Shifting the Blame"}}</script>
+<script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css?v=7">
+</head>
+<body data-root="..">
+<div class="progress" aria-hidden="true"></div>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">PM</span><span>Prasanna Malode</span></a>
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a id="nav-home" href="../index.html#/home">Home</a></li>
+        <li><a id="nav-articles" href="../index.html#/articles" aria-current="page">Articles</a></li>
+        <li><a id="nav-tools" href="../index.html#/tools">Tools</a></li>
+        <li><a id="nav-about" href="../index.html#/about">About</a></li>
+      </ul>
+    </nav>
+    <div class="nav-actions">
+      <a class="icon-btn" href="../feed.xml" title="RSS feed" aria-label="RSS feed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg></a>
+      <button class="icon-btn theme-toggle" type="button" title="Toggle dark mode" aria-label="Toggle dark mode"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      <button class="icon-btn menu-btn" type="button" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+  <article>
+    <header class="article-head">
+      <div class="wrap-read fade-up">
+        <a class="tag" href="../index.html#/articles?tag=DevSecOps">DevSecOps</a>
+        <h1>Your PR Has 400 Security Findings. Nobody Is Going to Fix Them.</h1>
+        <div class="meta">
+          <img class="avatar" src="../assets/photo-sm.jpg" alt="" width="26" height="26">
+          <span>Prasanna Malode</span>
+          <span aria-hidden="true">·</span>
+          <time datetime="2025-11-25">November 25, 2025</time>
+          <span aria-hidden="true">·</span>
+          <span>6 min read</span>
+        </div>
+        <p class="lede">Coverage is a vanity metric. Track fix rate per tool, give every pipeline stage a latency budget, and prefer secure defaults over blocking gates.</p>
+      </div>
+    </header>
+    <div class="wrap" style="max-width:calc(var(--max-read) + 220px + 56px + 48px)">
+      <div class="article-layout">
+        <div>
+          <aside class="series-box" aria-label="Series navigation">
+  <div class="eyebrow">Series · Part 1 of 4</div>
+  <strong>Shifting Left Without Shifting the Blame</strong>
+  <ol><li class="current"><a href="../articles/your-pr-has-400-security-findings.html">Your PR Has 400 Security Findings. Nobody Is Going to Fix Them.</a></li><li class=""><a href="../articles/bug-classes-not-bug-instances.html">Bug Classes, Not Bug Instances</a></li><li class=""><a href="../articles/risk-acceptance-with-an-expiry-date.html">The Vulnerability I Accepted, and the Expiry Date I Put on It</a></li><li class=""><a href="../articles/shift-left-has-a-ceiling.html">Shift Left Has a Ceiling</a></li></ol>
+</aside>
+          <nav class="toc-inline" data-toc aria-label="Contents"><div class="eyebrow">In this article</div><div data-toc-list></div></nav>
+          <div class="prose">
+<p>There is a specific moment I want to describe, because I think most engineers have lived it and nobody writes it down.</p>
+<p>You open a pull request. It changes eleven lines in a config file. The checks run. Fourteen minutes later you come back to a wall of red: 400-odd findings from six different tools, most of them in files you have never opened, several of them duplicates of each other described in different vocabularies, one of them possibly real.</p>
+<p>You scroll. You do not read. You look for the button that makes it go away.</p>
+<p>That reflex — the scroll, the scan for the override — is the actual output of most shift-left programmes. Not fixes. A reflex.</p>
+<h2>Coverage is a vanity metric</h2>
+<p>Here is the story security programmes tell themselves. We added SAST. We added SCA. We added secret scanning, IaC policy, container scanning, license compliance. Coverage went from 20% of repositories to 95% of repositories. The quarterly slide is green.</p>
+<p>Here is the story the codebase tells. Findings went up. Fixes did not. The delta went into a suppression file.</p>
+<p>Coverage measures how many tools you bought and wired up. It measures procurement. It says nothing about whether a single vulnerability left the codebase.</p>
+<p>The number that matters is the fix rate:</p>
+<blockquote><p>Of the findings surfaced in a given period, what fraction were remediated in code — not suppressed, not marked won't-fix, not aged out?</p></blockquote>
+<p>Track that monthly. Track it per tool. The first time you look at it per tool, you will find at least one scanner with a fix rate near zero, which means it has been generating pure noise and consuming review attention for however long you have had it.</p>
+<p>That tool is not a partial win. It is negative. It is making your other tools worse.</p>
+<h2>Why adding a scanner makes your other scanners worse</h2>
+<p>Developer attention on a pull request is fixed. Call it a few minutes. That budget does not expand because you added a seventh tool; it just gets divided more thinly.</p>
+<p>So each new scanner does two things at once. It adds some true positives, which is the reason you bought it. And it dilutes the average quality of the findings list, which lowers the probability that any individual finding — including the ones from your good tools — gets read.</p>
+<p>Below some threshold of precision, the second effect dominates. You cross a line where the list stops being a list of problems and starts being an obstacle. Once developers learn that the security check is usually wrong, they stop evaluating findings individually. They evaluate the <em>category</em>: "that's the security check, it's always noisy." And at that point your genuinely critical finding is indistinguishable from a style nit about a test fixture.</p>
+<p>You cannot fix this by adding a tenth tool that ranks the other nine. You fix it by turning tools off.</p>
+<p><strong>The uncomfortable exercise:</strong> pick your noisiest scanner. Turn it off in the PR entirely. Move it to nightly with a named owner. Watch the fix rate on your remaining tools. In my experience it goes up, because the remaining findings are now read.</p>
+<h2>The feedback latency budget</h2>
+<p>The second structural mistake is putting checks in the wrong place. Not the wrong tool — the wrong <em>stage</em>.</p>
+<p>The principle is that a check earns its stage by how fast it can answer, not by how important somebody thinks it is. Importance determines whether you run it at all. Runtime determines where.</p>
+<div class="table-wrap"><table><thead><tr><th>Stage</th><th>Budget</th><th>What belongs here</th><th>What kills it</th></tr></thead><tbody><tr><td>Editor</td><td>&lt; 1s</td><td>Type checks, linters, secret patterns, known-bad API usage</td><td>Anything needing a build</td></tr><tr><td>Pre-commit</td><td>&lt; 10s</td><td>Fast SAST on the diff, entropy scan on staged files</td><td>Whole-repo analysis</td></tr><tr><td>Pull request</td><td>&lt; 10 min</td><td>SCA on changed dependencies, IaC policy, unit and contract tests</td><td>Full DAST, deep taint analysis</td></tr><tr><td>Nightly</td><td>hours</td><td>Full-repo SAST, DAST, fuzzing, image and base-layer scanning</td><td>Nothing — this is the dumping ground, and that is fine</td></tr><tr><td>Backlog</td><td>days+</td><td>—</td><td>Everything. This is where findings go to die.</td></tr></tbody></table></div>
+<p>The common failure is to take a check that genuinely takes 40 minutes and put it in the PR anyway, because it is important. Importance does not make it faster. What it produces is a 40-minute PR cycle, which produces batching, which produces bigger PRs, which produces worse review — so your important check has now degraded the quality of human review across the whole repository.</p>
+<p>If a check cannot meet its stage's budget, you have two honest options. Narrow its scope so it only analyses the diff. Or move it right and give it an owner who triages the output on a schedule.</p>
+<p>The dishonest third option is to keep it in the PR and let people learn to ignore it.</p>
+<h2>Guardrails beat gates</h2>
+<p>The deepest version of this problem is that blocking checks are a weak instrument. A gate stops the build. It does not teach anything, it does not fix anything, and it creates pressure to find the bypass. Every organisation that leans hard on gates develops a culture of bypass — an <code>--no-verify</code> habit, a <code>security-exception</code> label that nobody audits, a shared admin account that can force-merge.</p>
+<p>Secure defaults work differently. They are invisible. Nobody notices them, nobody argues with them, and they have a 100% adoption rate on new code.</p>
+<p>Some concrete substitutions:</p>
+<ul><li><strong>Instead of</strong> a scanner that flags plaintext HTTP in Terraform, <strong>ship</strong> a module where the listener block is not exposed and TLS is the only path.</li><li><strong>Instead of</strong> a check that fails on missing resource limits in Kubernetes manifests, <strong>set</strong> a LimitRange on the namespace so the default is correct.</li><li><strong>Instead of</strong> a secret scanner in the PR, <strong>remove</strong> long-lived secrets from CI entirely with OIDC federation, so there is nothing to leak.</li><li><strong>Instead of</strong> a SAST rule for SQL string concatenation, <strong>make</strong> the raw-query function private and export only the parameterised one.</li></ul>
+<p>The pattern: move the control from <em>detection at review time</em> to <em>impossibility at authoring time</em>. That is the real meaning of shifting left, and it has nothing to do with scanners.</p>
+<h2>What a healthy programme looks like</h2>
+<p>A short checklist you can hold your own setup against:</p>
+<ol><li><strong>Fix rate is reported per tool, monthly.</strong> Any tool below a threshold you set gets moved out of the PR or removed.</li><li><strong>False positive rate is measured</strong>, by sampling — take 30 random findings a month and have an engineer adjudicate them. You cannot manage what you have not sampled.</li><li><strong>Every stage has a latency budget</strong> and a check that exceeds it gets moved, not excused.</li><li><strong>Suppressions expire.</strong> (This is the subject of part three.)</li><li><strong>Every recurring finding class has a ticket to eliminate the class</strong>, not a ticket to fix the instances. (Part two.)</li><li><strong>The security team owns the noise.</strong> If a tool is noisy, that is a security-team defect, not a developer-discipline problem.</li></ol>
+<p>Point six is the cultural one and the hardest. The default posture in a lot of organisations is that findings are the developer's problem and triage is the developer's job. That posture guarantees noise, because nobody who generates the noise pays for it. Put the cost where the decision is made: the team that turns on the scanner owns its precision.</p>
+<h2>The honest summary</h2>
+<p>Shift-left, as commonly practised, is the act of moving unfiltered machine output earlier in the process and calling the relocation an improvement. It is not. Moving a bad signal earlier just means you interrupt people sooner.</p>
+<p>The thing worth moving left is not <em>detection</em>. It is <em>decision</em>: the design choice, the default, the library boundary, the credential architecture. Those are the things that, moved left, stop bugs from existing.</p>
+<p>Detection is what you do about the ones that get through anyway. Keep it, tune it hard, measure it honestly, and stop pretending the size of the findings list is a measure of anything but the size of the findings list.</p>
+          </div>
+          <footer class="article-foot">
+            <div class="share">
+              <span class="label">Share</span>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="linkedin">LinkedIn</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="x">X</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="email">Email</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="copy">Copy link</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-share="native">Share…</button>
+            </div>
+            <div class="author-card">
+              <img src="../assets/photo-sm.jpg" alt="Prasanna Malode" width="64" height="64">
+              <div>
+                <div class="name">Prasanna Malode</div>
+                <div class="role">Global Head — DevSecOps · Cybersecurity · IT Operations · Bengaluru, India</div>
+                <p>Two decades in release engineering, IT operations and security, now leading a 20-person global DevSecOps, cybersecurity and IT operations organisation. I write about making speed, security and reliability the same conversation. <a href="../index.html#/about">More about me</a>.</p>
+              </div>
+            </div>
+            <nav class="pager" aria-label="More articles">
+              <a class="prev" href="../articles/genai-cicd-pipelines.html"><div class="dir">← Older</div><div class="title">How we integrated Gen AI into CI/CD pipelines, and what surprised us</div></a>
+              <a class="next" href="../articles/itil-incident-management.html"><div class="dir">Newer →</div><div class="title">How ITIL-aligned incident management cut our recurring incidents by 50%</div></a>
+            </nav>
+          </footer>
+        </div>
+        <nav class="toc-side" data-toc aria-label="Contents"><div class="eyebrow">In this article</div><div data-toc-list></div></nav>
+      </div>
+    </div>
+  </article>
+</main>
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">PM</span><span>Prasanna Malode</span></a>
+      <div style="margin-top:8px">DevSecOps · Cybersecurity · IT Operations · Bengaluru, India</div>
+      <div style="margin-top:4px">© <span data-year>2026</span> Prasanna Malode. Opinions are my own.</div>
+    </div>
+    <div class="footer-links">
+      <a href="../index.html#/articles">Articles</a>
+      <a href="../index.html#/tools">Tools</a>
+      <a href="../index.html#/about">About</a>
+      <a href="https://linkedin.com/in/prasannamalode" target="_blank" rel="noopener me">LinkedIn</a>
+      <a href="mailto:malode.prasanna@gmail.com">Email</a>
+      <a href="../feed.xml">RSS</a>
+    </div>
+  </div>
+</footer>
+<script src="../assets/articles-data.js?v=7" defer></script>
+<script src="../assets/site.js?v=7" defer></script>
+</body>
+</html>
