@@ -21,6 +21,7 @@ SITE = "https://prasannamalode.in"
 AUTHOR = "Prasanna Malode"
 ROLE = "Global Head — DevSecOps · Cybersecurity · IT Operations"
 HERE = os.path.dirname(os.path.abspath(__file__))
+ASSET_V = "20260913a"  # bump to force browsers to refetch CSS/JS
 CONTENT = os.path.join(HERE, "content")
 ARTICLES_DIR = os.path.join(HERE, "articles")
 ASSETS = os.path.join(HERE, "assets")
@@ -256,7 +257,7 @@ def head_html(title, description, canonical, root, og_image, extra=""):
 {extra}
 {THEME_INIT}
 {FONTS}
-<link rel="stylesheet" href="{root}/assets/site.css">"""
+<link rel="stylesheet" href="{root}/assets/site.css?v={ASSET_V}">"""
 
 
 def article_page(a, all_essays, series_map):
@@ -365,8 +366,8 @@ def article_page(a, all_essays, series_map):
   </article>
 </main>
 {footer_html(root)}
-<script src="{root}/assets/articles-data.js" defer></script>
-<script src="{root}/assets/site.js" defer></script>
+<script src="{root}/assets/articles-data.js?v={ASSET_V}" defer></script>
+<script src="{root}/assets/site.js?v={ASSET_V}" defer></script>
 </body>
 </html>
 """

@@ -449,7 +449,7 @@ table.data td.num { font-family: var(--mono); font-size: .82rem; }
 /* ---------- Home redesign ---------- */
 .hero-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: .8rem; font-weight: 600; color: var(--muted); margin-bottom: 18px; }
 .hero-eyebrow .name { color: var(--ink); }
-.hero-eyebrow .sep { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
+.hero-eyebrow .sep { color: var(--accent); font-weight: 700; }
 .proof { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
 .proof .pill { font-size: .78rem; padding: 6px 12px; }
 .proof .pill b { color: var(--accent); font-weight: 700; margin-right: 4px; }
