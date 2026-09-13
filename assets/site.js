@@ -101,9 +101,9 @@
     var picks = essays.filter(function (a) { return a.featured && a !== newest; }).slice(0, 2);
     if (picks.length < 2) essays.filter(function (a) { return a !== newest && picks.indexOf(a) < 0 && a.tag !== newest.tag; }).slice(0, 2 - picks.length).forEach(function (a) { picks.push(a); });
     var mainHtml = newest ? '<a class="featured-main fade-up" href="' + articleHref(newest) + '">' +
-      '<div class="kicker"><span class="tag">' + escapeHtml(newest.tag) + '</span><span class="new">Latest' + (newest.series ? ' · Part ' + newest.part : '') + '</span></div>' +
-      '<h3>' + escapeHtml(newest.title) + '</h3><p>' + escapeHtml(newest.summary) + '</p>' +
-      '<div class="card-meta"><span>' + escapeHtml(fmtDate(newest)) + '</span><span class="dot"></span><span>' + escapeHtml(newest.read) + '</span></div></a>' : '';
+      '<div class="kicker"><span class="tag">' + escapeHtml(newest.tag) + '</span><span class="new">Latest' + (newest.series ? ' · Part ' + newest.part + (newest.series ? ' of ' + ARTICLES.filter(function (x) { return x.series === newest.series; }).length : '') : '') + '</span></div>' +
+      '<div class="featured-body"><h3>' + escapeHtml(newest.title) + '</h3><p>' + escapeHtml(newest.summary) + '</p>' +
+      '<div class="card-meta"><span>' + escapeHtml(fmtDate(newest)) + '</span><span class="dot"></span><span>' + escapeHtml(newest.read) + '</span><span class="dot"></span><span class="read-on">Read the article →</span></div></div></a>' : '';
     home.innerHTML = mainHtml + '<div class="featured-side">' + picks.map(function (a, i) {
       return '<a class="card card-link fade-up d' + (i + 1) + '" href="' + articleHref(a) + '"><div class="eyebrow">Start here · ' + escapeHtml(a.tag) + '</div>' +
         '<h3 style="margin-top:0">' + escapeHtml(a.title) + '</h3><p>' + escapeHtml(a.summary) + '</p>' +
