@@ -19,7 +19,7 @@ import sys
 
 SITE = "https://prasannamalode.in"
 AUTHOR = "Prasanna Malode"
-ROLE = "Global Head — DevSecOps · Cybersecurity · IT Operations"
+ROLE = "DevSecOps · Cybersecurity · IT Operations"
 HERE = os.path.dirname(os.path.abspath(__file__))
 ASSET_V = "8"  # bump to force browsers to refetch CSS/JS
 CONTENT = os.path.join(HERE, "content")
