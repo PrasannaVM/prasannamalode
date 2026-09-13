@@ -455,7 +455,7 @@ table.data td.num { font-family: var(--mono); font-size: .82rem; }
 .proof .pill b { color: var(--accent); font-weight: 700; margin-right: 4px; }
 .featured { display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px; align-items: stretch; }
 @media (max-width: 800px) { .featured { grid-template-columns: 1fr; } }
-.featured-main { display: flex; flex-direction: column; justify-content: space-between; gap: 40px; padding: 28px 30px; min-height: 0; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); color: inherit; text-decoration: none; position: relative; overflow: hidden; transition: border-color .18s, transform .18s, box-shadow .18s; }
+.featured-main { display: flex; flex-direction: column; justify-content: flex-start; gap: 24px; padding: 28px 30px; min-height: 0; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); color: inherit; text-decoration: none; position: relative; overflow: hidden; transition: border-color .18s, transform .18s, box-shadow .18s; }
 .featured-main::before { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 90% at 100% 0%, var(--accent-tint) 0%, transparent 55%); pointer-events: none; }
 .featured-main:hover { text-decoration: none; border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-md); }
 .featured-main > * { position: relative; }
@@ -464,6 +464,7 @@ table.data td.num { font-family: var(--mono); font-size: .82rem; }
 .featured-main h3 { font-family: var(--serif); font-size: clamp(1.5rem, 2.8vw, 2.1rem); line-height: 1.2; font-weight: 700; margin: 0 0 12px; color: var(--ink); }
 .featured-main p { color: var(--muted); font-size: 1.02rem; max-width: 48ch; }
 .featured-main .read-on { color: var(--accent); font-weight: 600; }
+.featured-main .featured-body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
 .featured-main .card-meta { margin-top: 18px; }
 .featured-side { display: grid; gap: 16px; }
 .featured-side .card { display: flex; flex-direction: column; justify-content: center; padding: 18px 20px; }
