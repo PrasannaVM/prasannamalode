@@ -96,7 +96,30 @@
     var home = document.getElementById('home-articles-grid');
     if (!home) return; // not the index page
     var essays = ARTICLES.filter(function (a) { return a.kind !== 'guide'; });
-    home.innerHTML = essays.slice(0, 3).map(card).join('');
+    // Featured: newest essay large, plus two hand-picked pieces (featured: true) from other topics
+    var newest = essays[0];
+    var picks = essays.filter(function (a) { return a.featured && a !== newest; }).slice(0, 2);
+    if (picks.length < 2) essays.filter(function (a) { return a !== newest && picks.indexOf(a) < 0 && a.tag !== newest.tag; }).slice(0, 2 - picks.length).forEach(function (a) { picks.push(a); });
+    var mainHtml = newest ? '<a class="featured-main fade-up" href="' + articleHref(newest) + '">' +
+      '<div class="kicker"><span class="tag">' + escapeHtml(newest.tag) + '</span><span class="new">Latest' + (newest.series ? ' · Part ' + newest.part : '') + '</span></div>' +
+      '<h3>' + escapeHtml(newest.title) + '</h3><p>' + escapeHtml(newest.summary) + '</p>' +
+      '<div class="card-meta"><span>' + escapeHtml(fmtDate(newest)) + '</span><span class="dot"></span><span>' + escapeHtml(newest.read) + '</span></div></a>' : '';
+    home.innerHTML = mainHtml + '<div class="featured-side">' + picks.map(function (a, i) {
+      return '<a class="card card-link fade-up d' + (i + 1) + '" href="' + articleHref(a) + '"><div class="eyebrow">Start here · ' + escapeHtml(a.tag) + '</div>' +
+        '<h3 style="margin-top:0">' + escapeHtml(a.title) + '</h3><p>' + escapeHtml(a.summary) + '</p>' +
+        '<div class="card-meta"><span>' + escapeHtml(fmtDate(a)) + '</span><span class="dot"></span><span>' + escapeHtml(a.read) + '</span></div></a>';
+    }).join('') + '</div>';
+
+    // Topics row with counts
+    var topics = document.getElementById('topics');
+    if (topics) {
+      var counts = {};
+      essays.forEach(function (a) { counts[a.tag] = (counts[a.tag] || 0) + 1; });
+      var guides = ARTICLES.filter(function (a) { return a.kind === 'guide'; }).length;
+      var order = Object.keys(counts).sort(function (x, y) { return counts[y] - counts[x] || x.localeCompare(y); });
+      topics.innerHTML = order.map(function (t) { return '<a class="topic" href="#/articles?tag=' + encodeURIComponent(t) + '">' + escapeHtml(t) + '<span class="n">' + counts[t] + '</span></a>'; }).join('') +
+        (guides ? '<a class="topic" href="#/articles?tag=Guides">Training guides<span class="n">' + guides + '</span></a>' : '');
+    }
 
     // tag chips
     var tags = ['All'];
@@ -111,9 +134,10 @@
     var search = document.getElementById('article-search');
     if (search) search.addEventListener('input', function () { state.query = search.value; renderArticles(); });
 
+    var lastRoute = null;
     function route() {
       var r = parseHash();
-      if (r.q.tag) state.tag = r.q.tag;
+      if (r.q.tag) state.tag = r.q.tag; else if (r.name === 'articles' && lastRoute !== 'articles') state.tag = 'All';
       if (r.q.q && search) { search.value = r.q.q; state.query = r.q.q; }
       SECTIONS.forEach(function (s) {
         var el = document.getElementById(s); if (el) el.hidden = s !== r.name;
@@ -121,6 +145,7 @@
       });
       document.title = (r.name === 'home' ? '' : r.name.charAt(0).toUpperCase() + r.name.slice(1) + ' · ') + 'Prasanna Malode';
       renderArticles();
+      lastRoute = r.name;
       var links = document.querySelector('.nav-links'); if (links) links.classList.remove('open');
       try { window.scrollTo(0, 0); } catch (e) {}
     }

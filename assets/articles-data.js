@@ -113,7 +113,8 @@ window.ARTICLES = [
   "display_date": "Mar 2026",
   "read": "6 min read",
   "summary": "The CI/CD transformation framework, quality gates, and governance model that delivered measurable results for a global engineering organisation.",
-  "file": "articles/cicd-80-percent.html"
+  "file": "articles/cicd-80-percent.html",
+  "featured": true
  },
  {
   "id": "iso-27001-from-scratch",
@@ -135,7 +136,8 @@ window.ARTICLES = [
   "display_date": "Jan 2026",
   "read": "7 min read",
   "summary": "Handovers, shift scheduling, and the one ritual that keeps 24x7 teams sane and aligned.",
-  "file": "articles/follow-the-sun-ops.html"
+  "file": "articles/follow-the-sun-ops.html",
+  "featured": true
  },
  {
   "id": "itil-incident-management",

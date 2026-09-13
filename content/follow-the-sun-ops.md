@@ -5,6 +5,7 @@ tag: Leadership
 date: 2026-01-13
 read: 7 min read
 summary: Handovers, shift scheduling, and the one ritual that keeps 24x7 teams sane and aligned.
+featured: true
 ---
 
 Running a follow-the-sun operation sounds simple on paper: coverage across timezones, seamless handovers, 24x7 continuity. The reality is messier, and more human, than any playbook suggests.

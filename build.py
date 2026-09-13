@@ -460,6 +460,8 @@ def main():
         a["display_date"] = nice_date(a["date"])
         if "part" in a:
             a["part"] = int(a["part"])
+        if "featured" in a:
+            a["featured"] = str(a["featured"]).lower() in ("true", "yes", "1")
         a["body_md"] = body
         essays.append(a)
     essays.sort(key=lambda x: (x["date"], x.get("part", 0)), reverse=True)
@@ -481,7 +483,7 @@ def main():
     make_og(dict(title="DevSecOps, cybersecurity and IT leadership, written from the inside.", tag="prasannamalode.in", date="2026-01-01", display_date=""),
             os.path.join(ASSETS, "og", "site.png"))
 
-    public_keys = ["id", "kind", "title", "tag", "date", "display_date", "read", "summary", "file", "series", "part"]
+    public_keys = ["id", "kind", "title", "tag", "date", "display_date", "read", "summary", "file", "series", "part", "featured"]
     data = [{k: a[k] for k in public_keys if k in a} for a in essays] + \
            [{k: g[k] for k in public_keys if k in g} for g in GUIDES]
     with open(os.path.join(ASSETS, "articles-data.js"), "w", encoding="utf-8") as f:
