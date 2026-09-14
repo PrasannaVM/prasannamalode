@@ -39,6 +39,17 @@
     "part": 7
   },
   {
+    "id": "information-security-governance-six-outcomes",
+    "kind": "essay",
+    "title": "The 6 Outcomes of Information Security Governance: What Leaders Actually Need to Know",
+    "tag": "Cybersecurity",
+    "date": "2026-08-04",
+    "display_date": "Aug 2026",
+    "read": "8 min read",
+    "summary": "Governance is the operating system for how an organisation makes security decisions. Six measurable outcomes it must deliver, how to test each one, and the loop that connects them.",
+    "file": "articles/information-security-governance-six-outcomes.html"
+  },
+  {
     "id": "same-binary-under-four-names",
     "kind": "essay",
     "title": "The Same Binary Under Four Names",
