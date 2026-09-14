@@ -2,7 +2,7 @@
 id: information-security-governance-six-outcomes
 title: The 6 Outcomes of Information Security Governance: What Leaders Actually Need to Know
 tag: Cybersecurity
-date: 2026-08-04
+date: 2026-09-14
 summary: Governance is the operating system for how an organisation makes security decisions. Six measurable outcomes it must deliver, how to test each one, and the loop that connects them.
 ---
 

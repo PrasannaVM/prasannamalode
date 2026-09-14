@@ -1,5 +1,16 @@
 [
   {
+    "id": "information-security-governance-six-outcomes",
+    "kind": "essay",
+    "title": "The 6 Outcomes of Information Security Governance: What Leaders Actually Need to Know",
+    "tag": "Cybersecurity",
+    "date": "2026-09-14",
+    "display_date": "Sep 2026",
+    "read": "8 min read",
+    "summary": "Governance is the operating system for how an organisation makes security decisions. Six measurable outcomes it must deliver, how to test each one, and the loop that connects them.",
+    "file": "articles/information-security-governance-six-outcomes.html"
+  },
+  {
     "id": "the-demo-you-didnt-choose",
     "kind": "essay",
     "title": "The Demo You Didn't Choose",
@@ -37,17 +48,6 @@
     "file": "articles/code-review-at-machine-scale.html",
     "series": "AI Governance for Engineering Leaders",
     "part": 7
-  },
-  {
-    "id": "information-security-governance-six-outcomes",
-    "kind": "essay",
-    "title": "The 6 Outcomes of Information Security Governance: What Leaders Actually Need to Know",
-    "tag": "Cybersecurity",
-    "date": "2026-08-04",
-    "display_date": "Aug 2026",
-    "read": "8 min read",
-    "summary": "Governance is the operating system for how an organisation makes security decisions. Six measurable outcomes it must deliver, how to test each one, and the loop that connects them.",
-    "file": "articles/information-security-governance-six-outcomes.html"
   },
   {
     "id": "same-binary-under-four-names",
